@@ -1,0 +1,4 @@
+ShippingProviderID,ProviderName,ProviderType,TypicalUse
+SHP0000001,Voltiva Logistics,Internal Fleet,"Large appliances, TVs, bulky/high-value items"
+SHP0000002,Nile Express,External Courier,Small/medium electronics
+SHP0000003,Delta Delivery Services,External Courier,Small/medium electronics

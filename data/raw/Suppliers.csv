@@ -1,0 +1,17 @@
+SupplierID,SupplierName,PrimaryFocus,PaymentTerm
+SUP0000001,Nile Mobile Distribution,Samsung/Xiaomi/OPPO/realme mobile devices and tablets,Net 30
+SUP0000002,Apex Smart Devices Egypt,HONOR/Huawei/Infinix/Tecno/HMD/Itel devices and wearables,Net 30
+SUP0000003,Prime Digital Distribution,Apple products and accessories,Net 15
+SUP0000004,Cairo Computing Supply,Lenovo/HP/Dell computing,Net 30
+SUP0000005,Delta Computing & Gaming,ASUS/Acer/MSI computing and gaming,Net 30
+SUP0000006,DataStore Distribution,Printers and storage: HP/Canon/Epson/Brother/Kingston/SanDisk/WD/Seagate,Net 30
+SUP0000007,AudioLink Consumer Tech,Accessories: Anker/JBL/Logitech/Baseus/UGREEN/Oraimo/Spigen,Net 30
+SUP0000008,Vision Entertainment Supply,Sony/TCL/Hisense/Microsoft/Nintendo/BenQ/ViewSonic,Net 30
+SUP0000009,HomeTech Distribution Egypt,Samsung/LG TVs and home appliances,Net 45
+SUP0000010,Nile Appliances Trading,Fresh/Unionaire/Hoover appliances,Net 45
+SUP0000011,Delta Home Systems,Tornado/Sharp products,Net 45
+SUP0000012,Euro Appliances Distribution,Bosch/Zanussi/Ariston/Beko appliances,Net 60
+SUP0000013,KitchenPro Egypt,Tefal/Philips/Moulinex/Kenwood/Braun/Black+Decker/De'Longhi,Net 45
+SUP0000014,Climate & Water Solutions,Carrier/Olympic Electric and selected climate/water products,Net 45
+SUP0000015,SmartNet Distribution,TP-Link/D-Link/Mercusys/Huawei/Xiaomi networking,Net 30
+SUP0000016,SecureHome Technology Supply,EZVIZ/Hikvision/Sonoff/Xiaomi/Tapo smart-home & security,Net 30

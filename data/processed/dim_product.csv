@@ -1,0 +1,903 @@
+SKU_ID,ProductID,ColorName,StorageGB,MemoryGB,CapacityValue,CapacityUnit,ScreenSizeInches,BrandID,SubcategoryID,ProductLine,ModelName,ModelCode,SpecificationSummary,ActiveFrom,ActiveTo,BrandName,CategoryID,SubcategoryName,CategoryName
+SKU0000001,PRD0000001,Silver,256.0,16.0,,,,BRD0000048,SUB0000001,,Samsung Smartphones Model 001,,,2023-07-28,,Samsung,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000002,PRD0000001,Gray,512.0,6.0,,,,BRD0000048,SUB0000001,,Samsung Smartphones Model 001,,,2023-07-28,,Samsung,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000003,PRD0000001,Blue,1024.0,12.0,,,,BRD0000048,SUB0000001,,Samsung Smartphones Model 001,,,2023-07-28,,Samsung,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000004,PRD0000002,Blue,1024.0,12.0,,,,BRD0000048,SUB0000001,,Samsung Smartphones Model 002,,,2022-08-17,,Samsung,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000005,PRD0000002,Green,64.0,4.0,,,,BRD0000048,SUB0000001,,Samsung Smartphones Model 002,,,2022-08-17,,Samsung,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000006,PRD0000002,Red,128.0,8.0,,,,BRD0000048,SUB0000001,,Samsung Smartphones Model 002,,,2022-08-17,,Samsung,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000007,PRD0000003,Pink,512.0,6.0,,,,BRD0000048,SUB0000001,,Samsung Smartphones Model 003,,,2023-09-09,,Samsung,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000008,PRD0000003,Black,64.0,4.0,,,,BRD0000048,SUB0000001,,Samsung Smartphones Model 003,,,2023-09-09,,Samsung,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000009,PRD0000003,White,128.0,8.0,,,,BRD0000048,SUB0000001,,Samsung Smartphones Model 003,,,2023-09-09,,Samsung,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000010,PRD0000004,Red,128.0,8.0,,,,BRD0000048,SUB0000001,,Samsung Smartphones Model 004,,,2023-11-08,,Samsung,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000011,PRD0000004,Gold,256.0,16.0,,,,BRD0000048,SUB0000001,,Samsung Smartphones Model 004,,,2023-11-08,,Samsung,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000012,PRD0000005,Gold,256.0,16.0,,,,BRD0000048,SUB0000001,,Samsung Smartphones Model 005,,,2025-07-31,,Samsung,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000013,PRD0000005,Pink,512.0,6.0,,,,BRD0000048,SUB0000001,,Samsung Smartphones Model 005,,,2025-07-31,,Samsung,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000014,PRD0000005,Black,64.0,4.0,,,,BRD0000048,SUB0000001,,Samsung Smartphones Model 005,,,2025-07-31,,Samsung,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000015,PRD0000006,Pink,512.0,6.0,,,,BRD0000048,SUB0000001,,Samsung Smartphones Model 006,,,2023-04-26,2024-12-26,Samsung,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000016,PRD0000006,Black,64.0,4.0,,,,BRD0000048,SUB0000001,,Samsung Smartphones Model 006,,,2023-04-26,2024-12-26,Samsung,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000017,PRD0000006,White,128.0,8.0,,,,BRD0000048,SUB0000001,,Samsung Smartphones Model 006,,,2023-04-26,2024-12-26,Samsung,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000018,PRD0000006,Silver,256.0,16.0,,,,BRD0000048,SUB0000001,,Samsung Smartphones Model 006,,,2023-04-26,2024-12-26,Samsung,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000019,PRD0000007,Gray,512.0,6.0,,,,BRD0000048,SUB0000001,,Samsung Smartphones Model 007,,,2025-09-22,,Samsung,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000020,PRD0000007,Blue,1024.0,12.0,,,,BRD0000048,SUB0000001,,Samsung Smartphones Model 007,,,2025-09-22,,Samsung,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000021,PRD0000007,Green,64.0,4.0,,,,BRD0000048,SUB0000001,,Samsung Smartphones Model 007,,,2025-09-22,,Samsung,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000022,PRD0000008,Pink,512.0,6.0,,,,BRD0000048,SUB0000001,,Samsung Smartphones Model 008,,,2023-06-05,,Samsung,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000023,PRD0000008,Black,64.0,4.0,,,,BRD0000048,SUB0000001,,Samsung Smartphones Model 008,,,2023-06-05,,Samsung,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000024,PRD0000009,White,128.0,8.0,,,,BRD0000048,SUB0000001,,Samsung Smartphones Model 009,,,2022-08-25,,Samsung,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000025,PRD0000009,Silver,256.0,16.0,,,,BRD0000048,SUB0000001,,Samsung Smartphones Model 009,,,2022-08-25,,Samsung,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000026,PRD0000010,Pink,512.0,6.0,,,,BRD0000064,SUB0000001,,Xiaomi Smartphones Model 001,,,2022-04-04,,Xiaomi,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000027,PRD0000010,Black,64.0,4.0,,,,BRD0000064,SUB0000001,,Xiaomi Smartphones Model 001,,,2022-04-04,,Xiaomi,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000028,PRD0000011,Green,64.0,4.0,,,,BRD0000064,SUB0000001,,Xiaomi Smartphones Model 002,,,2022-08-09,,Xiaomi,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000029,PRD0000011,Red,128.0,8.0,,,,BRD0000064,SUB0000001,,Xiaomi Smartphones Model 002,,,2022-08-09,,Xiaomi,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000030,PRD0000011,Gold,256.0,16.0,,,,BRD0000064,SUB0000001,,Xiaomi Smartphones Model 002,,,2022-08-09,,Xiaomi,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000031,PRD0000012,Gold,256.0,16.0,,,,BRD0000064,SUB0000001,,Xiaomi Smartphones Model 003,,,2025-03-16,,Xiaomi,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000032,PRD0000012,Pink,512.0,6.0,,,,BRD0000064,SUB0000001,,Xiaomi Smartphones Model 003,,,2025-03-16,,Xiaomi,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000033,PRD0000013,Gray,512.0,6.0,,,,BRD0000064,SUB0000001,,Xiaomi Smartphones Model 004,,,2023-08-30,,Xiaomi,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000034,PRD0000013,Blue,1024.0,12.0,,,,BRD0000064,SUB0000001,,Xiaomi Smartphones Model 004,,,2023-08-30,,Xiaomi,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000035,PRD0000013,Green,64.0,4.0,,,,BRD0000064,SUB0000001,,Xiaomi Smartphones Model 004,,,2023-08-30,,Xiaomi,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000036,PRD0000014,Silver,256.0,16.0,,,,BRD0000064,SUB0000001,,Xiaomi Smartphones Model 005,,,2022-08-24,,Xiaomi,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000037,PRD0000014,Gray,512.0,6.0,,,,BRD0000064,SUB0000001,,Xiaomi Smartphones Model 005,,,2022-08-24,,Xiaomi,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000038,PRD0000014,Blue,1024.0,12.0,,,,BRD0000064,SUB0000001,,Xiaomi Smartphones Model 005,,,2022-08-24,,Xiaomi,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000039,PRD0000015,Blue,1024.0,12.0,,,,BRD0000064,SUB0000001,,Xiaomi Smartphones Model 006,,,2023-02-19,,Xiaomi,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000040,PRD0000015,Green,64.0,4.0,,,,BRD0000064,SUB0000001,,Xiaomi Smartphones Model 006,,,2023-02-19,,Xiaomi,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000041,PRD0000016,Gold,256.0,16.0,,,,BRD0000064,SUB0000001,,Xiaomi Smartphones Model 007,,,2022-01-11,,Xiaomi,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000042,PRD0000016,Pink,512.0,6.0,,,,BRD0000064,SUB0000001,,Xiaomi Smartphones Model 007,,,2022-01-11,,Xiaomi,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000043,PRD0000016,Black,64.0,4.0,,,,BRD0000064,SUB0000001,,Xiaomi Smartphones Model 007,,,2022-01-11,,Xiaomi,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000044,PRD0000017,Gray,512.0,6.0,,,,BRD0000044,SUB0000001,,OPPO Smartphones Model 001,,,2022-07-05,,OPPO,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000045,PRD0000018,Silver,256.0,16.0,,,,BRD0000044,SUB0000001,,OPPO Smartphones Model 002,,,2024-05-11,,OPPO,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000046,PRD0000019,Green,64.0,4.0,,,,BRD0000044,SUB0000001,,OPPO Smartphones Model 003,,,2024-10-30,,OPPO,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000047,PRD0000019,Red,128.0,8.0,,,,BRD0000044,SUB0000001,,OPPO Smartphones Model 003,,,2024-10-30,,OPPO,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000048,PRD0000019,Gold,256.0,16.0,,,,BRD0000044,SUB0000001,,OPPO Smartphones Model 003,,,2024-10-30,,OPPO,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000049,PRD0000020,Gray,512.0,6.0,,,,BRD0000044,SUB0000001,,OPPO Smartphones Model 004,,,2023-11-26,,OPPO,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000050,PRD0000021,Silver,256.0,16.0,,,,BRD0000044,SUB0000001,,OPPO Smartphones Model 005,,,2023-03-03,,OPPO,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000051,PRD0000021,Gray,512.0,6.0,,,,BRD0000044,SUB0000001,,OPPO Smartphones Model 005,,,2023-03-03,,OPPO,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000052,PRD0000022,Blue,1024.0,12.0,,,,BRD0000044,SUB0000001,,OPPO Smartphones Model 006,,,2023-02-06,,OPPO,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000053,PRD0000022,Green,64.0,4.0,,,,BRD0000044,SUB0000001,,OPPO Smartphones Model 006,,,2023-02-06,,OPPO,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000054,PRD0000022,Red,128.0,8.0,,,,BRD0000044,SUB0000001,,OPPO Smartphones Model 006,,,2023-02-06,,OPPO,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000055,PRD0000023,Blue,1024.0,12.0,,,,BRD0000066,SUB0000001,,realme Smartphones Model 001,,,2025-09-02,,realme,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000056,PRD0000023,Green,64.0,4.0,,,,BRD0000066,SUB0000001,,realme Smartphones Model 001,,,2025-09-02,,realme,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000057,PRD0000023,Red,128.0,8.0,,,,BRD0000066,SUB0000001,,realme Smartphones Model 001,,,2025-09-02,,realme,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000058,PRD0000024,Silver,256.0,16.0,,,,BRD0000066,SUB0000001,,realme Smartphones Model 002,,,2025-11-21,,realme,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000059,PRD0000024,Gray,512.0,6.0,,,,BRD0000066,SUB0000001,,realme Smartphones Model 002,,,2025-11-21,,realme,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000060,PRD0000025,Red,128.0,8.0,,,,BRD0000066,SUB0000001,,realme Smartphones Model 003,,,2023-06-27,2024-10-27,realme,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000061,PRD0000025,Gold,256.0,16.0,,,,BRD0000066,SUB0000001,,realme Smartphones Model 003,,,2023-06-27,2024-10-27,realme,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000062,PRD0000025,Pink,512.0,6.0,,,,BRD0000066,SUB0000001,,realme Smartphones Model 003,,,2023-06-27,2024-10-27,realme,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000063,PRD0000026,Silver,256.0,16.0,,,,BRD0000066,SUB0000001,,realme Smartphones Model 004,,,2023-03-17,2024-05-17,realme,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000064,PRD0000026,Gray,512.0,6.0,,,,BRD0000066,SUB0000001,,realme Smartphones Model 004,,,2023-03-17,2024-05-17,realme,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000065,PRD0000027,Black,64.0,4.0,,,,BRD0000066,SUB0000001,,realme Smartphones Model 005,,,2022-04-15,,realme,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000066,PRD0000027,White,128.0,8.0,,,,BRD0000066,SUB0000001,,realme Smartphones Model 005,,,2022-04-15,,realme,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000067,PRD0000028,Black,64.0,4.0,,,,BRD0000024,SUB0000001,,HONOR Smartphones Model 001,,,2025-10-27,,HONOR,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000068,PRD0000028,White,,8.0,,,,BRD0000024,SUB0000001,,HONOR Smartphones Model 001,,,2025-10-27,,HONOR,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000069,PRD0000028,Silver,256.0,16.0,,,,BRD0000024,SUB0000001,,HONOR Smartphones Model 001,,,2025-10-27,,HONOR,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000070,PRD0000029,Pink,512.0,6.0,,,,BRD0000024,SUB0000001,,HONOR Smartphones Model 002,,,2024-01-16,,HONOR,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000071,PRD0000029,Black,64.0,4.0,,,,BRD0000024,SUB0000001,,HONOR Smartphones Model 002,,,2024-01-16,,HONOR,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000072,PRD0000029,White,128.0,8.0,,,,BRD0000024,SUB0000001,,HONOR Smartphones Model 002,,,2024-01-16,,HONOR,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000073,PRD0000029,Silver,256.0,16.0,,,,BRD0000024,SUB0000001,,HONOR Smartphones Model 002,,,2024-01-16,,HONOR,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000074,PRD0000030,Green,64.0,4.0,,,,BRD0000024,SUB0000001,,HONOR Smartphones Model 003,,,2022-09-12,,HONOR,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000075,PRD0000030,Red,128.0,8.0,,,,BRD0000024,SUB0000001,,HONOR Smartphones Model 003,,,2022-09-12,,HONOR,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000076,PRD0000031,Black,64.0,4.0,,,,BRD0000024,SUB0000001,,HONOR Smartphones Model 004,,,2024-10-27,2025-08-27,HONOR,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000077,PRD0000031,White,128.0,8.0,,,,BRD0000024,SUB0000001,,HONOR Smartphones Model 004,,,2024-10-27,2025-08-27,HONOR,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000078,PRD0000031,Silver,256.0,16.0,,,,BRD0000024,SUB0000001,,HONOR Smartphones Model 004,,,2024-10-27,2025-08-27,HONOR,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000079,PRD0000032,Pink,512.0,6.0,,,,BRD0000024,SUB0000001,,HONOR Smartphones Model 005,,,2023-06-18,,HONOR,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000080,PRD0000032,Black,64.0,4.0,,,,BRD0000024,SUB0000001,,HONOR Smartphones Model 005,,,2023-06-18,,HONOR,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000081,PRD0000032,White,128.0,8.0,,,,BRD0000024,SUB0000001,,HONOR Smartphones Model 005,,,2023-06-18,,HONOR,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000082,PRD0000033,Gold,256.0,,,,,BRD0000030,SUB0000001,,Infinix Smartphones Model 001,,,2024-04-09,,Infinix,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000083,PRD0000033,Pink,512.0,6.0,,,,BRD0000030,SUB0000001,,Infinix Smartphones Model 001,,,2024-04-09,,Infinix,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000084,PRD0000033,Black,64.0,4.0,,,,BRD0000030,SUB0000001,,Infinix Smartphones Model 001,,,2024-04-09,,Infinix,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000085,PRD0000034,Gray,512.0,6.0,,,,BRD0000030,SUB0000001,,Infinix Smartphones Model 002,,,2025-02-26,,Infinix,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000086,PRD0000034,Blue,1024.0,12.0,,,,BRD0000030,SUB0000001,,Infinix Smartphones Model 002,,,2025-02-26,,Infinix,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000087,PRD0000035,Green,64.0,4.0,,,,BRD0000030,SUB0000001,,Infinix Smartphones Model 003,,,2022-04-04,,Infinix,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000088,PRD0000035,Red,128.0,8.0,,,,BRD0000030,SUB0000001,,Infinix Smartphones Model 003,,,2022-04-04,,Infinix,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000089,PRD0000035,Gold,256.0,16.0,,,,BRD0000030,SUB0000001,,Infinix Smartphones Model 003,,,2022-04-04,,Infinix,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000090,PRD0000036,Gold,256.0,16.0,,,,BRD0000030,SUB0000001,,Infinix Smartphones Model 004,,,2022-03-17,,Infinix,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000091,PRD0000036,Pink,512.0,6.0,,,,BRD0000030,SUB0000001,,Infinix Smartphones Model 004,,,2022-03-17,,Infinix,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000092,PRD0000037,Pink,512.0,6.0,,,,BRD0000005,SUB0000001,, Apple Smartphones Model 001,,,2025-01-03,2025-12-31,Apple,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000093,PRD0000037,Black,64.0,4.0,,,,BRD0000005,SUB0000001,, Apple Smartphones Model 001,,,2025-01-03,2025-12-31,Apple,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000094,PRD0000037,White,128.0,8.0,,,,BRD0000005,SUB0000001,, Apple Smartphones Model 001,,,2025-01-03,2025-12-31,Apple,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000095,PRD0000038,Blue,1024.0,12.0,,,,BRD0000005,SUB0000001,,Apple Smartphones Model 002,,,2022-01-25,,Apple,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000096,PRD0000039,Blue,1024.0,12.0,,,,BRD0000005,SUB0000001,,Apple Smartphones Model 003,,,2025-12-07,,Apple,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000097,PRD0000039,Green,64.0,,,,,BRD0000005,SUB0000001,,Apple Smartphones Model 003,,,2025-12-07,,Apple,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000098,PRD0000039,Red,128.0,,,,,BRD0000005,SUB0000001,,Apple Smartphones Model 003,,,2025-12-07,,Apple,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000099,PRD0000040,Red,128.0,8.0,,,,BRD0000057,SUB0000001,,Tecno Smartphones Model 001,,,2024-12-03,,Tecno,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000100,PRD0000040,Gold,256.0,16.0,,,,BRD0000057,SUB0000001,,Tecno Smartphones Model 001,,,2024-12-03,,Tecno,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000101,PRD0000041,Black,64.0,4.0,,,,BRD0000057,SUB0000001,,Tecno Smartphones Model 002,,,2024-04-02,,Tecno,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000102,PRD0000041,White,128.0,8.0,,,,BRD0000057,SUB0000001,,Tecno Smartphones Model 002,,,2024-04-02,,Tecno,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000103,PRD0000042,Pink,512.0,6.0,,,,BRD0000057,SUB0000001,,Tecno Smartphones Model 003,,,2023-11-12,2025-09-12,Tecno,CAT0000001,Smartphones,"Mobiles, Tablets & Wearables"
+SKU0000104,PRD0000043,Gray,,,,,,BRD0000043,SUB0000002,,Nokia Feature Phones Model 001,,,2023-04-22,2024-06-22,Nokia,CAT0000001,Feature Phones,"Mobiles, Tablets & Wearables"
+SKU0000105,PRD0000043,Blue,,,,,,BRD0000043,SUB0000002,,Nokia Feature Phones Model 001,,,2023-04-22,2024-06-22,Nokia,CAT0000001,Feature Phones,"Mobiles, Tablets & Wearables"
+SKU0000106,PRD0000043,Green,,,,,,BRD0000043,SUB0000002,,Nokia Feature Phones Model 001,,,2023-04-22,2024-06-22,Nokia,CAT0000001,Feature Phones,"Mobiles, Tablets & Wearables"
+SKU0000107,PRD0000043,Red,,,,,,BRD0000043,SUB0000002,,Nokia Feature Phones Model 001,,,2023-04-22,2024-06-22,Nokia,CAT0000001,Feature Phones,"Mobiles, Tablets & Wearables"
+SKU0000108,PRD0000044,Gold,,,,,,BRD0000043,SUB0000002,,Nokia Feature Phones Model 002,,,2023-04-01,,Nokia,CAT0000001,Feature Phones,"Mobiles, Tablets & Wearables"
+SKU0000109,PRD0000044,Pink,,,,,,BRD0000043,SUB0000002,,Nokia Feature Phones Model 002,,,2023-04-01,,Nokia,CAT0000001,Feature Phones,"Mobiles, Tablets & Wearables"
+SKU0000110,PRD0000045,Pink,,,,,,BRD0000043,SUB0000002,,Nokia Feature Phones Model 003,,,2024-02-10,,Nokia,CAT0000001,Feature Phones,"Mobiles, Tablets & Wearables"
+SKU0000111,PRD0000045,Black,,,,,,BRD0000043,SUB0000002,,Nokia Feature Phones Model 003,,,2024-02-10,,Nokia,CAT0000001,Feature Phones,"Mobiles, Tablets & Wearables"
+SKU0000112,PRD0000045,White,,,,,,BRD0000043,SUB0000002,,Nokia Feature Phones Model 003,,,2024-02-10,,Nokia,CAT0000001,Feature Phones,"Mobiles, Tablets & Wearables"
+SKU0000113,PRD0000046,Pink,,,,,,BRD0000031,SUB0000002,,Itel Feature Phones Model 001,,,2024-12-27,2025-12-31,Itel,CAT0000001,Feature Phones,"Mobiles, Tablets & Wearables"
+SKU0000114,PRD0000047,Green,,,,,,BRD0000031,SUB0000002,,Itel Feature Phones Model 002,,,2024-05-11,,Itel,CAT0000001,Feature Phones,"Mobiles, Tablets & Wearables"
+SKU0000115,PRD0000047,Red,,,,,,BRD0000031,SUB0000002,,Itel Feature Phones Model 002,,,2024-05-11,,Itel,CAT0000001,Feature Phones,"Mobiles, Tablets & Wearables"
+SKU0000116,PRD0000047,Gold,,,,,,BRD0000031,SUB0000002,,Itel Feature Phones Model 002,,,2024-05-11,,Itel,CAT0000001,Feature Phones,"Mobiles, Tablets & Wearables"
+SKU0000117,PRD0000048,Blue,,,,,,BRD0000023,SUB0000002,,HMD Feature Phones Model 001,,,2025-06-22,,HMD,CAT0000001,Feature Phones,"Mobiles, Tablets & Wearables"
+SKU0000118,PRD0000048,Green,,,,,,BRD0000023,SUB0000002,,HMD Feature Phones Model 001,,,2025-06-22,,HMD,CAT0000001,Feature Phones,"Mobiles, Tablets & Wearables"
+SKU0000119,PRD0000048,Red,,,,,,BRD0000023,SUB0000002,,HMD Feature Phones Model 001,,,2025-06-22,,HMD,CAT0000001,Feature Phones,"Mobiles, Tablets & Wearables"
+SKU0000120,PRD0000049,Blue,64.0,4.0,,,,BRD0000048,SUB0000003,,Samsung Tablets Model 001,,,2025-06-26,,Samsung,CAT0000001,Tablets,"Mobiles, Tablets & Wearables"
+SKU0000121,PRD0000049,Green,128.0,8.0,,,,BRD0000048,SUB0000003,,Samsung Tablets Model 001,,,2025-06-26,,Samsung,CAT0000001,Tablets,"Mobiles, Tablets & Wearables"
+SKU0000122,PRD0000049,Red,256.0,4.0,,,,BRD0000048,SUB0000003,,Samsung Tablets Model 001,,,2025-06-26,,Samsung,CAT0000001,Tablets,"Mobiles, Tablets & Wearables"
+SKU0000123,PRD0000050,Gold,512.0,8.0,,,,BRD0000048,SUB0000003,,Samsung Tablets Model 002,,,2022-07-31,2024-06-30,Samsung,CAT0000001,Tablets,"Mobiles, Tablets & Wearables"
+SKU0000124,PRD0000050,Pink,64.0,4.0,,,,BRD0000048,SUB0000003,,Samsung Tablets Model 002,,,2022-07-31,2024-06-30,Samsung,CAT0000001,Tablets,"Mobiles, Tablets & Wearables"
+SKU0000125,PRD0000050,Black,64.0,4.0,,,,BRD0000048,SUB0000003,,Samsung Tablets Model 002,,,2022-07-31,2024-06-30,Samsung,CAT0000001,Tablets,"Mobiles, Tablets & Wearables"
+SKU0000126,PRD0000051,Silver,256.0,4.0,,,,BRD0000048,SUB0000003,,Samsung Tablets Model 003,,,2023-09-08,2024-09-08,Samsung,CAT0000001,Tablets,"Mobiles, Tablets & Wearables"
+SKU0000127,PRD0000051,Gray,512.0,8.0,,,,BRD0000048,SUB0000003,,Samsung Tablets Model 003,,,2023-09-08,2024-09-08,Samsung,CAT0000001,Tablets,"Mobiles, Tablets & Wearables"
+SKU0000128,PRD0000051,Blue,64.0,4.0,,,,BRD0000048,SUB0000003,,Samsung Tablets Model 003,,,2023-09-08,2024-09-08,Samsung,CAT0000001,Tablets,"Mobiles, Tablets & Wearables"
+SKU0000129,PRD0000052,Blue,64.0,4.0,,,,BRD0000048,SUB0000003,,Samsung Tablets Model 004,,,2023-08-07,,Samsung,CAT0000001,Tablets,"Mobiles, Tablets & Wearables"
+SKU0000130,PRD0000052,Green,128.0,8.0,,,,BRD0000048,SUB0000003,,Samsung Tablets Model 004,,,2023-08-07,,Samsung,CAT0000001,Tablets,"Mobiles, Tablets & Wearables"
+SKU0000131,PRD0000052,Red,256.0,4.0,,,,BRD0000048,SUB0000003,,Samsung Tablets Model 004,,,2023-08-07,,Samsung,CAT0000001,Tablets,"Mobiles, Tablets & Wearables"
+SKU0000132,PRD0000052,Gold,512.0,8.0,,,,BRD0000048,SUB0000003,,Samsung Tablets Model 004,,,2023-08-07,,Samsung,CAT0000001,Tablets,"Mobiles, Tablets & Wearables"
+SKU0000133,PRD0000053,White,128.0,8.0,,,,BRD0000005,SUB0000003,,Apple Tablets Model 001,,,2022-01-09,2023-09-09,Apple,CAT0000001,Tablets,"Mobiles, Tablets & Wearables"
+SKU0000134,PRD0000053,Silver,256.0,4.0,,,,BRD0000005,SUB0000003,,Apple Tablets Model 001,,,2022-01-09,2023-09-09,Apple,CAT0000001,Tablets,"Mobiles, Tablets & Wearables"
+SKU0000135,PRD0000054,Blue,64.0,4.0,,,,BRD0000005,SUB0000003,,Apple Tablets Model 002,,,2024-09-05,,Apple,CAT0000001,Tablets,"Mobiles, Tablets & Wearables"
+SKU0000136,PRD0000054,Green,128.0,8.0,,,,BRD0000005,SUB0000003,,Apple Tablets Model 002,,,2024-09-05,,Apple,CAT0000001,Tablets,"Mobiles, Tablets & Wearables"
+SKU0000137,PRD0000054,Red,256.0,4.0,,,,BRD0000005,SUB0000003,,Apple Tablets Model 002,,,2024-09-05,,Apple,CAT0000001,Tablets,"Mobiles, Tablets & Wearables"
+SKU0000138,PRD0000054,Gold,512.0,8.0,,,,BRD0000005,SUB0000003,,Apple Tablets Model 002,,,2024-09-05,,Apple,CAT0000001,Tablets,"Mobiles, Tablets & Wearables"
+SKU0000139,PRD0000055,Black,64.0,4.0,,,,BRD0000005,SUB0000003,,Apple Tablets Model 003,,,2024-12-11,2025-12-31,Apple,CAT0000001,Tablets,"Mobiles, Tablets & Wearables"
+SKU0000140,PRD0000055,White,128.0,8.0,,,,BRD0000005,SUB0000003,,Apple Tablets Model 003,,,2024-12-11,2025-12-31,Apple,CAT0000001,Tablets,"Mobiles, Tablets & Wearables"
+SKU0000141,PRD0000055,Silver,256.0,4.0,,,,BRD0000005,SUB0000003,,Apple Tablets Model 003,,,2024-12-11,2025-12-31,Apple,CAT0000001,Tablets,"Mobiles, Tablets & Wearables"
+SKU0000142,PRD0000056,Pink,64.0,4.0,,,,BRD0000036,SUB0000003,,Lenovo Tablets Model 001,,,2022-08-29,,Lenovo,CAT0000001,Tablets,"Mobiles, Tablets & Wearables"
+SKU0000143,PRD0000056,Black,64.0,4.0,,,,BRD0000036,SUB0000003,,Lenovo Tablets Model 001,,,2022-08-29,,Lenovo,CAT0000001,Tablets,"Mobiles, Tablets & Wearables"
+SKU0000144,PRD0000056,White,128.0,8.0,,,,BRD0000036,SUB0000003,,Lenovo Tablets Model 001,,,2022-08-29,,Lenovo,CAT0000001,Tablets,"Mobiles, Tablets & Wearables"
+SKU0000145,PRD0000056,Silver,256.0,4.0,,,,BRD0000036,SUB0000003,,Lenovo Tablets Model 001,,,2022-08-29,,Lenovo,CAT0000001,Tablets,"Mobiles, Tablets & Wearables"
+SKU0000146,PRD0000057,Pink,64.0,4.0,,,,BRD0000036,SUB0000003,,Lenovo Tablets Model 002,,,2025-06-06,,Lenovo,CAT0000001,Tablets,"Mobiles, Tablets & Wearables"
+SKU0000147,PRD0000057,Black,64.0,4.0,,,,BRD0000036,SUB0000003,,Lenovo Tablets Model 002,,,2025-06-06,,Lenovo,CAT0000001,Tablets,"Mobiles, Tablets & Wearables"
+SKU0000148,PRD0000058,Pink,64.0,4.0,,,,BRD0000064,SUB0000003,,Xiaomi Tablets Model 001,,,2023-09-21,,Xiaomi,CAT0000001,Tablets,"Mobiles, Tablets & Wearables"
+SKU0000149,PRD0000058,Black,64.0,4.0,,,,BRD0000064,SUB0000003,,Xiaomi Tablets Model 001,,,2023-09-21,,Xiaomi,CAT0000001,Tablets,"Mobiles, Tablets & Wearables"
+SKU0000150,PRD0000059,Red,256.0,4.0,,,,BRD0000064,SUB0000003,,Xiaomi Tablets Model 002,,,2025-12-15,,Xiaomi,CAT0000001,Tablets,"Mobiles, Tablets & Wearables"
+SKU0000151,PRD0000059,Gold,512.0,8.0,,,,BRD0000064,SUB0000003,,Xiaomi Tablets Model 002,,,2025-12-15,,Xiaomi,CAT0000001,Tablets,"Mobiles, Tablets & Wearables"
+SKU0000152,PRD0000060,White,128.0,8.0,,,,BRD0000029,SUB0000003,,Huawei Tablets Model 001,,,2023-12-27,,Huawei,CAT0000001,Tablets,"Mobiles, Tablets & Wearables"
+SKU0000153,PRD0000061,Silver,256.0,4.0,,,,BRD0000029,SUB0000003,,Huawei Tablets Model 002,,,2023-08-29,,Huawei,CAT0000001,Tablets,"Mobiles, Tablets & Wearables"
+SKU0000154,PRD0000061,Gray,512.0,8.0,,,,BRD0000029,SUB0000003,,Huawei Tablets Model 002,,,2023-08-29,,Huawei,CAT0000001,Tablets,"Mobiles, Tablets & Wearables"
+SKU0000155,PRD0000061,Blue,64.0,4.0,,,,BRD0000029,SUB0000003,,Huawei Tablets Model 002,,,2023-08-29,,Huawei,CAT0000001,Tablets,"Mobiles, Tablets & Wearables"
+SKU0000156,PRD0000062,Silver,256.0,4.0,,,,BRD0000024,SUB0000003,,HONOR Tablets Model 001,,,2023-12-29,,HONOR,CAT0000001,Tablets,"Mobiles, Tablets & Wearables"
+SKU0000157,PRD0000062,Gray,512.0,8.0,,,,BRD0000024,SUB0000003,,HONOR Tablets Model 001,,,2023-12-29,,HONOR,CAT0000001,Tablets,"Mobiles, Tablets & Wearables"
+SKU0000158,PRD0000062,Blue,64.0,4.0,,,,BRD0000024,SUB0000003,,HONOR Tablets Model 001,,,2023-12-29,,HONOR,CAT0000001,Tablets,"Mobiles, Tablets & Wearables"
+SKU0000159,PRD0000063,Silver,,,,,,BRD0000005,SUB0000004,,Apple Smart Watches Model 001,,,2025-01-21,,Apple,CAT0000001,Smart Watches,"Mobiles, Tablets & Wearables"
+SKU0000160,PRD0000064,Pink,,,,,,BRD0000005,SUB0000004,,Apple Smart Watches Model 002,,,2022-11-16,2023-12-16,Apple,CAT0000001,Smart Watches,"Mobiles, Tablets & Wearables"
+SKU0000161,PRD0000064,Black,,,,,,BRD0000005,SUB0000004,,Apple Smart Watches Model 002,,,2022-11-16,2023-12-16,Apple,CAT0000001,Smart Watches,"Mobiles, Tablets & Wearables"
+SKU0000162,PRD0000065,Red,,,,,,BRD0000005,SUB0000004,,Apple Smart Watches Model 003,,,2024-12-24,,Apple,CAT0000001,Smart Watches,"Mobiles, Tablets & Wearables"
+SKU0000163,PRD0000065,Gold,,,,,,BRD0000005,SUB0000004,,Apple Smart Watches Model 003,,,2024-12-24,,Apple,CAT0000001,Smart Watches,"Mobiles, Tablets & Wearables"
+SKU0000164,PRD0000066,Gray,,,,,,BRD0000005,SUB0000004,,Apple Smart Watches Model 004,,,2024-11-23,,Apple,CAT0000001,Smart Watches,"Mobiles, Tablets & Wearables"
+SKU0000165,PRD0000066,Blue,,,,,,BRD0000005,SUB0000004,,Apple Smart Watches Model 004,,,2024-11-23,,Apple,CAT0000001,Smart Watches,"Mobiles, Tablets & Wearables"
+SKU0000166,PRD0000066,Green,,,,,,BRD0000005,SUB0000004,,Apple Smart Watches Model 004,,,2024-11-23,,Apple,CAT0000001,Smart Watches,"Mobiles, Tablets & Wearables"
+SKU0000167,PRD0000066,Red,,,,,,BRD0000005,SUB0000004,,Apple Smart Watches Model 004,,,2024-11-23,,Apple,CAT0000001,Smart Watches,"Mobiles, Tablets & Wearables"
+SKU0000168,PRD0000067,Red,,,,,,BRD0000048,SUB0000004,,Samsung Smart Watches Model 001,,,2025-01-01,,Samsung,CAT0000001,Smart Watches,"Mobiles, Tablets & Wearables"
+SKU0000169,PRD0000067,Gold,,,,,,BRD0000048,SUB0000004,,Samsung Smart Watches Model 001,,,2025-01-01,,Samsung,CAT0000001,Smart Watches,"Mobiles, Tablets & Wearables"
+SKU0000170,PRD0000068,Gray,,,,,,BRD0000048,SUB0000004,,Samsung Smart Watches Model 002,,,2022-10-02,2023-11-02,Samsung,CAT0000001,Smart Watches,"Mobiles, Tablets & Wearables"
+SKU0000171,PRD0000069,GOLD,,,,,,BRD0000048,SUB0000004,,Samsung Smart Watches Model 003,,,2023-08-17,,Samsung,CAT0000001,Smart Watches,"Mobiles, Tablets & Wearables"
+SKU0000172,PRD0000069,Pink,,,,,,BRD0000048,SUB0000004,,Samsung Smart Watches Model 003,,,2023-08-17,,Samsung,CAT0000001,Smart Watches,"Mobiles, Tablets & Wearables"
+SKU0000173,PRD0000070,Blue,,,,,,BRD0000048,SUB0000004,,Samsung Smart Watches Model 004,,,2022-06-15,,Samsung,CAT0000001,Smart Watches,"Mobiles, Tablets & Wearables"
+SKU0000174,PRD0000071,White,,,,,,BRD0000029,SUB0000004,,Huawei Smart Watches Model 001,,,2022-07-05,,Huawei,CAT0000001,Smart Watches,"Mobiles, Tablets & Wearables"
+SKU0000175,PRD0000071,Silver,,,,,,BRD0000029,SUB0000004,,Huawei Smart Watches Model 001,,,2022-07-05,,Huawei,CAT0000001,Smart Watches,"Mobiles, Tablets & Wearables"
+SKU0000176,PRD0000071,Gray,,,,,,BRD0000029,SUB0000004,,Huawei Smart Watches Model 001,,,2022-07-05,,Huawei,CAT0000001,Smart Watches,"Mobiles, Tablets & Wearables"
+SKU0000177,PRD0000071,Blue,,,,,,BRD0000029,SUB0000004,,Huawei Smart Watches Model 001,,,2022-07-05,,Huawei,CAT0000001,Smart Watches,"Mobiles, Tablets & Wearables"
+SKU0000178,PRD0000072,Blue,,,,,,BRD0000029,SUB0000004,,Huawei Smart Watches Model 002,,,2023-01-25,,Huawei,CAT0000001,Smart Watches,"Mobiles, Tablets & Wearables"
+SKU0000179,PRD0000072,Green,,,,,,BRD0000029,SUB0000004,,Huawei Smart Watches Model 002,,,2023-01-25,,Huawei,CAT0000001,Smart Watches,"Mobiles, Tablets & Wearables"
+SKU0000180,PRD0000073,Silver,,,,,,BRD0000029,SUB0000004,,Huawei Smart Watches Model 003,,,2023-12-08,,Huawei,CAT0000001,Smart Watches,"Mobiles, Tablets & Wearables"
+SKU0000181,PRD0000073,Gray,,,,,,BRD0000029,SUB0000004,,Huawei Smart Watches Model 003,,,2023-12-08,,Huawei,CAT0000001,Smart Watches,"Mobiles, Tablets & Wearables"
+SKU0000182,PRD0000074,Blue,,,,,,BRD0000029,SUB0000004,,Huawei Smart Watches Model 004,,,2022-11-02,,Huawei,CAT0000001,Smart Watches,"Mobiles, Tablets & Wearables"
+SKU0000183,PRD0000074,Green,,,,,,BRD0000029,SUB0000004,,Huawei Smart Watches Model 004,,,2022-11-02,,Huawei,CAT0000001,Smart Watches,"Mobiles, Tablets & Wearables"
+SKU0000184,PRD0000074,Red,,,,,,BRD0000029,SUB0000004,,Huawei Smart Watches Model 004,,,2022-11-02,,Huawei,CAT0000001,Smart Watches,"Mobiles, Tablets & Wearables"
+SKU0000185,PRD0000075,Black,,,,,,BRD0000064,SUB0000004,,Xiaomi Smart Watches Model 001,,,2025-10-03,,Xiaomi,CAT0000001,Smart Watches,"Mobiles, Tablets & Wearables"
+SKU0000186,PRD0000075,White,,,,,,BRD0000064,SUB0000004,,Xiaomi Smart Watches Model 001,,,2025-10-03,,Xiaomi,CAT0000001,Smart Watches,"Mobiles, Tablets & Wearables"
+SKU0000187,PRD0000075,Silver,,,,,,BRD0000064,SUB0000004,,Xiaomi Smart Watches Model 001,,,2025-10-03,,Xiaomi,CAT0000001,Smart Watches,"Mobiles, Tablets & Wearables"
+SKU0000188,PRD0000076,Black,,,,,,BRD0000064,SUB0000004,,Xiaomi Smart Watches Model 002,,,2025-03-11,2025-12-31,Xiaomi,CAT0000001,Smart Watches,"Mobiles, Tablets & Wearables"
+SKU0000189,PRD0000076,White,,,,,,BRD0000064,SUB0000004,,Xiaomi Smart Watches Model 002,,,2025-03-11,2025-12-31,Xiaomi,CAT0000001,Smart Watches,"Mobiles, Tablets & Wearables"
+SKU0000190,PRD0000077,Green,,,,,,BRD0000064,SUB0000004,,Xiaomi Smart Watches Model 003,,,2022-05-12,,Xiaomi,CAT0000001,Smart Watches,"Mobiles, Tablets & Wearables"
+SKU0000191,PRD0000077,Red,,,,,,BRD0000064,SUB0000004,,Xiaomi Smart Watches Model 003,,,2022-05-12,,Xiaomi,CAT0000001,Smart Watches,"Mobiles, Tablets & Wearables"
+SKU0000192,PRD0000077,Gold,,,,,,BRD0000064,SUB0000004,,Xiaomi Smart Watches Model 003,,,2022-05-12,,Xiaomi,CAT0000001,Smart Watches,"Mobiles, Tablets & Wearables"
+SKU0000193,PRD0000077,Pink,,,,,,BRD0000064,SUB0000004,,Xiaomi Smart Watches Model 003,,,2022-05-12,,Xiaomi,CAT0000001,Smart Watches,"Mobiles, Tablets & Wearables"
+SKU0000194,PRD0000078,Silver,,,,,,BRD0000024,SUB0000004,,HONOR Smart Watches Model 001,,,2022-04-03,,HONOR,CAT0000001,Smart Watches,"Mobiles, Tablets & Wearables"
+SKU0000195,PRD0000078,Gray,,,,,,BRD0000024,SUB0000004,,HONOR Smart Watches Model 001,,,2022-04-03,,HONOR,CAT0000001,Smart Watches,"Mobiles, Tablets & Wearables"
+SKU0000196,PRD0000079,Silver,,,,,,BRD0000024,SUB0000004,,HONOR Smart Watches Model 002,,,2022-11-13,2023-05-13,HONOR,CAT0000001,Smart Watches,"Mobiles, Tablets & Wearables"
+SKU0000197,PRD0000079,Gray,,,,,,BRD0000024,SUB0000004,,HONOR Smart Watches Model 002,,,2022-11-13,2023-05-13,HONOR,CAT0000001,Smart Watches,"Mobiles, Tablets & Wearables"
+SKU0000198,PRD0000080,Blue,,,,,,BRD0000024,SUB0000004,,HONOR Smart Watches Model 003,,,2023-04-26,,HONOR,CAT0000001,Smart Watches,"Mobiles, Tablets & Wearables"
+SKU0000199,PRD0000080,Green,,,,,,BRD0000024,SUB0000004,,HONOR Smart Watches Model 003,,,2023-04-26,,HONOR,CAT0000001,Smart Watches,"Mobiles, Tablets & Wearables"
+SKU0000200,PRD0000081,Gray,,,,,,BRD0000064,SUB0000005,,Xiaomi Fitness Bands Model 001,,,2023-06-21,,Xiaomi,CAT0000001,Fitness Bands,"Mobiles, Tablets & Wearables"
+SKU0000201,PRD0000081,Blue,,,,,,BRD0000064,SUB0000005,,Xiaomi Fitness Bands Model 001,,,2023-06-21,,Xiaomi,CAT0000001,Fitness Bands,"Mobiles, Tablets & Wearables"
+SKU0000202,PRD0000082,Gold,,,,,,BRD0000064,SUB0000005,,Xiaomi Fitness Bands Model 002,,,2024-03-03,2025-02-03,Xiaomi,CAT0000001,Fitness Bands,"Mobiles, Tablets & Wearables"
+SKU0000203,PRD0000082,Pink,,,,,,BRD0000064,SUB0000005,,Xiaomi Fitness Bands Model 002,,,2024-03-03,2025-02-03,Xiaomi,CAT0000001,Fitness Bands,"Mobiles, Tablets & Wearables"
+SKU0000204,PRD0000082,Black,,,,,,BRD0000064,SUB0000005,,Xiaomi Fitness Bands Model 002,,,2024-03-03,2025-02-03,Xiaomi,CAT0000001,Fitness Bands,"Mobiles, Tablets & Wearables"
+SKU0000205,PRD0000083,Red,,,,,,BRD0000064,SUB0000005,,Xiaomi Fitness Bands Model 003,,,2022-11-13,2024-03-13,Xiaomi,CAT0000001,Fitness Bands,"Mobiles, Tablets & Wearables"
+SKU0000206,PRD0000083,Gold,,,,,,BRD0000064,SUB0000005,,Xiaomi Fitness Bands Model 003,,,2022-11-13,2024-03-13,Xiaomi,CAT0000001,Fitness Bands,"Mobiles, Tablets & Wearables"
+SKU0000207,PRD0000084,Blue,,,,,,BRD0000064,SUB0000005,,Xiaomi Fitness Bands Model 004,,,2022-01-17,2023-02-17,Xiaomi,CAT0000001,Fitness Bands,"Mobiles, Tablets & Wearables"
+SKU0000208,PRD0000084,Green,,,,,,BRD0000064,SUB0000005,,Xiaomi Fitness Bands Model 004,,,2022-01-17,2023-02-17,Xiaomi,CAT0000001,Fitness Bands,"Mobiles, Tablets & Wearables"
+SKU0000209,PRD0000084,Red,,,,,,BRD0000064,SUB0000005,,Xiaomi Fitness Bands Model 004,,,2022-01-17,2023-02-17,Xiaomi,CAT0000001,Fitness Bands,"Mobiles, Tablets & Wearables"
+SKU0000210,PRD0000084,Gold,,,,,,BRD0000064,SUB0000005,,Xiaomi Fitness Bands Model 004,,,2022-01-17,2023-02-17,Xiaomi,CAT0000001,Fitness Bands,"Mobiles, Tablets & Wearables"
+SKU0000211,PRD0000085,Red,,,,,,BRD0000029,SUB0000005,,Huawei Fitness Bands Model 001,,,2024-12-04,2025-11-04,Huawei,CAT0000001,Fitness Bands,"Mobiles, Tablets & Wearables"
+SKU0000212,PRD0000085,Gold,,,,,,BRD0000029,SUB0000005,,Huawei Fitness Bands Model 001,,,2024-12-04,2025-11-04,Huawei,CAT0000001,Fitness Bands,"Mobiles, Tablets & Wearables"
+SKU0000213,PRD0000086,Gold,,,,,,BRD0000029,SUB0000005,,Huawei Fitness Bands Model 002,,,2024-01-28,2024-07-28,Huawei,CAT0000001,Fitness Bands,"Mobiles, Tablets & Wearables"
+SKU0000214,PRD0000086,Pink,,,,,,BRD0000029,SUB0000005,,Huawei Fitness Bands Model 002,,,2024-01-28,2024-07-28,Huawei,CAT0000001,Fitness Bands,"Mobiles, Tablets & Wearables"
+SKU0000215,PRD0000087,Black,,,,,,BRD0000029,SUB0000005,,Huawei Fitness Bands Model 003,,,2023-07-01,2024-08-01,Huawei,CAT0000001,Fitness Bands,"Mobiles, Tablets & Wearables"
+SKU0000216,PRD0000087,White,,,,,,BRD0000029,SUB0000005,,Huawei Fitness Bands Model 003,,,2023-07-01,2024-08-01,Huawei,CAT0000001,Fitness Bands,"Mobiles, Tablets & Wearables"
+SKU0000217,PRD0000087,Silver,,,,,,BRD0000029,SUB0000005,,Huawei Fitness Bands Model 003,,,2023-07-01,2024-08-01,Huawei,CAT0000001,Fitness Bands,"Mobiles, Tablets & Wearables"
+SKU0000218,PRD0000088,Blue,,,,,,BRD0000024,SUB0000005,,HONOR Fitness Bands Model 001,,,2024-01-11,,HONOR,CAT0000001,Fitness Bands,"Mobiles, Tablets & Wearables"
+SKU0000219,PRD0000088,Green,,,,,,BRD0000024,SUB0000005,,HONOR Fitness Bands Model 001,,,2024-01-11,,HONOR,CAT0000001,Fitness Bands,"Mobiles, Tablets & Wearables"
+SKU0000220,PRD0000089,Green,,,,,,BRD0000024,SUB0000005,,HONOR Fitness Bands Model 002,,,2022-07-28,,HONOR,CAT0000001,Fitness Bands,"Mobiles, Tablets & Wearables"
+SKU0000221,PRD0000089,Red,,,,,,BRD0000024,SUB0000005,,HONOR Fitness Bands Model 002,,,2022-07-28,,HONOR,CAT0000001,Fitness Bands,"Mobiles, Tablets & Wearables"
+SKU0000222,PRD0000089,Gold,,,,,,BRD0000024,SUB0000005,,HONOR Fitness Bands Model 002,,,2022-07-28,,HONOR,CAT0000001,Fitness Bands,"Mobiles, Tablets & Wearables"
+SKU0000223,PRD0000090,Pink,,,,,,BRD0000024,SUB0000005,,HONOR Fitness Bands Model 003,,,2022-07-09,,HONOR,CAT0000001,Fitness Bands,"Mobiles, Tablets & Wearables"
+SKU0000224,PRD0000090,Black,,,,,,BRD0000024,SUB0000005,,HONOR Fitness Bands Model 003,,,2022-07-09,,HONOR,CAT0000001,Fitness Bands,"Mobiles, Tablets & Wearables"
+SKU0000225,PRD0000090,White,,,,,,BRD0000024,SUB0000005,,HONOR Fitness Bands Model 003,,,2022-07-09,,HONOR,CAT0000001,Fitness Bands,"Mobiles, Tablets & Wearables"
+SKU0000226,PRD0000091,Gray,2048.0,32.0,,,16.0,BRD0000036,SUB0000006,,Lenovo Laptops Model 001,,,2023-09-30,,Lenovo,CAT0000002,Laptops,Computers & Computing
+SKU0000227,PRD0000091,Blue,256.0,8.0,,,17.3,BRD0000036,SUB0000006,,Lenovo Laptops Model 001,,,2023-09-30,,Lenovo,CAT0000002,Laptops,Computers & Computing
+SKU0000228,PRD0000092,Blue,256.0,8.0,,,17.3,BRD0000036,SUB0000006,,Lenovo Laptops Model 002,,,2024-12-10,,Lenovo,CAT0000002,Laptops,Computers & Computing
+SKU0000229,PRD0000092,Green,512.0,32.0,,,13.3,BRD0000036,SUB0000006,,Lenovo Laptops Model 002,,,2024-12-10,,Lenovo,CAT0000002,Laptops,Computers & Computing
+SKU0000230,PRD0000093,Silver,1024.0,8.0,,,15.6,BRD0000036,SUB0000006,,Lenovo Laptops Model 003,,,2025-04-15,,Lenovo,CAT0000002,Laptops,Computers & Computing
+SKU0000231,PRD0000093,Gray,2048.0,32.0,,,16.0,BRD0000036,SUB0000006,,Lenovo Laptops Model 003,,,2025-04-15,,Lenovo,CAT0000002,Laptops,Computers & Computing
+SKU0000232,PRD0000093,BLUE,256.0,8.0,,,17.3,BRD0000036,SUB0000006,,Lenovo Laptops Model 003,,,2025-04-15,,Lenovo,CAT0000002,Laptops,Computers & Computing
+SKU0000233,PRD0000094,Green,512.0,32.0,,,13.3,BRD0000036,SUB0000006,,Lenovo Laptops Model 004,,,2023-10-20,2024-04-20,Lenovo,CAT0000002,Laptops,Computers & Computing
+SKU0000234,PRD0000094,Red,1024.0,8.0,,,14.0,BRD0000036,SUB0000006,,Lenovo Laptops Model 004,,,2023-10-20,2024-04-20,Lenovo,CAT0000002,Laptops,Computers & Computing
+SKU0000235,PRD0000095,Gold,2048.0,32.0,,,15.6,BRD0000036,SUB0000006,,Lenovo Laptops Model 005,,,2024-07-02,,Lenovo,CAT0000002,Laptops,Computers & Computing
+SKU0000236,PRD0000095,Pink,256.0,8.0,,,16.0,BRD0000036,SUB0000006,,Lenovo Laptops Model 005,,,2024-07-02,,Lenovo,CAT0000002,Laptops,Computers & Computing
+SKU0000237,PRD0000096,Gray,2048.0,32.0,,,16.0,BRD0000036,SUB0000006,,Lenovo Laptops Model 006,,,2022-09-25,2024-02-25,Lenovo,CAT0000002,Laptops,Computers & Computing
+SKU0000238,PRD0000096,Blue,256.0,8.0,,,17.3,BRD0000036,SUB0000006,,Lenovo Laptops Model 006,,,2022-09-25,2024-02-25,Lenovo,CAT0000002,Laptops,Computers & Computing
+SKU0000239,PRD0000097,Blue,256.0,8.0,,,17.3,BRD0000025,SUB0000006,,HP Laptops Model 001,,,2023-12-24,2025-09-24,HP,CAT0000002,Laptops,Computers & Computing
+SKU0000240,PRD0000097,Green,512.0,32.0,,,13.3,BRD0000025,SUB0000006,,HP Laptops Model 001,,,2023-12-24,2025-09-24,HP,CAT0000002,Laptops,Computers & Computing
+SKU0000241,PRD0000097,Red,1024.0,8.0,,,14.0,BRD0000025,SUB0000006,,HP Laptops Model 001,,,2023-12-24,2025-09-24,HP,CAT0000002,Laptops,Computers & Computing
+SKU0000242,PRD0000098,Green,512.0,32.0,,,13.3,BRD0000025,SUB0000006,,HP Laptops Model 002,,,2024-12-16,,HP,CAT0000002,Laptops,Computers & Computing
+SKU0000243,PRD0000098,Red,1024.0,8.0,,,14.0,BRD0000025,SUB0000006,,HP Laptops Model 002,,,2024-12-16,,HP,CAT0000002,Laptops,Computers & Computing
+SKU0000244,PRD0000098,Gold,2048.0,32.0,,,15.6,BRD0000025,SUB0000006,,HP Laptops Model 002,,,2024-12-16,,HP,CAT0000002,Laptops,Computers & Computing
+SKU0000245,PRD0000099,Gold,2048.0,32.0,,,15.6,BRD0000025,SUB0000006,,HP Laptops Model 003,,,2022-03-25,,HP,CAT0000002,Laptops,Computers & Computing
+SKU0000246,PRD0000099,Pink,256.0,8.0,,,16.0,BRD0000025,SUB0000006,,HP Laptops Model 003,,,2022-03-25,,HP,CAT0000002,Laptops,Computers & Computing
+SKU0000247,PRD0000099,Black,256.0,8.0,,,13.3,BRD0000025,SUB0000006,,HP Laptops Model 003,,,2022-03-25,,HP,CAT0000002,Laptops,Computers & Computing
+SKU0000248,PRD0000100,Silver,1024.0,8.0,,,15.6,BRD0000025,SUB0000006,,HP Laptops Model 004,,,2025-08-27,,HP,CAT0000002,Laptops,Computers & Computing
+SKU0000249,PRD0000100,Gray,2048.0,32.0,,,16.0,BRD0000025,SUB0000006,,HP Laptops Model 004,,,2025-08-27,,HP,CAT0000002,Laptops,Computers & Computing
+SKU0000250,PRD0000100,Blue,256.0,8.0,,,17.3,BRD0000025,SUB0000006,,HP Laptops Model 004,,,2025-08-27,,HP,CAT0000002,Laptops,Computers & Computing
+SKU0000251,PRD0000101,Pink,256.0,8.0,,,16.0,BRD0000025,SUB0000006,,HP Laptops Model 005,,,2022-02-17,,HP,CAT0000002,Laptops,Computers & Computing
+SKU0000252,PRD0000101,Black,256.0,8.0,,,13.3,BRD0000025,SUB0000006,,HP Laptops Model 005,,,2022-02-17,,HP,CAT0000002,Laptops,Computers & Computing
+SKU0000253,PRD0000101,White,512.0,32.0,,,14.0,BRD0000025,SUB0000006,,HP Laptops Model 005,,,2022-02-17,,HP,CAT0000002,Laptops,Computers & Computing
+SKU0000254,PRD0000102,Pink,256.0,8.0,,,16.0,BRD0000018,SUB0000006,,Dell Laptops Model 001,,,2024-05-10,,Dell,CAT0000002,Laptops,Computers & Computing
+SKU0000255,PRD0000102,Black,256.0,8.0,,,13.3,BRD0000018,SUB0000006,,Dell Laptops Model 001,,,2024-05-10,,Dell,CAT0000002,Laptops,Computers & Computing
+SKU0000256,PRD0000102,White,512.0,32.0,,,14.0,BRD0000018,SUB0000006,,Dell Laptops Model 001,,,2024-05-10,,Dell,CAT0000002,Laptops,Computers & Computing
+SKU0000257,PRD0000103,Pink,256.0,8.0,,,16.0,BRD0000018,SUB0000006,,Dell Laptops Model 002,,,2024-10-04,,Dell,CAT0000002,Laptops,Computers & Computing
+SKU0000258,PRD0000103,Black,256.0,8.0,,,13.3,BRD0000018,SUB0000006,,Dell Laptops Model 002,,,2024-10-04,,Dell,CAT0000002,Laptops,Computers & Computing
+SKU0000259,PRD0000104,Silver,1024.0,8.0,,,15.6,BRD0000018,SUB0000006,,Dell Laptops Model 003,,,2022-01-13,,Dell,CAT0000002,Laptops,Computers & Computing
+SKU0000260,PRD0000104,Gray,2048.0,32.0,,,16.0,BRD0000018,SUB0000006,,Dell Laptops Model 003,,,2022-01-13,,Dell,CAT0000002,Laptops,Computers & Computing
+SKU0000261,PRD0000105,Gold,2048.0,32.0,,,15.6,BRD0000018,SUB0000006,,Dell Laptops Model 004,,,2024-08-25,,Dell,CAT0000002,Laptops,Computers & Computing
+SKU0000262,PRD0000105,Pink,256.0,8.0,,,16.0,BRD0000018,SUB0000006,,Dell Laptops Model 004,,,2024-08-25,,Dell,CAT0000002,Laptops,Computers & Computing
+SKU0000263,PRD0000106,Black,256.0,8.0,,,13.3,BRD0000001,SUB0000006,,ASUS Laptops Model 001,,,2025-06-06,,ASUS,CAT0000002,Laptops,Computers & Computing
+SKU0000264,PRD0000106,White,512.0,32.0,,,14.0,BRD0000001,SUB0000006,,ASUS Laptops Model 001,,,2025-06-06,,ASUS,CAT0000002,Laptops,Computers & Computing
+SKU0000265,PRD0000107,Pink,256.0,8.0,,,16.0,BRD0000001,SUB0000006,,ASUS Laptops Model 002,,,2023-07-26,,ASUS,CAT0000002,Laptops,Computers & Computing
+SKU0000266,PRD0000107,Black,256.0,8.0,,,13.3,BRD0000001,SUB0000006,,ASUS Laptops Model 002,,,2023-07-26,,ASUS,CAT0000002,Laptops,Computers & Computing
+SKU0000267,PRD0000108,Pink,256.0,8.0,,,16.0,BRD0000001,SUB0000006,,ASUS Laptops Model 003,,,2025-10-25,,ASUS,CAT0000002,Laptops,Computers & Computing
+SKU0000268,PRD0000108,Black,256.0,8.0,,,13.3,BRD0000001,SUB0000006,,ASUS Laptops Model 003,,,2025-10-25,,ASUS,CAT0000002,Laptops,Computers & Computing
+SKU0000269,PRD0000109,White,512.0,32.0,,,14.0,BRD0000001,SUB0000006,,ASUS Laptops Model 004,,,2024-09-07,2025-12-31,ASUS,CAT0000002,Laptops,Computers & Computing
+SKU0000270,PRD0000109,Silver,1024.0,8.0,,,15.6,BRD0000001,SUB0000006,,ASUS Laptops Model 004,,,2024-09-07,2025-12-31,ASUS,CAT0000002,Laptops,Computers & Computing
+SKU0000271,PRD0000109,Gray,2048.0,32.0,,,16.0,BRD0000001,SUB0000006,,ASUS Laptops Model 004,,,2024-09-07,2025-12-31,ASUS,CAT0000002,Laptops,Computers & Computing
+SKU0000272,PRD0000110,Gray,2048.0,32.0,,,16.0,BRD0000002,SUB0000006,,Acer Laptops Model 001,,,2022-01-25,,Acer,CAT0000002,Laptops,Computers & Computing
+SKU0000273,PRD0000110,Blue,256.0,8.0,,,17.3,BRD0000002,SUB0000006,,Acer Laptops Model 001,,,2022-01-25,,Acer,CAT0000002,Laptops,Computers & Computing
+SKU0000274,PRD0000111,Green,512.0,32.0,,,13.3,BRD0000002,SUB0000006,,,,,2024-03-25,,Acer,CAT0000002,Laptops,Computers & Computing
+SKU0000275,PRD0000111,Red,1024.0,8.0,,,14.0,BRD0000002,SUB0000006,,,,,2024-03-25,,Acer,CAT0000002,Laptops,Computers & Computing
+SKU0000276,PRD0000111,Gold,2048.0,32.0,,,15.6,BRD0000002,SUB0000006,,,,,2024-03-25,,Acer,CAT0000002,Laptops,Computers & Computing
+SKU0000277,PRD0000112,Pink,256.0,8.0,,,16.0,BRD0000002,SUB0000006,,Acer Laptops Model 003,,,2022-06-18,,Acer,CAT0000002,Laptops,Computers & Computing
+SKU0000278,PRD0000112,Black,256.0,8.0,,,13.3,BRD0000002,SUB0000006,,Acer Laptops Model 003,,,2022-06-18,,Acer,CAT0000002,Laptops,Computers & Computing
+SKU0000279,PRD0000113,Blue,256.0,8.0,,,17.3,BRD0000005,SUB0000006,,Apple Laptops Model 001,,,2025-12-07,,Apple,CAT0000002,Laptops,Computers & Computing
+SKU0000280,PRD0000113,Green,512.0,32.0,,,13.3,BRD0000005,SUB0000006,,Apple Laptops Model 001,,,2025-12-07,,Apple,CAT0000002,Laptops,Computers & Computing
+SKU0000281,PRD0000114,Pink,256.0,8.0,,,16.0,BRD0000005,SUB0000006,,Apple Laptops Model 002,,,2023-11-07,,Apple,CAT0000002,Laptops,Computers & Computing
+SKU0000282,PRD0000114,Black,256.0,8.0,,,13.3,BRD0000005,SUB0000006,,Apple Laptops Model 002,,,2023-11-07,,Apple,CAT0000002,Laptops,Computers & Computing
+SKU0000283,PRD0000115,Black,256.0,8.0,,,13.3,BRD0000005,SUB0000006,,APPLE LAPTOPS MODEL 003,,,2024-06-25,,Apple,CAT0000002,Laptops,Computers & Computing
+SKU0000284,PRD0000115,White,512.0,32.0,,,14.0,BRD0000005,SUB0000006,,APPLE LAPTOPS MODEL 003,,,2024-06-25,,Apple,CAT0000002,Laptops,Computers & Computing
+SKU0000285,PRD0000115,Silver,1024.0,8.0,,,15.6,BRD0000005,SUB0000006,,APPLE LAPTOPS MODEL 003,,,2024-06-25,,Apple,CAT0000002,Laptops,Computers & Computing
+SKU0000286,PRD0000116,Pink,256.0,8.0,,,16.0,BRD0000038,SUB0000006,,MSI Laptops Model 001,,,2025-01-09,,MSI,CAT0000002,Laptops,Computers & Computing
+SKU0000287,PRD0000116,Black,256.0,8.0,,,13.3,BRD0000038,SUB0000006,,MSI Laptops Model 001,,,2025-01-09,,MSI,CAT0000002,Laptops,Computers & Computing
+SKU0000288,PRD0000117,Green,512.0,32.0,,,13.3,BRD0000038,SUB0000006,,MSI Laptops Model 002,,,2022-02-10,,MSI,CAT0000002,Laptops,Computers & Computing
+SKU0000289,PRD0000117,Red,1024.0,8.0,,,14.0,BRD0000038,SUB0000006,,MSI Laptops Model 002,,,2022-02-10,,MSI,CAT0000002,Laptops,Computers & Computing
+SKU0000290,PRD0000118,Green,512.0,32.0,,,13.3,BRD0000038,SUB0000006,,MSI Laptops Model 003,,,2022-04-08,,MSI,CAT0000002,Laptops,Computers & Computing
+SKU0000291,PRD0000118,Red,1024.0,8.0,,,14.0,BRD0000038,SUB0000006,,MSI Laptops Model 003,,,2022-04-08,,MSI,CAT0000002,Laptops,Computers & Computing
+SKU0000292,PRD0000119,,512.0,32.0,,,,BRD0000025,SUB0000007,,HP Desktop PCs Model 001,,,2025-11-13,,HP,CAT0000002,Desktop PCs,Computers & Computing
+SKU0000293,PRD0000120,,1024.0,8.0,,,,BRD0000025,SUB0000007,,HP Desktop PCs Model 002,,,2024-02-19,2025-03-19,HP,CAT0000002,Desktop PCs,Computers & Computing
+SKU0000294,PRD0000121,,512.0,32.0,,,,BRD0000025,SUB0000007,,HP Desktop PCs Model 003,,,2023-01-10,2024-12-10,HP,CAT0000002,Desktop PCs,Computers & Computing
+SKU0000295,PRD0000122,,1024.0,8.0,,,,BRD0000018,SUB0000007,,Dell Desktop PCs Model 001,,,2023-12-13,2024-07-13,Dell,CAT0000002,Desktop PCs,Computers & Computing
+SKU0000296,PRD0000123,,,32.0,,,,BRD0000018,SUB0000007,,Dell Desktop PCs Model 002,,,2023-01-25,,Dell,CAT0000002,Desktop PCs,Computers & Computing
+SKU0000297,PRD0000124,,256.0,8.0,,,,BRD0000036,SUB0000007,,Lenovo Desktop PCs Model 001,,,2022-01-24,,Lenovo,CAT0000002,Desktop PCs,Computers & Computing
+SKU0000298,PRD0000125,,512.0,32.0,,,,BRD0000036,SUB0000007,,Lenovo Desktop PCs Model 002,,,2025-06-24,2025-12-31,Lenovo,CAT0000002,Desktop PCs,Computers & Computing
+SKU0000299,PRD0000126,,256.0,8.0,,,21.5,BRD0000025,SUB0000008,,HP All-in-One PCs Model 001,,,2024-10-28,2025-12-31,HP,CAT0000002,All-in-One PCs,Computers & Computing
+SKU0000300,PRD0000127,,1024.0,16.0,,,27.0,BRD0000025,SUB0000008,,HP All-in-One PCs Model 002,,,2023-06-14,,HP,CAT0000002,All-in-One PCs,Computers & Computing
+SKU0000301,PRD0000128,,256.0,8.0,,,21.5,BRD0000036,SUB0000008,,Lenovo All-in-One PCs Model 001,,,2023-10-01,,Lenovo,CAT0000002,All-in-One PCs,Computers & Computing
+SKU0000302,PRD0000129,,512.0,32.0,,,23.8,BRD0000018,SUB0000008,,Dell All-in-One PCs Model 001,,,2023-06-03,,Dell,CAT0000002,All-in-One PCs,Computers & Computing
+SKU0000303,PRD0000130,,512.0,32.0,,,23.8,BRD0000005,SUB0000008,,Apple All-in-One PCs Model 001,,,2023-05-29,,Apple,CAT0000002,All-in-One PCs,Computers & Computing
+SKU0000304,PRD0000131,,,,,,24.0,BRD0000048,SUB0000009,,Samsung Monitors Model 001,,,2025-04-26,,Samsung,CAT0000002,Monitors,Computers & Computing
+SKU0000305,PRD0000132,,,,,,27.0,BRD0000048,SUB0000009,,Samsung Monitors Model 002,,,2023-11-12,,Samsung,CAT0000002,Monitors,Computers & Computing
+SKU0000306,PRD0000133,,,,,,27.0,BRD0000048,SUB0000009,,Samsung Monitors Model 003,,,2025-04-10,2025-12-31,Samsung,CAT0000002,Monitors,Computers & Computing
+SKU0000307,PRD0000134,,,,,,,BRD0000035,SUB0000009,,LG Monitors Model 001,,,2022-02-12,,LG,CAT0000002,Monitors,Computers & Computing
+SKU0000308,PRD0000135,,,,,,24.0,BRD0000035,SUB0000009,,LG Monitors Model 002,,,2022-08-09,,LG,CAT0000002,Monitors,Computers & Computing
+SKU0000309,PRD0000136,,,,,,32.0,BRD0000018,SUB0000009,,Dell Monitors Model 001,,,2025-12-22,,Dell,CAT0000002,Monitors,Computers & Computing
+SKU0000310,PRD0000137,,,,,,27.0,BRD0000018,SUB0000009,,Dell Monitors Model 002,,,2025-08-31,,Dell,CAT0000002,Monitors,Computers & Computing
+SKU0000311,PRD0000138,,,,,,,BRD0000001,SUB0000009,,ASUS Monitors Model 001,,,2022-06-04,2023-10-04,ASUS,CAT0000002,Monitors,Computers & Computing
+SKU0000312,PRD0000139,,,,,,32.0,BRD0000001,SUB0000009,,ASUS Monitors Model 002,,,2024-01-16,,ASUS,CAT0000002,Monitors,Computers & Computing
+SKU0000313,PRD0000139,,,,,,34.0,BRD0000001,SUB0000009,,ASUS Monitors Model 002,,,2024-01-16,,ASUS,CAT0000002,Monitors,Computers & Computing
+SKU0000314,PRD0000140,,,,,,22.0,BRD0000002,SUB0000009,,Acer Monitors Model 001,,,2024-01-09,,Acer,CAT0000002,Monitors,Computers & Computing
+SKU0000315,PRD0000141,,,,,,32.0,BRD0000002,SUB0000009,,Acer Monitors Model 002,,,2024-07-02,2025-06-02,Acer,CAT0000002,Monitors,Computers & Computing
+SKU0000316,PRD0000142,,,,,,32.0,BRD0000036,SUB0000009,,Lenovo Monitors Model 001,,,2025-03-04,2025-12-31,Lenovo,CAT0000002,Monitors,Computers & Computing
+SKU0000317,PRD0000143,,,,,,32.0,BRD0000038,SUB0000009,,MSI Monitors Model 001,,,2022-11-24,,MSI,CAT0000002,Monitors,Computers & Computing
+SKU0000318,PRD0000143,,,,,,34.0,BRD0000038,SUB0000009,,MSI Monitors Model 001,,,2022-11-24,,MSI,CAT0000002,Monitors,Computers & Computing
+SKU0000319,PRD0000144,,,,,,,BRD0000025,SUB0000010,,HP Printers Model 001,,,2025-07-26,,HP,CAT0000002,Printers,Computers & Computing
+SKU0000320,PRD0000145,,,,,,,BRD0000025,SUB0000010,,HP Printers Model 002,,,2022-11-13,,HP,CAT0000002,Printers,Computers & Computing
+SKU0000321,PRD0000146,,,,,,,BRD0000025,SUB0000010,,HP Printers Model 003,,,2023-06-12,,HP,CAT0000002,Printers,Computers & Computing
+SKU0000322,PRD0000147,,,,,,,BRD0000014,SUB0000010,,Canon Printers Model 001,,,2023-04-26,,Canon,CAT0000002,Printers,Computers & Computing
+SKU0000323,PRD0000148,,,,,,,BRD0000014,SUB0000010,,Canon Printers Model 002,,,2022-03-22,,Canon,CAT0000002,Printers,Computers & Computing
+SKU0000324,PRD0000149,,,,,,,BRD0000020,SUB0000010,,Epson Printers Model 001,,,2025-07-26,,Epson,CAT0000002,Printers,Computers & Computing
+SKU0000325,PRD0000150,,,,,,,BRD0000020,SUB0000010,,Epson Printers Model 002,,,2023-10-10,2024-09-10,Epson,CAT0000002,Printers,Computers & Computing
+SKU0000326,PRD0000151,,,,,,,BRD0000013,SUB0000010,,Brother Printers Model 001,,,2024-06-16,2025-12-16,Brother,CAT0000002,Printers,Computers & Computing
+SKU0000327,PRD0000152,,,,,,,BRD0000013,SUB0000010,,Brother Printers Model 002,,,2022-08-02,,Brother,CAT0000002,Printers,Computers & Computing
+SKU0000328,PRD0000153,,,,,,,BRD0000014,SUB0000011,,Canon Scanners Model 001,,,2025-06-23,,Canon,CAT0000002,Scanners,Computers & Computing
+SKU0000329,PRD0000154,,,,,,,BRD0000020,SUB0000011,,Epson Scanners Model 001,,,2024-05-05,,Epson,CAT0000002,Scanners,Computers & Computing
+SKU0000330,PRD0000155,,,,,,,BRD0000013,SUB0000011,,Brother Scanners Model 001,,,2022-02-04,,Brother,CAT0000002,Scanners,Computers & Computing
+SKU0000331,PRD0000156,,256.0,,,,,BRD0000063,SUB0000012,,Western Digital External Storage Model 001,,,2022-10-02,,Western Digital,CAT0000002,External Storage,Computers & Computing
+SKU0000332,PRD0000156,,512.0,,,,,BRD0000063,SUB0000012,,Western Digital External Storage Model 001,,,2022-10-02,,Western Digital,CAT0000002,External Storage,Computers & Computing
+SKU0000333,PRD0000157,,256.0,,,,,BRD0000063,SUB0000012,,Western Digital External Storage Model 002,,,2022-01-10,,Western Digital,CAT0000002,External Storage,Computers & Computing
+SKU0000334,PRD0000157,,512.0,,,,,BRD0000063,SUB0000012,,Western Digital External Storage Model 002,,,2022-01-10,,Western Digital,CAT0000002,External Storage,Computers & Computing
+SKU0000335,PRD0000158,,256.0,,,,,BRD0000063,SUB0000012,,Western Digital External Storage Model 003,,,2025-08-10,,Western Digital,CAT0000002,External Storage,Computers & Computing
+SKU0000336,PRD0000158,,512.0,,,,,BRD0000063,SUB0000012,,Western Digital External Storage Model 003,,,2025-08-10,,Western Digital,CAT0000002,External Storage,Computers & Computing
+SKU0000337,PRD0000159,,5120.0,,,,,BRD0000050,SUB0000012,,Seagate External Storage Model 001,,,2024-08-06,2025-08-06,Seagate,CAT0000002,External Storage,Computers & Computing
+SKU0000338,PRD0000159,,256.0,,,,,BRD0000050,SUB0000012,,Seagate External Storage Model 001,,,2024-08-06,2025-08-06,Seagate,CAT0000002,External Storage,Computers & Computing
+SKU0000339,PRD0000160,,1024.0,,,,,BRD0000050,SUB0000012,,Seagate External Storage Model 002,,,2022-12-23,,Seagate,CAT0000002,External Storage,Computers & Computing
+SKU0000340,PRD0000160,,2048.0,,,,,BRD0000050,SUB0000012,,Seagate External Storage Model 002,,,2022-12-23,,Seagate,CAT0000002,External Storage,Computers & Computing
+SKU0000341,PRD0000161,,,,,,,BRD0000050,SUB0000012,,Seagate External Storage Model 003,,,2023-11-11,,Seagate,CAT0000002,External Storage,Computers & Computing
+SKU0000342,PRD0000161,,4096.0,,,,,BRD0000050,SUB0000012,,Seagate External Storage Model 003,,,2023-11-11,,Seagate,CAT0000002,External Storage,Computers & Computing
+SKU0000343,PRD0000162,,4096.0,,,,,BRD0000049,SUB0000012,,SanDisk External Storage Model 001,,,2025-04-01,,SanDisk,CAT0000002,External Storage,Computers & Computing
+SKU0000344,PRD0000162,,5120.0,,,,,BRD0000049,SUB0000012,,SanDisk External Storage Model 001,,,2025-04-01,,SanDisk,CAT0000002,External Storage,Computers & Computing
+SKU0000345,PRD0000163,,1024.0,,,,,BRD0000049,SUB0000012,,SanDisk External Storage Model 002,,,2022-12-26,,SanDisk,CAT0000002,External Storage,Computers & Computing
+SKU0000346,PRD0000163,,2048.0,,,,,BRD0000049,SUB0000012,,SanDisk External Storage Model 002,,,2022-12-26,,SanDisk,CAT0000002,External Storage,Computers & Computing
+SKU0000347,PRD0000164,,512.0,,,,,BRD0000034,SUB0000012,,Kingston External Storage Model 001,,,2024-04-25,2025-03-25,Kingston,CAT0000002,External Storage,Computers & Computing
+SKU0000348,PRD0000164,,1024.0,,,,,BRD0000034,SUB0000012,,Kingston External Storage Model 001,,,2024-04-25,2025-03-25,Kingston,CAT0000002,External Storage,Computers & Computing
+SKU0000349,PRD0000165,,5120.0,,,,,BRD0000034,SUB0000012,,Kingston External Storage Model 002,,,2022-12-04,,Kingston,CAT0000002,External Storage,Computers & Computing
+SKU0000350,PRD0000165,,256.0,,,,,BRD0000034,SUB0000012,,Kingston External Storage Model 002,,,2022-12-04,,Kingston,CAT0000002,External Storage,Computers & Computing
+SKU0000351,PRD0000166,Red,,,,,,BRD0000004,SUB0000013,,Anker Headphones & Earbuds Model 001,,,2024-05-21,,Anker,CAT0000003,Headphones & Earbuds,Accessories & Peripherals
+SKU0000352,PRD0000167,Gray,,,,,,BRD0000004,SUB0000013,,Anker Headphones & Earbuds Model 002,,,2023-06-30,,Anker,CAT0000003,Headphones & Earbuds,Accessories & Peripherals
+SKU0000353,PRD0000168,Red,,,,,,BRD0000004,SUB0000013,,Anker Headphones & Earbuds Model 003,,,2025-04-26,2025-12-26,Anker,CAT0000003,Headphones & Earbuds,Accessories & Peripherals
+SKU0000354,PRD0000169,Silver,,,,,,BRD0000004,SUB0000013,,Anker Headphones & Earbuds Model 004,,,2025-01-17,,Anker,CAT0000003,Headphones & Earbuds,Accessories & Peripherals
+SKU0000355,PRD0000170,Blue,,,,,,BRD0000032,SUB0000013,,JBL Headphones & Earbuds Model 001,,,2022-04-12,,JBL,CAT0000003,Headphones & Earbuds,Accessories & Peripherals
+SKU0000356,PRD0000171,Black,,,,,,BRD0000032,SUB0000013,,JBL Headphones & Earbuds Model 002,,,2024-08-01,2025-12-31,JBL,CAT0000003,Headphones & Earbuds,Accessories & Peripherals
+SKU0000357,PRD0000172,Black,,,,,,BRD0000032,SUB0000013,,JBL Headphones & Earbuds Model 003,,,2025-11-28,,JBL,CAT0000003,Headphones & Earbuds,Accessories & Peripherals
+SKU0000358,PRD0000173,Gold,,,,,,BRD0000032,SUB0000013,,JBL Headphones & Earbuds Model 004,,,2022-07-02,,JBL,CAT0000003,Headphones & Earbuds,Accessories & Peripherals
+SKU0000359,PRD0000174,White,,,,,,BRD0000005,SUB0000013,,Apple Headphones & Earbuds Model 001,,,2023-06-07,2024-02-07,Apple,CAT0000003,Headphones & Earbuds,Accessories & Peripherals
+SKU0000360,PRD0000175,Black,,,,,,BRD0000005,SUB0000013,,Apple Headphones & Earbuds Model 002,,,2022-12-14,2023-06-14,Apple,CAT0000003,Headphones & Earbuds,Accessories & Peripherals
+SKU0000361,PRD0000176,Black,,,,,,BRD0000005,SUB0000013,,Apple Headphones & Earbuds Model 003,,,2022-12-25,,Apple,CAT0000003,Headphones & Earbuds,Accessories & Peripherals
+SKU0000362,PRD0000177,Green,,,,,,BRD0000048,SUB0000013,,Samsung Headphones & Earbuds Model 001,,,2022-06-13,2023-03-13,Samsung,CAT0000003,Headphones & Earbuds,Accessories & Peripherals
+SKU0000363,PRD0000177,Red,,,,,,BRD0000048,SUB0000013,,Samsung Headphones & Earbuds Model 001,,,2022-06-13,2023-03-13,Samsung,CAT0000003,Headphones & Earbuds,Accessories & Peripherals
+SKU0000364,PRD0000177,Gold,,,,,,BRD0000048,SUB0000013,,Samsung Headphones & Earbuds Model 001,,,2022-06-13,2023-03-13,Samsung,CAT0000003,Headphones & Earbuds,Accessories & Peripherals
+SKU0000365,PRD0000178,White,,,,,,BRD0000048,SUB0000013,,Samsung Headphones & Earbuds Model 002,,,2025-07-22,,Samsung,CAT0000003,Headphones & Earbuds,Accessories & Peripherals
+SKU0000366,PRD0000179,Black,,,,,,BRD0000048,SUB0000013,,Samsung Headphones & Earbuds Model 003,,,2025-04-28,2025-12-31,Samsung,CAT0000003,Headphones & Earbuds,Accessories & Peripherals
+SKU0000367,PRD0000180,Blue,,,,,,BRD0000064,SUB0000013,,Xiaomi Headphones & Earbuds Model 001,,,2024-12-22,,Xiaomi,CAT0000003,Headphones & Earbuds,Accessories & Peripherals
+SKU0000368,PRD0000181,Pink,,,,,,BRD0000064,SUB0000013,,Xiaomi Headphones & Earbuds Model 002,,,2022-03-01,2023-11-01,Xiaomi,CAT0000003,Headphones & Earbuds,Accessories & Peripherals
+SKU0000369,PRD0000182,Gray,,,,,,BRD0000046,SUB0000013,,ORAIMO HEADPHONES & EARBUDS MODEL 001,,,2022-05-07,,Oraimo,CAT0000003,Headphones & Earbuds,Accessories & Peripherals
+SKU0000370,PRD0000182,Blue,,,,,,BRD0000046,SUB0000013,,ORAIMO HEADPHONES & EARBUDS MODEL 001,,,2022-05-07,,Oraimo,CAT0000003,Headphones & Earbuds,Accessories & Peripherals
+SKU0000371,PRD0000183,Blue,,,,,,BRD0000046,SUB0000013,,Oraimo Headphones & Earbuds Model 002,,,2024-03-26,,Oraimo,CAT0000003,Headphones & Earbuds,Accessories & Peripherals
+SKU0000372,PRD0000184,Gold,,,,,,BRD0000007,SUB0000013,,Baseus Headphones & Earbuds Model 001,,,2023-03-11,2025-01-11,Baseus,CAT0000003,Headphones & Earbuds,Accessories & Peripherals
+SKU0000373,PRD0000184,Pink,,,,,,BRD0000007,SUB0000013,,Baseus Headphones & Earbuds Model 001,,,2023-03-11,2025-01-11,Baseus,CAT0000003,Headphones & Earbuds,Accessories & Peripherals
+SKU0000374,PRD0000184,Black,,,,,,BRD0000007,SUB0000013,,Baseus Headphones & Earbuds Model 001,,,2023-03-11,2025-01-11,Baseus,CAT0000003,Headphones & Earbuds,Accessories & Peripherals
+SKU0000375,PRD0000185,Pink,,,,,,BRD0000007,SUB0000013,,Baseus Headphones & Earbuds Model 002,,,2022-04-20,,Baseus,CAT0000003,Headphones & Earbuds,Accessories & Peripherals
+SKU0000376,PRD0000186,Pink,,,,,,BRD0000032,SUB0000014,,JBL Speakers Model 001,,,2022-04-18,,JBL,CAT0000003,Speakers,Accessories & Peripherals
+SKU0000377,PRD0000186,Black,,,,,,BRD0000032,SUB0000014,,JBL Speakers Model 001,,,2022-04-18,,JBL,CAT0000003,Speakers,Accessories & Peripherals
+SKU0000378,PRD0000187,Red,,,,,,BRD0000032,SUB0000014,,JBL Speakers Model 002,,,2023-06-21,,JBL,CAT0000003,Speakers,Accessories & Peripherals
+SKU0000379,PRD0000187,Gold,,,,,,BRD0000032,SUB0000014,,JBL Speakers Model 002,,,2023-06-21,,JBL,CAT0000003,Speakers,Accessories & Peripherals
+SKU0000380,PRD0000188,Red,,,,,,BRD0000032,SUB0000014,,JBL Speakers Model 003,,,2025-06-17,,JBL,CAT0000003,Speakers,Accessories & Peripherals
+SKU0000381,PRD0000189,Gold,,,,,,BRD0000032,SUB0000014,,JBL Speakers Model 004,,,2025-11-04,,JBL,CAT0000003,Speakers,Accessories & Peripherals
+SKU0000382,PRD0000190,White,,,,,,BRD0000004,SUB0000014,,Anker Speakers Model 001,,,2023-02-19,,Anker,CAT0000003,Speakers,Accessories & Peripherals
+SKU0000383,PRD0000190,Silver,,,,,,BRD0000004,SUB0000014,,Anker Speakers Model 001,,,2023-02-19,,Anker,CAT0000003,Speakers,Accessories & Peripherals
+SKU0000384,PRD0000191,Red,,,,,,BRD0000004,SUB0000014,,Anker Speakers Model 002,,,2022-08-25,,Anker,CAT0000003,Speakers,Accessories & Peripherals
+SKU0000385,PRD0000192,Blue,,,,,,BRD0000053,SUB0000014,,Sony Speakers Model 001,,,2024-04-25,,Sony,CAT0000003,Speakers,Accessories & Peripherals
+SKU0000386,PRD0000193,Gold,,,,,,BRD0000053,SUB0000014,,Sony Speakers Model 002,,,2022-02-06,2023-03-06,Sony,CAT0000003,Speakers,Accessories & Peripherals
+SKU0000387,PRD0000194,Silver,,,,,,BRD0000064,SUB0000014,,Xiaomi Speakers Model 001,,,2022-12-06,,Xiaomi,CAT0000003,Speakers,Accessories & Peripherals
+SKU0000388,PRD0000195,Pink,,,,,,BRD0000064,SUB0000014,,Xiaomi Speakers Model 002,,,2022-01-24,,Xiaomi,CAT0000003,Speakers,Accessories & Peripherals
+SKU0000389,PRD0000196,Pink,,,,,,BRD0000037,SUB0000015,,Logitech Keyboards Model 001,,,2022-07-23,2023-08-23,Logitech,CAT0000003,Keyboards,Accessories & Peripherals
+SKU0000390,PRD0000197,Blue,,,,,,BRD0000037,SUB0000015,,Logitech Keyboards Model 002,,,2025-08-26,,Logitech,CAT0000003,Keyboards,Accessories & Peripherals
+SKU0000391,PRD0000198,Blue,,,,,,BRD0000037,SUB0000015,,Logitech Keyboards Model 003,,,2023-02-20,2024-11-20,Logitech,CAT0000003,Keyboards,Accessories & Peripherals
+SKU0000392,PRD0000198,Green,,,,,,BRD0000037,SUB0000015,,Logitech Keyboards Model 003,,,2023-02-20,2024-11-20,Logitech,CAT0000003,Keyboards,Accessories & Peripherals
+SKU0000393,PRD0000199,Silver,,,,,,BRD0000025,SUB0000015,,HP Keyboards Model 001,,,2023-01-18,,HP,CAT0000003,Keyboards,Accessories & Peripherals
+SKU0000394,PRD0000200,Green,,,,,,BRD0000025,SUB0000015,,HP Keyboards Model 002,,,2025-05-23,,HP,CAT0000003,Keyboards,Accessories & Peripherals
+SKU0000395,PRD0000201,Black,,,,,,BRD0000018,SUB0000015,,Dell Keyboards Model 001,,,2022-01-02,,Dell,CAT0000003,Keyboards,Accessories & Peripherals
+SKU0000396,PRD0000201,White,,,,,,BRD0000018,SUB0000015,,Dell Keyboards Model 001,,,2022-01-02,,Dell,CAT0000003,Keyboards,Accessories & Peripherals
+SKU0000397,PRD0000202,Red,,,,,,BRD0000018,SUB0000015,,Dell Keyboards Model 002,,,2024-12-21,2025-12-31,Dell,CAT0000003,Keyboards,Accessories & Peripherals
+SKU0000398,PRD0000203,Blue,,,,,,BRD0000036,SUB0000015,,Lenovo Keyboards Model 001,,,2022-10-26,,Lenovo,CAT0000003,Keyboards,Accessories & Peripherals
+SKU0000399,PRD0000204,White,,,,,,BRD0000001,SUB0000015,,ASUS Keyboards Model 001,,,2025-05-16,,ASUS,CAT0000003,Keyboards,Accessories & Peripherals
+SKU0000400,PRD0000205,Green,,,,,,BRD0000037,SUB0000016,,Logitech Mice Model 001,,,2023-07-10,,Logitech,CAT0000003,Mice,Accessories & Peripherals
+SKU0000401,PRD0000206,Black,,,,,,BRD0000037,SUB0000016,,Logitech Mice Model 002,,,2023-09-12,2025-05-12,Logitech,CAT0000003,Mice,Accessories & Peripherals
+SKU0000402,PRD0000207,Gray,,,,,,BRD0000037,SUB0000016,,Logitech Mice Model 003,,,2024-01-15,,Logitech,CAT0000003,Mice,Accessories & Peripherals
+SKU0000403,PRD0000208,Gray,,,,,,BRD0000037,SUB0000016,,Logitech Mice Model 004,,,2023-01-21,2024-07-21,Logitech,CAT0000003,Mice,Accessories & Peripherals
+SKU0000404,PRD0000209,Red,,,,,,BRD0000025,SUB0000016,,HP Mice Model 001,,,2022-09-18,,HP,CAT0000003,Mice,Accessories & Peripherals
+SKU0000405,PRD0000210,Blue,,,,,,BRD0000025,SUB0000016,,HP Mice Model 002,,,2022-02-27,,HP,CAT0000003,Mice,Accessories & Peripherals
+SKU0000406,PRD0000210,Green,,,,,,BRD0000025,SUB0000016,,HP Mice Model 002,,,2022-02-27,,HP,CAT0000003,Mice,Accessories & Peripherals
+SKU0000407,PRD0000211,Red,,,,,,BRD0000018,SUB0000016,,Dell Mice Model 001,,,2024-07-19,,Dell,CAT0000003,Mice,Accessories & Peripherals
+SKU0000408,PRD0000211,Gold,,,,,,BRD0000018,SUB0000016,,Dell Mice Model 001,,,2024-07-19,,Dell,CAT0000003,Mice,Accessories & Peripherals
+SKU0000409,PRD0000212,Silver,,,,,,BRD0000036,SUB0000016,,Lenovo Mice Model 001 ,,,2022-05-20,2023-05-20,Lenovo,CAT0000003,Mice,Accessories & Peripherals
+SKU0000410,PRD0000213,Pink,,,,,,BRD0000001,SUB0000016,,ASUS Mice Model 001,,,2023-03-18,,ASUS,CAT0000003,Mice,Accessories & Peripherals
+SKU0000411,PRD0000213,Black,,,,,,BRD0000001,SUB0000016,,ASUS Mice Model 001,,,2023-03-18,,ASUS,CAT0000003,Mice,Accessories & Peripherals
+SKU0000412,PRD0000214,Gold,,,,,,BRD0000001,SUB0000016,,ASUS Mice Model 002,,,2025-11-16,,ASUS,CAT0000003,Mice,Accessories & Peripherals
+SKU0000413,PRD0000215,Silver,,,,,,BRD0000004,SUB0000017,,Anker Chargers & Adapters Model 001,,,2022-05-17,2024-03-17,Anker,CAT0000003,Chargers & Adapters,Accessories & Peripherals
+SKU0000414,PRD0000215,Gray,,,,,,BRD0000004,SUB0000017,,Anker Chargers & Adapters Model 001,,,2022-05-17,2024-03-17,Anker,CAT0000003,Chargers & Adapters,Accessories & Peripherals
+SKU0000415,PRD0000215,Blue,,,,,,BRD0000004,SUB0000017,,Anker Chargers & Adapters Model 001,,,2022-05-17,2024-03-17,Anker,CAT0000003,Chargers & Adapters,Accessories & Peripherals
+SKU0000416,PRD0000216,White,,,,,,BRD0000004,SUB0000017,,Anker Chargers & Adapters Model 002,,,2024-08-19,2025-11-19,Anker,CAT0000003,Chargers & Adapters,Accessories & Peripherals
+SKU0000417,PRD0000216,Silver,,,,,,BRD0000004,SUB0000017,,Anker Chargers & Adapters Model 002,,,2024-08-19,2025-11-19,Anker,CAT0000003,Chargers & Adapters,Accessories & Peripherals
+SKU0000418,PRD0000217,Silver,,,,,,BRD0000004,SUB0000017,,Anker Chargers & Adapters Model 003,,,2025-02-11,,Anker,CAT0000003,Chargers & Adapters,Accessories & Peripherals
+SKU0000419,PRD0000217,Gray,,,,,,BRD0000004,SUB0000017,,Anker Chargers & Adapters Model 003,,,2025-02-11,,Anker,CAT0000003,Chargers & Adapters,Accessories & Peripherals
+SKU0000420,PRD0000218,Green,,,,,,BRD0000007,SUB0000017,,Baseus Chargers & Adapters Model 001,,,2022-05-15,,Baseus,CAT0000003,Chargers & Adapters,Accessories & Peripherals
+SKU0000421,PRD0000219,Black,,,,,,BRD0000007,SUB0000017,,Baseus Chargers & Adapters Model 002,,,2025-08-28,,Baseus,CAT0000003,Chargers & Adapters,Accessories & Peripherals
+SKU0000422,PRD0000220,White,,,,,,BRD0000060,SUB0000017,,UGREEN Chargers & Adapters Model 001,,,2023-02-20,,UGREEN,CAT0000003,Chargers & Adapters,Accessories & Peripherals
+SKU0000423,PRD0000221,Red,,,,,,BRD0000060,SUB0000017,,UGREEN Chargers & Adapters Model 002,,,2023-06-16,,UGREEN,CAT0000003,Chargers & Adapters,Accessories & Peripherals
+SKU0000424,PRD0000222,Gold,,,,,,BRD0000005,SUB0000017,,Apple Chargers & Adapters Model 001,,,2024-10-18,2025-08-18,Apple,CAT0000003,Chargers & Adapters,Accessories & Peripherals
+SKU0000425,PRD0000223,Gold,,,,,,BRD0000048,SUB0000017,,Samsung Chargers & Adapters Model 001,,,2024-02-15,,Samsung,CAT0000003,Chargers & Adapters,Accessories & Peripherals
+SKU0000426,PRD0000224,White,,,,,,BRD0000064,SUB0000017,,Xiaomi Chargers & Adapters Model 001,,,2024-12-16,,Xiaomi,CAT0000003,Chargers & Adapters,Accessories & Peripherals
+SKU0000427,PRD0000225,Black,,,,,,BRD0000064,SUB0000017,,Xiaomi Chargers & Adapters Model 002,,,2023-06-20,2024-08-20,Xiaomi,CAT0000003,Chargers & Adapters,Accessories & Peripherals
+SKU0000428,PRD0000226,Red,,,,,,BRD0000046,SUB0000017,,Oraimo Chargers & Adapters Model 001,,,2022-09-08,,Oraimo,CAT0000003,Chargers & Adapters,Accessories & Peripherals
+SKU0000429,PRD0000227,Red,,,10000.0,mAh,,BRD0000004,SUB0000018,,Anker Power Banks Model 001,,,2023-03-31,,Anker,CAT0000003,Power Banks,Accessories & Peripherals
+SKU0000430,PRD0000228,Black,,,10000.0,mAh,,BRD0000004,SUB0000018,,Anker Power Banks Model 002,,,2025-05-11,,Anker,CAT0000003,Power Banks,Accessories & Peripherals
+SKU0000431,PRD0000228,White,,,20000.0,mAh,,BRD0000004,SUB0000018,,Anker Power Banks Model 002,,,2025-05-11,,Anker,CAT0000003,Power Banks,Accessories & Peripherals
+SKU0000432,PRD0000229,Red,,,10000.0,mAh,,BRD0000004,SUB0000018,,Anker Power Banks Model 003,,,2023-11-16,2025-05-16,Anker,CAT0000003,Power Banks,Accessories & Peripherals
+SKU0000433,PRD0000229,Gold,,,20000.0,mAh,,BRD0000004,SUB0000018,,Anker Power Banks Model 003,,,2023-11-16,2025-05-16,Anker,CAT0000003,Power Banks,Accessories & Peripherals
+SKU0000434,PRD0000230,White,,,20000.0,mAh,,BRD0000007,SUB0000018,,Baseus Power Banks Model 001,,,2025-11-24,,Baseus,CAT0000003,Power Banks,Accessories & Peripherals
+SKU0000435,PRD0000230,Silver,,,30000.0,mAh,,BRD0000007,SUB0000018,,Baseus Power Banks Model 001,,,2025-11-24,,Baseus,CAT0000003,Power Banks,Accessories & Peripherals
+SKU0000436,PRD0000231,Black,,,10000.0,mAh,,BRD0000007,SUB0000018,,Baseus Power Banks Model 002,,,2024-09-24,2025-10-24,Baseus,CAT0000003,Power Banks,Accessories & Peripherals
+SKU0000437,PRD0000232,Gray,,,10000.0,mAh,,BRD0000060,SUB0000018,,UGREEN Power Banks Model 001,,,2024-08-16,,UGREEN,CAT0000003,Power Banks,Accessories & Peripherals
+SKU0000438,PRD0000233,Green,,,30000.0,mAh,,BRD0000064,SUB0000018,,Xiaomi Power Banks Model 001,,,2024-01-14,,Xiaomi,CAT0000003,Power Banks,Accessories & Peripherals
+SKU0000439,PRD0000234,White,,,20000.0,mAh,,BRD0000064,SUB0000018,,Xiaomi Power Banks Model 002,,,2023-11-17,,Xiaomi,CAT0000003,Power Banks,Accessories & Peripherals
+SKU0000440,PRD0000234,Silver,,,30000.0,mAh,,BRD0000064,SUB0000018,,Xiaomi Power Banks Model 002,,,2023-11-17,,Xiaomi,CAT0000003,Power Banks,Accessories & Peripherals
+SKU0000441,PRD0000235,White,,,20000.0,mAh,,BRD0000046,SUB0000018,,Oraimo Power Banks Model 001,,,2024-07-09,2025-07-09,Oraimo,CAT0000003,Power Banks,Accessories & Peripherals
+SKU0000442,PRD0000235,Silver,,,30000.0,mAh,,BRD0000046,SUB0000018,,Oraimo Power Banks Model 001,,,2024-07-09,2025-07-09,Oraimo,CAT0000003,Power Banks,Accessories & Peripherals
+SKU0000443,PRD0000235,Gray,,,10000.0,mAh,,BRD0000046,SUB0000018,,Oraimo Power Banks Model 001,,,2024-07-09,2025-07-09,Oraimo,CAT0000003,Power Banks,Accessories & Peripherals
+SKU0000444,PRD0000236,Blue,,,,,,BRD0000004,SUB0000019,,Anker Cables Model 001,,,2023-05-16,2025-03-16,Anker,CAT0000003,Cables,Accessories & Peripherals
+SKU0000445,PRD0000237,Gray,,,,,,BRD0000004,SUB0000019,,Anker Cables Model 002,,,2025-12-24,,Anker,CAT0000003,Cables,Accessories & Peripherals
+SKU0000446,PRD0000238,Gold,,,,,,BRD0000004,SUB0000019,,Anker Cables Model 003,,,2023-12-07,,Anker,CAT0000003,Cables,Accessories & Peripherals
+SKU0000447,PRD0000238,Pink,,,,,,BRD0000004,SUB0000019,,Anker Cables Model 003,,,2023-12-07,,Anker,CAT0000003,Cables,Accessories & Peripherals
+SKU0000448,PRD0000239,Green,,,,,,BRD0000007,SUB0000019,,BASEUS CABLES MODEL 001,,,2025-10-01,,Baseus,CAT0000003,Cables,Accessories & Peripherals
+SKU0000449,PRD0000239,Red,,,,,,BRD0000007,SUB0000019,,BASEUS CABLES MODEL 001,,,2025-10-01,,Baseus,CAT0000003,Cables,Accessories & Peripherals
+SKU0000450,PRD0000240,Blue,,,,,,BRD0000007,SUB0000019,,Baseus Cables Model 002,,,2023-01-25,,Baseus,CAT0000003,Cables,Accessories & Peripherals
+SKU0000451,PRD0000241,Green,,,,,,BRD0000060,SUB0000019,,UGREEN Cables Model 001,,,2022-08-01,,UGREEN,CAT0000003,Cables,Accessories & Peripherals
+SKU0000452,PRD0000241,Red,,,,,,BRD0000060,SUB0000019,,UGREEN Cables Model 001,,,2022-08-01,,UGREEN,CAT0000003,Cables,Accessories & Peripherals
+SKU0000453,PRD0000242,Pink,,,,,,BRD0000060,SUB0000019,,UGREEN Cables Model 002,,,2023-05-05,,UGREEN,CAT0000003,Cables,Accessories & Peripherals
+SKU0000454,PRD0000243,White,,,,,,BRD0000005,SUB0000019,,Apple Cables Model 001,,,2023-04-12,,Apple,CAT0000003,Cables,Accessories & Peripherals
+SKU0000455,PRD0000243,Silver,,,,,,BRD0000005,SUB0000019,,Apple Cables Model 001,,,2023-04-12,,Apple,CAT0000003,Cables,Accessories & Peripherals
+SKU0000456,PRD0000244,Gray,,,,,,BRD0000048,SUB0000019,,Samsung Cables Model 001,,,2022-12-04,,Samsung,CAT0000003,Cables,Accessories & Peripherals
+SKU0000457,PRD0000245,Gray,,,,,,BRD0000048,SUB0000019,,Samsung Cables Model 002,,,2025-10-16,,Samsung,CAT0000003,Cables,Accessories & Peripherals
+SKU0000458,PRD0000245,Blue,,,,,,BRD0000048,SUB0000019,,Samsung Cables Model 002,,,2025-10-16,,Samsung,CAT0000003,Cables,Accessories & Peripherals
+SKU0000459,PRD0000246,Black,,,,,,BRD0000060,SUB0000020,,UGREEN USB Hubs Model 001,,,2023-12-31,2024-10-31,UGREEN,CAT0000003,USB Hubs,Accessories & Peripherals
+SKU0000460,PRD0000246,White,,,,,,BRD0000060,SUB0000020,,UGREEN USB Hubs Model 001,,,2023-12-31,2024-10-31,UGREEN,CAT0000003,USB Hubs,Accessories & Peripherals
+SKU0000461,PRD0000247,Silver,,,,,,BRD0000060,SUB0000020,,UGREEN USB Hubs Model 002,,,2024-01-23,,UGREEN,CAT0000003,USB Hubs,Accessories & Peripherals
+SKU0000462,PRD0000248,Silver,,,,,,BRD0000007,SUB0000020,,Baseus USB Hubs Model 001,,,2024-08-22,2025-05-22,Baseus,CAT0000003,USB Hubs,Accessories & Peripherals
+SKU0000463,PRD0000249,Silver,,,,,,BRD0000007,SUB0000020,,Baseus USB Hubs Model 002,,,2024-06-22,,Baseus,CAT0000003,USB Hubs,Accessories & Peripherals
+SKU0000464,PRD0000250,Green,,,,,,BRD0000004,SUB0000020,,Anker USB Hubs Model 001,,,2024-04-17,,Anker,CAT0000003,USB Hubs,Accessories & Peripherals
+SKU0000465,PRD0000250,Red,,,,,,BRD0000004,SUB0000020,,Anker USB Hubs Model 001,,,2024-04-17,,Anker,CAT0000003,USB Hubs,Accessories & Peripherals
+SKU0000466,PRD0000251,Black,,,,,,BRD0000025,SUB0000021,,HP Laptop Bags & Sleeves Model 001,,,2024-05-14,,HP,CAT0000003,Laptop Bags & Sleeves,Accessories & Peripherals
+SKU0000467,PRD0000251,White,,,,,,BRD0000025,SUB0000021,,HP Laptop Bags & Sleeves Model 001,,,2024-05-14,,HP,CAT0000003,Laptop Bags & Sleeves,Accessories & Peripherals
+SKU0000468,PRD0000252,White,,,,,,BRD0000036,SUB0000021,,Lenovo Laptop Bags & Sleeves Model 001,,,2022-05-09,2023-10-09,Lenovo,CAT0000003,Laptop Bags & Sleeves,Accessories & Peripherals
+SKU0000469,PRD0000253,Black,,,,,,BRD0000018,SUB0000021,,Dell Laptop Bags & Sleeves Model 001,,,2023-11-30,2025-01-30,Dell,CAT0000003,Laptop Bags & Sleeves,Accessories & Peripherals
+SKU0000470,PRD0000253,White,,,,,,BRD0000018,SUB0000021,,Dell Laptop Bags & Sleeves Model 001,,,2023-11-30,2025-01-30,Dell,CAT0000003,Laptop Bags & Sleeves,Accessories & Peripherals
+SKU0000471,PRD0000254,Green,,,,,,BRD0000001,SUB0000021,,ASUS Laptop Bags & Sleeves Model 001,,,2022-08-06,,ASUS,CAT0000003,Laptop Bags & Sleeves,Accessories & Peripherals
+SKU0000472,PRD0000255,Pink,,,,,,BRD0000054,SUB0000022,,Spigen Phone Cases & Screen Protectors Model 001,,,2024-12-31,,Spigen,CAT0000003,Phone Cases & Screen Protectors,Accessories & Peripherals
+SKU0000473,PRD0000256,White,,,,,,BRD0000054,SUB0000022,,Spigen Phone Cases & Screen Protectors Model 002,,,2022-02-27,2023-09-27,Spigen,CAT0000003,Phone Cases & Screen Protectors,Accessories & Peripherals
+SKU0000474,PRD0000257,Gray,,,,,,BRD0000007,SUB0000022,,Baseus Phone Cases & Screen Protectors Model 001,,,2023-02-14,,Baseus,CAT0000003,Phone Cases & Screen Protectors,Accessories & Peripherals
+SKU0000475,PRD0000257,Blue,,,,,,BRD0000007,SUB0000022,,Baseus Phone Cases & Screen Protectors Model 001,,,2023-02-14,,Baseus,CAT0000003,Phone Cases & Screen Protectors,Accessories & Peripherals
+SKU0000476,PRD0000257,Green,,,,,,BRD0000007,SUB0000022,,Baseus Phone Cases & Screen Protectors Model 001,,,2023-02-14,,Baseus,CAT0000003,Phone Cases & Screen Protectors,Accessories & Peripherals
+SKU0000477,PRD0000258,Gold,,,,,,BRD0000007,SUB0000022,,Baseus Phone Cases & Screen Protectors Model 002,,,2024-01-30,,Baseus,CAT0000003,Phone Cases & Screen Protectors,Accessories & Peripherals
+SKU0000478,PRD0000258,Pink,,,,,,BRD0000007,SUB0000022,,Baseus Phone Cases & Screen Protectors Model 002,,,2024-01-30,,Baseus,CAT0000003,Phone Cases & Screen Protectors,Accessories & Peripherals
+SKU0000479,PRD0000259,Red,,,,,,BRD0000005,SUB0000022,,Apple Phone Cases & Screen Protectors Model 001,,,2024-02-21,,Apple,CAT0000003,Phone Cases & Screen Protectors,Accessories & Peripherals
+SKU0000480,PRD0000260,Silver,,,,,,BRD0000048,SUB0000022,,Samsung Phone Cases & Screen Protectors Model 001,,,2023-01-25,,Samsung,CAT0000003,Phone Cases & Screen Protectors,Accessories & Peripherals
+SKU0000481,PRD0000261,,,,,,65.0,BRD0000048,SUB0000023,,Samsung Televisions Model 001,,,2024-09-17,,Samsung,CAT0000004,Televisions,TVs & Home Entertainment
+SKU0000482,PRD0000262,,,,,,55.0,BRD0000048,SUB0000023,, Samsung Televisions Model 002,,,2022-11-19,,Samsung,CAT0000004,Televisions,TVs & Home Entertainment
+SKU0000483,PRD0000262,,,,,,65.0,BRD0000048,SUB0000023,, Samsung Televisions Model 002,,,2022-11-19,,Samsung,CAT0000004,Televisions,TVs & Home Entertainment
+SKU0000484,PRD0000263,,,,,,32.0,BRD0000048,SUB0000023,,Samsung Televisions Model 003,,,2024-05-08,,Samsung,CAT0000004,Televisions,TVs & Home Entertainment
+SKU0000485,PRD0000264,,,,,,43.0,BRD0000048,SUB0000023,,Samsung Televisions Model 004,,,2022-01-27,,Samsung,CAT0000004,Televisions,TVs & Home Entertainment
+SKU0000486,PRD0000265,,,,,,85.0,BRD0000048,SUB0000023,,Samsung Televisions Model 005,,,2022-06-24,2023-01-24,Samsung,CAT0000004,Televisions,TVs & Home Entertainment
+SKU0000487,PRD0000266,,,,,,32.0,BRD0000035,SUB0000023,,LG Televisions Model 001,,,2022-02-27,2023-07-27,LG,CAT0000004,Televisions,TVs & Home Entertainment
+SKU0000488,PRD0000267,,,,,,75.0,BRD0000035,SUB0000023,,LG Televisions Model 002,,,2022-11-02,,LG,CAT0000004,Televisions,TVs & Home Entertainment
+SKU0000489,PRD0000268,,,,,,32.0,BRD0000035,SUB0000023,,LG Televisions Model 003,,,2024-01-25,,LG,CAT0000004,Televisions,TVs & Home Entertainment
+SKU0000490,PRD0000269,,,,,,65.0,BRD0000035,SUB0000023,,LG Televisions Model 004,,,2025-03-05,2025-12-31,LG,CAT0000004,Televisions,TVs & Home Entertainment
+SKU0000491,PRD0000270,,,,,,55.0,BRD0000035,SUB0000023,,LG Televisions Model 005,,,2024-11-05,2025-12-31,LG,CAT0000004,Televisions,TVs & Home Entertainment
+SKU0000492,PRD0000271,,,,,,65.0,BRD0000053,SUB0000023,,Sony Televisions Model 001,,,2023-02-25,2024-06-25,Sony,CAT0000004,Televisions,TVs & Home Entertainment
+SKU0000493,PRD0000272,,,,,,43.0,BRD0000053,SUB0000023,,,,,2025-06-25,2025-12-31,Sony,CAT0000004,Televisions,TVs & Home Entertainment
+SKU0000494,PRD0000272,,,,,,50.0,BRD0000053,SUB0000023,,,,,2025-06-25,2025-12-31,Sony,CAT0000004,Televisions,TVs & Home Entertainment
+SKU0000495,PRD0000273,,,,,,50.0,BRD0000053,SUB0000023,,Sony Televisions Model 003,,,2024-02-11,,Sony,CAT0000004,Televisions,TVs & Home Entertainment
+SKU0000496,PRD0000274,,,,,,32.0,BRD0000053,SUB0000023,,Sony Televisions Model 004,,,2022-08-19,,Sony,CAT0000004,Televisions,TVs & Home Entertainment
+SKU0000497,PRD0000275,,,,,,85.0,BRD0000055,SUB0000023,,TCL Televisions Model 001,,,2024-07-14,2025-12-31,TCL,CAT0000004,Televisions,TVs & Home Entertainment
+SKU0000498,PRD0000276,,,,,,32.0,BRD0000055,SUB0000023,,TCL Televisions Model 002,,,2024-01-16,2025-03-16,TCL,CAT0000004,Televisions,TVs & Home Entertainment
+SKU0000499,PRD0000276,,,,,,43.0,BRD0000055,SUB0000023,,TCL Televisions Model 002,,,2024-01-16,2025-03-16,TCL,CAT0000004,Televisions,TVs & Home Entertainment
+SKU0000500,PRD0000277,,,,,,85.0,BRD0000055,SUB0000023,,TCL Televisions Model 003,,,2023-11-18,,TCL,CAT0000004,Televisions,TVs & Home Entertainment
+SKU0000501,PRD0000277,,,,,,32.0,BRD0000055,SUB0000023,,TCL Televisions Model 003,,,2023-11-18,,TCL,CAT0000004,Televisions,TVs & Home Entertainment
+SKU0000502,PRD0000278,,,,,,43.0,BRD0000055,SUB0000023,,TCL Televisions Model 004,,,2024-04-20,,TCL,CAT0000004,Televisions,TVs & Home Entertainment
+SKU0000503,PRD0000279,,,,,,65.0,BRD0000027,SUB0000023,,Hisense Televisions Model 001,,,2023-09-12,,Hisense,CAT0000004,Televisions,TVs & Home Entertainment
+SKU0000504,PRD0000280,,,,,,32.0,BRD0000027,SUB0000023,,Hisense Televisions Model 002,,,2023-08-19,,Hisense,CAT0000004,Televisions,TVs & Home Entertainment
+SKU0000505,PRD0000281,,,,,,32.0,BRD0000027,SUB0000023,,Hisense Televisions Model 003,,,2022-10-29,2023-11-29,Hisense,CAT0000004,Televisions,TVs & Home Entertainment
+SKU0000506,PRD0000282,,,,,,75.0,BRD0000051,SUB0000023,,Sharp Televisions Model 001,,,2023-11-18,,Sharp,CAT0000004,Televisions,TVs & Home Entertainment
+SKU0000507,PRD0000283,,,,,,85.0,BRD0000051,SUB0000023,,Sharp Televisions Model 002,,,2022-05-21,,Sharp,CAT0000004,Televisions,TVs & Home Entertainment
+SKU0000508,PRD0000284,,,,,,32.0,BRD0000059,SUB0000023,,Tornado Televisions Model 001,,,2023-05-10,,Tornado,CAT0000004,Televisions,TVs & Home Entertainment
+SKU0000509,PRD0000285,,,,,,55.0,BRD0000021,SUB0000023,,Fresh Televisions Model 001,,,2024-03-17,2024-12-17,Fresh,CAT0000004,Televisions,TVs & Home Entertainment
+SKU0000510,PRD0000286,White,,,,,,BRD0000048,SUB0000024,,Samsung Soundbars Model 001,,,2022-05-14,,Samsung,CAT0000004,Soundbars,TVs & Home Entertainment
+SKU0000511,PRD0000286,Silver,,,,,,BRD0000048,SUB0000024,,Samsung Soundbars Model 001,,,2022-05-14,,Samsung,CAT0000004,Soundbars,TVs & Home Entertainment
+SKU0000512,PRD0000286,Gray,,,,,,BRD0000048,SUB0000024,,Samsung Soundbars Model 001,,,2022-05-14,,Samsung,CAT0000004,Soundbars,TVs & Home Entertainment
+SKU0000513,PRD0000287,Gray,,,,,,BRD0000048,SUB0000024,,Samsung Soundbars Model 002,,,2022-12-25,,Samsung,CAT0000004,Soundbars,TVs & Home Entertainment
+SKU0000514,PRD0000287,Blue,,,,,,BRD0000048,SUB0000024,,Samsung Soundbars Model 002,,,2022-12-25,,Samsung,CAT0000004,Soundbars,TVs & Home Entertainment
+SKU0000515,PRD0000287,Green,,,,,,BRD0000048,SUB0000024,,Samsung Soundbars Model 002,,,2022-12-25,,Samsung,CAT0000004,Soundbars,TVs & Home Entertainment
+SKU0000516,PRD0000288,Gray,,,,,,BRD0000053,SUB0000024,,Sony Soundbars Model 001,,,2022-03-04,,Sony,CAT0000004,Soundbars,TVs & Home Entertainment
+SKU0000517,PRD0000288,Blue,,,,,,BRD0000053,SUB0000024,,Sony Soundbars Model 001,,,2022-03-04,,Sony,CAT0000004,Soundbars,TVs & Home Entertainment
+SKU0000518,PRD0000289,Gold,,,,,,BRD0000053,SUB0000024,,Sony Soundbars Model 002,,,2022-02-02,,Sony,CAT0000004,Soundbars,TVs & Home Entertainment
+SKU0000519,PRD0000289,Pink,,,,,,BRD0000053,SUB0000024,,Sony Soundbars Model 002,,,2022-02-02,,Sony,CAT0000004,Soundbars,TVs & Home Entertainment
+SKU0000520,PRD0000289,Black,,,,,,BRD0000053,SUB0000024,,Sony Soundbars Model 002,,,2022-02-02,,Sony,CAT0000004,Soundbars,TVs & Home Entertainment
+SKU0000521,PRD0000290,Silver,,,,,,BRD0000032,SUB0000024,,JBL Soundbars Model 001,,,2025-11-27,,JBL,CAT0000004,Soundbars,TVs & Home Entertainment
+SKU0000522,PRD0000290,Gray,,,,,,BRD0000032,SUB0000024,,JBL Soundbars Model 001,,,2025-11-27,,JBL,CAT0000004,Soundbars,TVs & Home Entertainment
+SKU0000523,PRD0000291,White,,,,,,BRD0000032,SUB0000024,,JBL Soundbars Model 002,,,2024-04-05,2025-12-31,JBL,CAT0000004,Soundbars,TVs & Home Entertainment
+SKU0000524,PRD0000291,Silver,,,,,,BRD0000032,SUB0000024,,JBL Soundbars Model 002,,,2024-04-05,2025-12-31,JBL,CAT0000004,Soundbars,TVs & Home Entertainment
+SKU0000525,PRD0000292,Blue,,,,,,BRD0000035,SUB0000024,,LG Soundbars Model 001,,,2023-05-06,2024-11-06,LG,CAT0000004,Soundbars,TVs & Home Entertainment
+SKU0000526,PRD0000292,Green,,,,,,BRD0000035,SUB0000024,,LG Soundbars Model 001,,,2023-05-06,2024-11-06,LG,CAT0000004,Soundbars,TVs & Home Entertainment
+SKU0000527,PRD0000293,White,,,,,,BRD0000055,SUB0000024,,TCL Soundbars Model 001,,,2022-12-18,2023-06-18,TCL,CAT0000004,Soundbars,TVs & Home Entertainment
+SKU0000528,PRD0000293,Silver,,,,,,BRD0000055,SUB0000024,,TCL Soundbars Model 001,,,2022-12-18,2023-06-18,TCL,CAT0000004,Soundbars,TVs & Home Entertainment
+SKU0000529,PRD0000294,,,,,,,BRD0000053,SUB0000025,,Sony Home Theater Systems Model 001,,,2023-07-04,,Sony,CAT0000004,Home Theater Systems,TVs & Home Entertainment
+SKU0000530,PRD0000295,,,,,,,BRD0000053,SUB0000025,,Sony Home Theater Systems Model 002,,,2022-10-13,2023-05-13,Sony,CAT0000004,Home Theater Systems,TVs & Home Entertainment
+SKU0000531,PRD0000296,,,,,,,BRD0000035,SUB0000025,,LG HOME THEATER SYSTEMS MODEL 001,,,2022-04-18,,LG,CAT0000004,Home Theater Systems,TVs & Home Entertainment
+SKU0000532,PRD0000297,,,,,,,BRD0000048,SUB0000025,,Samsung Home Theater Systems Model 001,,,2025-01-10,2025-12-31,Samsung,CAT0000004,Home Theater Systems,TVs & Home Entertainment
+SKU0000533,PRD0000298,,256.0,,,,,BRD0000005,SUB0000026,,Apple Streaming Devices Model 001,,,2025-02-24,2025-12-31,Apple,CAT0000004,Streaming Devices,TVs & Home Entertainment
+SKU0000534,PRD0000299,,128.0,,,,,BRD0000005,SUB0000026,,Apple Streaming Devices Model 002,,,2024-02-14,,Apple,CAT0000004,Streaming Devices,TVs & Home Entertainment
+SKU0000535,PRD0000300,,128.0,,,,,BRD0000064,SUB0000026,,Xiaomi Streaming Devices Model 001,,,2024-06-17,,Xiaomi,CAT0000004,Streaming Devices,TVs & Home Entertainment
+SKU0000536,PRD0000301,,256.0,,,,,BRD0000064,SUB0000026,,Xiaomi Streaming Devices Model 002,,,2024-12-20,,Xiaomi,CAT0000004,Streaming Devices,TVs & Home Entertainment
+SKU0000537,PRD0000302,,64.0,,,,,BRD0000003,SUB0000026,,Amazon Streaming Devices Model 001,,,2025-09-01,,Amazon,CAT0000004,Streaming Devices,TVs & Home Entertainment
+SKU0000538,PRD0000303,,32.0,,,,,BRD0000022,SUB0000026,,Google Streaming Devices Model 001,,,2025-12-28,,Google,CAT0000004,Streaming Devices,TVs & Home Entertainment
+SKU0000539,PRD0000304,,,,,,,BRD0000020,SUB0000027,,Epson Projectors Model 001,,,2025-08-14,,Epson,CAT0000004,Projectors,TVs & Home Entertainment
+SKU0000540,PRD0000305,,,,,,,BRD0000020,SUB0000027,,Epson Projectors Model 002,,,2023-04-20,2024-09-20,Epson,CAT0000004,Projectors,TVs & Home Entertainment
+SKU0000541,PRD0000306,,,,,,,BRD0000009,SUB0000027,,BenQ Projectors Model 001,,,2022-01-05,,BenQ,CAT0000004,Projectors,TVs & Home Entertainment
+SKU0000542,PRD0000307,,,,,,,BRD0000062,SUB0000027,,ViewSonic Projectors Model 001,,,2023-09-26,2025-04-26,ViewSonic,CAT0000004,Projectors,TVs & Home Entertainment
+SKU0000543,PRD0000308,Pink,512.0,,,,,BRD0000053,SUB0000028,,Sony Gaming Consoles Model 001,,,2025-10-04,,Sony,CAT0000004,Gaming Consoles,TVs & Home Entertainment
+SKU0000544,PRD0000308,Black,,,,,,BRD0000053,SUB0000028,,Sony Gaming Consoles Model 001,,,2025-10-04,,Sony,CAT0000004,Gaming Consoles,TVs & Home Entertainment
+SKU0000545,PRD0000308,White,825.0,,,,,BRD0000053,SUB0000028,,Sony Gaming Consoles Model 001,,,2025-10-04,,Sony,CAT0000004,Gaming Consoles,TVs & Home Entertainment
+SKU0000546,PRD0000309,Gold,2048.0,,,,,BRD0000053,SUB0000028,,Sony Gaming Consoles Model 002,,,2024-02-25,,Sony,CAT0000004,Gaming Consoles,TVs & Home Entertainment
+SKU0000547,PRD0000309,PINK,,,,,,BRD0000053,SUB0000028,,Sony Gaming Consoles Model 002,,,2024-02-25,,Sony,CAT0000004,Gaming Consoles,TVs & Home Entertainment
+SKU0000548,PRD0000310,Gray,2048.0,,,,,BRD0000053,SUB0000028,,Sony Gaming Consoles Model 003,,,2023-03-25,,Sony,CAT0000004,Gaming Consoles,TVs & Home Entertainment
+SKU0000549,PRD0000310,Blue,512.0,,,,,BRD0000053,SUB0000028,,Sony Gaming Consoles Model 003,,,2023-03-25,,Sony,CAT0000004,Gaming Consoles,TVs & Home Entertainment
+SKU0000550,PRD0000310,Green,825.0,,,,,BRD0000053,SUB0000028,,Sony Gaming Consoles Model 003,,,2023-03-25,,Sony,CAT0000004,Gaming Consoles,TVs & Home Entertainment
+SKU0000551,PRD0000311,Gray,2048.0,,,,,BRD0000053,SUB0000028,,Sony Gaming Consoles Model 004,,,2023-09-04,,Sony,CAT0000004,Gaming Consoles,TVs & Home Entertainment
+SKU0000552,PRD0000311,Blue,512.0,,,,,BRD0000053,SUB0000028,,Sony Gaming Consoles Model 004,,,2023-09-04,,Sony,CAT0000004,Gaming Consoles,TVs & Home Entertainment
+SKU0000553,PRD0000312,Silver,1024.0,,,,,BRD0000040,SUB0000028,,Microsoft Gaming Consoles Model 001,,,2025-04-22,,Microsoft,CAT0000004,Gaming Consoles,TVs & Home Entertainment
+SKU0000554,PRD0000312,Gray,2048.0,,,,,BRD0000040,SUB0000028,,Microsoft Gaming Consoles Model 001,,,2025-04-22,,Microsoft,CAT0000004,Gaming Consoles,TVs & Home Entertainment
+SKU0000555,PRD0000313,Gold,2048.0,,,,,BRD0000040,SUB0000028,,,,,2022-07-28,,Microsoft,CAT0000004,Gaming Consoles,TVs & Home Entertainment
+SKU0000556,PRD0000313,Pink,512.0,,,,,BRD0000040,SUB0000028,,,,,2022-07-28,,Microsoft,CAT0000004,Gaming Consoles,TVs & Home Entertainment
+SKU0000557,PRD0000314,Black,512.0,,,,,BRD0000042,SUB0000028,,Nintendo Gaming Consoles Model 001,,,2023-02-15,2024-07-15,Nintendo,CAT0000004,Gaming Consoles,TVs & Home Entertainment
+SKU0000558,PRD0000314,White,825.0,,,,,BRD0000042,SUB0000028,,Nintendo Gaming Consoles Model 001,,,2023-02-15,2024-07-15,Nintendo,CAT0000004,Gaming Consoles,TVs & Home Entertainment
+SKU0000559,PRD0000315,Blue,512.0,,,,,BRD0000042,SUB0000028,,Nintendo Gaming Consoles Model 002,,,2023-11-28,2025-07-28,Nintendo,CAT0000004,Gaming Consoles,TVs & Home Entertainment
+SKU0000560,PRD0000315,Green,825.0,,,,,BRD0000042,SUB0000028,,Nintendo Gaming Consoles Model 002,,,2023-11-28,2025-07-28,Nintendo,CAT0000004,Gaming Consoles,TVs & Home Entertainment
+SKU0000561,PRD0000316,Silver,,,500.0,L,,BRD0000048,SUB0000029,,Samsung Refrigerators Model 001,,,2024-12-21,,Samsung,CAT0000005,Refrigerators,Large Home Appliances
+SKU0000562,PRD0000317,Gold,,,500.0,L,,BRD0000048,SUB0000029,,Samsung Refrigerators Model 002,,,2023-05-10,,Samsung,CAT0000005,Refrigerators,Large Home Appliances
+SKU0000563,PRD0000317,Pink,,,600.0,L,,BRD0000048,SUB0000029,,Samsung Refrigerators Model 002,,,2023-05-10,,Samsung,CAT0000005,Refrigerators,Large Home Appliances
+SKU0000564,PRD0000318,Pink,,,600.0,L,,BRD0000035,SUB0000029,,LG Refrigerators Model 001,,,2022-11-05,,LG,CAT0000005,Refrigerators,Large Home Appliances
+SKU0000565,PRD0000318,Black,,,300.0,L,,BRD0000035,SUB0000029,,LG Refrigerators Model 001,,,2022-11-05,,LG,CAT0000005,Refrigerators,Large Home Appliances
+SKU0000566,PRD0000319,Pink,,,600.0,L,,BRD0000035,SUB0000029,,LG Refrigerators Model 002,,,2023-11-20,,LG,CAT0000005,Refrigerators,Large Home Appliances
+SKU0000567,PRD0000320,Silver,,,500.0,L,,BRD0000051,SUB0000029,,Sharp Refrigerators Model 001,,,2023-02-11,,Sharp,CAT0000005,Refrigerators,Large Home Appliances
+SKU0000568,PRD0000320,Gray,,,600.0,L,,BRD0000051,SUB0000029,,Sharp Refrigerators Model 001,,,2023-02-11,,Sharp,CAT0000005,Refrigerators,Large Home Appliances
+SKU0000569,PRD0000321,White,,,400.0,L,,BRD0000051,SUB0000029,,Sharp Refrigerators Model 002,,,2023-11-24,,Sharp,CAT0000005,Refrigerators,Large Home Appliances
+SKU0000570,PRD0000321,Silver,,,500.0,L,,BRD0000051,SUB0000029,,Sharp Refrigerators Model 002,,,2023-11-24,,Sharp,CAT0000005,Refrigerators,Large Home Appliances
+SKU0000571,PRD0000321,Gray,,,600.0,L,,BRD0000051,SUB0000029,,Sharp Refrigerators Model 002,,,2023-11-24,,Sharp,CAT0000005,Refrigerators,Large Home Appliances
+SKU0000572,PRD0000322,Gold,,,500.0,L,,BRD0000021,SUB0000029,,Fresh Refrigerators Model 001,,,2023-09-28,,Fresh,CAT0000005,Refrigerators,Large Home Appliances
+SKU0000573,PRD0000322,Pink,,,600.0,L,,BRD0000021,SUB0000029,,Fresh Refrigerators Model 001,,,2023-09-28,,Fresh,CAT0000005,Refrigerators,Large Home Appliances
+SKU0000574,PRD0000323,Silver,,,500.0,L,,BRD0000021,SUB0000029,,Fresh Refrigerators Model 002,,,2025-06-28,,Fresh,CAT0000005,Refrigerators,Large Home Appliances
+SKU0000575,PRD0000323,Gray,,,600.0,L,,BRD0000021,SUB0000029,,Fresh Refrigerators Model 002,,,2025-06-28,,Fresh,CAT0000005,Refrigerators,Large Home Appliances
+SKU0000576,PRD0000324,White,,,400.0,L,,BRD0000059,SUB0000029,,Tornado Refrigerators Model 001,,,2023-11-07,,Tornado,CAT0000005,Refrigerators,Large Home Appliances
+SKU0000577,PRD0000324,Silver,,,500.0,L,,BRD0000059,SUB0000029,,Tornado Refrigerators Model 001,,,2023-11-07,,Tornado,CAT0000005,Refrigerators,Large Home Appliances
+SKU0000578,PRD0000325,SILVER,,,500.0,L,,BRD0000059,SUB0000029,,Tornado Refrigerators Model 002,,,2023-04-17,,Tornado,CAT0000005,Refrigerators,Large Home Appliances
+SKU0000579,PRD0000325,Gray,,,600.0,L,,BRD0000059,SUB0000029,,Tornado Refrigerators Model 002,,,2023-04-17,,Tornado,CAT0000005,Refrigerators,Large Home Appliances
+SKU0000580,PRD0000326,Silver,,,500.0,L,,BRD0000011,SUB0000029,,Bosch Refrigerators Model 001,,,2023-12-31,2025-12-31,Bosch,CAT0000005,Refrigerators,Large Home Appliances
+SKU0000581,PRD0000326,Gray,,,600.0,L,,BRD0000011,SUB0000029,,Bosch Refrigerators Model 001,,,2023-12-31,2025-12-31,Bosch,CAT0000005,Refrigerators,Large Home Appliances
+SKU0000582,PRD0000326,Blue,,,700.0,L,,BRD0000011,SUB0000029,,Bosch Refrigerators Model 001,,,2023-12-31,2025-12-31,Bosch,CAT0000005,Refrigerators,Large Home Appliances
+SKU0000583,PRD0000327,Black,,,300.0,L,,BRD0000065,SUB0000029,,Zanussi Refrigerators Model 001,,,2024-11-19,2025-12-19,Zanussi,CAT0000005,Refrigerators,Large Home Appliances
+SKU0000584,PRD0000327,White,,,400.0,L,,BRD0000065,SUB0000029,,Zanussi Refrigerators Model 001,,,2024-11-19,2025-12-19,Zanussi,CAT0000005,Refrigerators,Large Home Appliances
+SKU0000585,PRD0000328,Green,,,300.0,L,,BRD0000061,SUB0000029,,Unionaire Refrigerators Model 001,,,2023-06-05,,Unionaire,CAT0000005,Refrigerators,Large Home Appliances
+SKU0000586,PRD0000328,Red,,,400.0,L,,BRD0000061,SUB0000029,,Unionaire Refrigerators Model 001,,,2023-06-05,,Unionaire,CAT0000005,Refrigerators,Large Home Appliances
+SKU0000587,PRD0000329,Gray,,,400.0,L,,BRD0000021,SUB0000030,,Fresh Freezers Model 001,,,2024-04-25,,Fresh,CAT0000005,Freezers,Large Home Appliances
+SKU0000588,PRD0000329,Blue,,,200.0,L,,BRD0000021,SUB0000030,,Fresh Freezers Model 001,,,2024-04-25,,Fresh,CAT0000005,Freezers,Large Home Appliances
+SKU0000589,PRD0000329,Green,,,250.0,L,,BRD0000021,SUB0000030,,Fresh Freezers Model 001,,,2024-04-25,,Fresh,CAT0000005,Freezers,Large Home Appliances
+SKU0000590,PRD0000330,Red,,,300.0,L,,BRD0000021,SUB0000030,,Fresh Freezers Model 002,,,2025-06-18,2025-12-31,Fresh,CAT0000005,Freezers,Large Home Appliances
+SKU0000591,PRD0000330,Gold,,,400.0,L,,BRD0000021,SUB0000030,,Fresh Freezers Model 002,,,2025-06-18,2025-12-31,Fresh,CAT0000005,Freezers,Large Home Appliances
+SKU0000592,PRD0000331,White,,,250.0,L,,BRD0000059,SUB0000030,,Tornado Freezers Model 001,,,2024-06-06,,Tornado,CAT0000005,Freezers,Large Home Appliances
+SKU0000593,PRD0000331,Silver,,,300.0,L,,BRD0000059,SUB0000030,,Tornado Freezers Model 001,,,2024-06-06,,Tornado,CAT0000005,Freezers,Large Home Appliances
+SKU0000594,PRD0000332,Black,,,200.0,L,,BRD0000059,SUB0000030,,Tornado Freezers Model 002,,,2023-01-31,,Tornado,CAT0000005,Freezers,Large Home Appliances
+SKU0000595,PRD0000333,Silver,,,300.0,L,,BRD0000051,SUB0000030,,Sharp Freezers Model 001,,,2023-02-07,2025-04-07,Sharp,CAT0000005,Freezers,Large Home Appliances
+SKU0000596,PRD0000333,Gray,,,400.0,L,,BRD0000051,SUB0000030,,Sharp Freezers Model 001,,,2023-02-07,2025-04-07,Sharp,CAT0000005,Freezers,Large Home Appliances
+SKU0000597,PRD0000334,Black,,,200.0,L,,BRD0000061,SUB0000030,,Unionaire Freezers Model 001,,,2023-12-07,2025-06-07,Unionaire,CAT0000005,Freezers,Large Home Appliances
+SKU0000598,PRD0000334,White,,,250.0,L,,BRD0000061,SUB0000030,,Unionaire Freezers Model 001,,,2023-12-07,2025-06-07,Unionaire,CAT0000005,Freezers,Large Home Appliances
+SKU0000599,PRD0000335,Blue,,,200.0,L,,BRD0000008,SUB0000030,,Beko Freezers Model 001,,,2025-08-06,,Beko,CAT0000005,Freezers,Large Home Appliances
+SKU0000600,PRD0000335,Green,,,250.0,L,,BRD0000008,SUB0000030,,Beko Freezers Model 001,,,2025-08-06,,Beko,CAT0000005,Freezers,Large Home Appliances
+SKU0000601,PRD0000336,Black,,,7.0,kg,,BRD0000048,SUB0000031,,Samsung Washing Machines Model 001,,,2025-09-07,,Samsung,CAT0000005,Washing Machines,Large Home Appliances
+SKU0000602,PRD0000337,Silver,,,9.0,kg,,BRD0000048,SUB0000031,,Samsung Washing Machines Model 002,,,2023-12-01,,Samsung,CAT0000005,Washing Machines,Large Home Appliances
+SKU0000603,PRD0000337,Gray,,,10.0,kg,,BRD0000048,SUB0000031,,Samsung Washing Machines Model 002,,,2023-12-01,,Samsung,CAT0000005,Washing Machines,Large Home Appliances
+SKU0000604,PRD0000338,White,,,8.0,kg,,BRD0000035,SUB0000031,,LG Washing Machines Model 001,,,2025-09-19,,LG,CAT0000005,Washing Machines,Large Home Appliances
+SKU0000605,PRD0000338,Silver,,,9.0,kg,,BRD0000035,SUB0000031,,LG Washing Machines Model 001,,,2025-09-19,,LG,CAT0000005,Washing Machines,Large Home Appliances
+SKU0000606,PRD0000339,Gray,,,10.0,kg,,BRD0000035,SUB0000031,,LG Washing Machines Model 002,,,2023-07-15,2024-09-15,LG,CAT0000005,Washing Machines,Large Home Appliances
+SKU0000607,PRD0000340,Blue,,,12.0,kg,,BRD0000065,SUB0000031,,Zanussi Washing Machines Model 001,,,2023-02-06,,Zanussi,CAT0000005,Washing Machines,Large Home Appliances
+SKU0000608,PRD0000340,Green,,,7.0,kg,,BRD0000065,SUB0000031,,Zanussi Washing Machines Model 001,,,2023-02-06,,Zanussi,CAT0000005,Washing Machines,Large Home Appliances
+SKU0000609,PRD0000341,Gray,,,10.0,kg,,BRD0000065,SUB0000031,,Zanussi Washing Machines Model 002,,,2023-12-07,,Zanussi,CAT0000005,Washing Machines,Large Home Appliances
+SKU0000610,PRD0000342,Black,,,7.0,kg,,BRD0000021,SUB0000031,,Fresh Washing Machines Model 001,,,2022-02-28,,Fresh,CAT0000005,Washing Machines,Large Home Appliances
+SKU0000611,PRD0000343,Gray,,,10.0,kg,,BRD0000021,SUB0000031,,Fresh Washing Machines Model 002,,,2022-07-29,2025-02-28,Fresh,CAT0000005,Washing Machines,Large Home Appliances
+SKU0000612,PRD0000343,Blue,,,12.0,kg,,BRD0000021,SUB0000031,,Fresh Washing Machines Model 002,,,2022-07-29,2025-02-28,Fresh,CAT0000005,Washing Machines,Large Home Appliances
+SKU0000613,PRD0000343,Green,,,7.0,kg,,BRD0000021,SUB0000031,,Fresh Washing Machines Model 002,,,2022-07-29,2025-02-28,Fresh,CAT0000005,Washing Machines,Large Home Appliances
+SKU0000614,PRD0000344,Black,,,7.0,kg,,BRD0000011,SUB0000031,,Bosch Washing Machines Model 001,,,2023-02-25,2023-12-25,Bosch,CAT0000005,Washing Machines,Large Home Appliances
+SKU0000615,PRD0000345,Gray,,,10.0,kg,,BRD0000011,SUB0000031,,Bosch Washing Machines Model 002,,,2024-12-13,2025-12-31,Bosch,CAT0000005,Washing Machines,Large Home Appliances
+SKU0000616,PRD0000345,Blue,,,12.0,kg,,BRD0000011,SUB0000031,,Bosch Washing Machines Model 002,,,2024-12-13,2025-12-31,Bosch,CAT0000005,Washing Machines,Large Home Appliances
+SKU0000617,PRD0000345,Green,,,7.0,kg,,BRD0000011,SUB0000031,,Bosch Washing Machines Model 002,,,2024-12-13,2025-12-31,Bosch,CAT0000005,Washing Machines,Large Home Appliances
+SKU0000618,PRD0000346,Black,,,7.0,kg,,BRD0000059,SUB0000031,,Tornado Washing Machines Model 001,,,2023-01-22,2024-06-22,Tornado,CAT0000005,Washing Machines,Large Home Appliances
+SKU0000619,PRD0000346,White,,,8.0,kg,,BRD0000059,SUB0000031,,Tornado Washing Machines Model 001,,,2023-01-22,2024-06-22,Tornado,CAT0000005,Washing Machines,Large Home Appliances
+SKU0000620,PRD0000347,Gold,,,9.0,kg,,BRD0000051,SUB0000031,,Sharp Washing Machines Model 001,,,2022-04-28,,Sharp,CAT0000005,Washing Machines,Large Home Appliances
+SKU0000621,PRD0000347,Pink,,,10.0,kg,,BRD0000051,SUB0000031,,Sharp Washing Machines Model 001,,,2022-04-28,,Sharp,CAT0000005,Washing Machines,Large Home Appliances
+SKU0000622,PRD0000348,Silver,,,9.0,kg,,BRD0000028,SUB0000031,,Hoover Washing Machines Model 001,,,2022-03-31,2022-12-31,Hoover,CAT0000005,Washing Machines,Large Home Appliances
+SKU0000623,PRD0000348,Gray,,,10.0,kg,,BRD0000028,SUB0000031,,Hoover Washing Machines Model 001,,,2022-03-31,2022-12-31,Hoover,CAT0000005,Washing Machines,Large Home Appliances
+SKU0000624,PRD0000349,Blue,,,7.0,kg,,BRD0000048,SUB0000032,,Samsung Dryers Model 001,,,2024-04-18,2025-04-18,Samsung,CAT0000005,Dryers,Large Home Appliances
+SKU0000625,PRD0000350,White,,,8.0,kg,,BRD0000035,SUB0000032,,LG Dryers Model 001,,,2022-10-22,,LG,CAT0000005,Dryers,Large Home Appliances
+SKU0000626,PRD0000351,Pink,,,7.0,kg,,BRD0000065,SUB0000032,,Zanussi Dryers Model 001,,,2023-02-28,,Zanussi,CAT0000005,Dryers,Large Home Appliances
+SKU0000627,PRD0000352,Silver,,,9.0,kg,,BRD0000028,SUB0000032,,Hoover Dryers Model 001,,,2023-10-27,,Hoover,CAT0000005,Dryers,Large Home Appliances
+SKU0000628,PRD0000352,Gray,,,10.0,kg,,BRD0000028,SUB0000032,,Hoover Dryers Model 001,,,2023-10-27,,Hoover,CAT0000005,Dryers,Large Home Appliances
+SKU0000629,PRD0000353,Black,,,7.0,kg,,BRD0000011,SUB0000032,,Bosch Dryers Model 001,,,2024-07-22,2025-12-22,Bosch,CAT0000005,Dryers,Large Home Appliances
+SKU0000630,PRD0000354,,,,,,,BRD0000011,SUB0000033,,Bosch Dishwashers Model 001,,,2022-11-30,2023-12-30,Bosch,CAT0000005,Dishwashers,Large Home Appliances
+SKU0000631,PRD0000355,,,,,,,BRD0000011,SUB0000033,,Bosch Dishwashers Model 002,,,2022-11-15,2024-04-15,Bosch,CAT0000005,Dishwashers,Large Home Appliances
+SKU0000632,PRD0000356,,,,,,,BRD0000035,SUB0000033,,LG Dishwashers Model 001,,,2022-03-14,2023-05-14,LG,CAT0000005,Dishwashers,Large Home Appliances
+SKU0000633,PRD0000357,,,,,,,BRD0000035,SUB0000033,,LG Dishwashers Model 002,,,2024-06-05,,LG,CAT0000005,Dishwashers,Large Home Appliances
+SKU0000634,PRD0000358,,,,,,,BRD0000006,SUB0000033,,Ariston Dishwashers Model 001,,,2022-12-16,,Ariston,CAT0000005,Dishwashers,Large Home Appliances
+SKU0000635,PRD0000359,,,,,,,BRD0000065,SUB0000033,,Zanussi Dishwashers Model 001,,,2025-07-28,,Zanussi,CAT0000005,Dishwashers,Large Home Appliances
+SKU0000636,PRD0000360,,,,,,,BRD0000008,SUB0000033,,Beko Dishwashers Model 001,,,2025-06-20,,Beko,CAT0000005,Dishwashers,Large Home Appliances
+SKU0000637,PRD0000361,Gold,,,,,,BRD0000021,SUB0000034,,Fresh Cookers Model 001,,,2025-10-30,,Fresh,CAT0000005,Cookers,Large Home Appliances
+SKU0000638,PRD0000361,Pink,,,,,,BRD0000021,SUB0000034,,Fresh Cookers Model 001,,,2025-10-30,,Fresh,CAT0000005,Cookers,Large Home Appliances
+SKU0000639,PRD0000362,Green,,,,,,BRD0000021,SUB0000034,,Fresh Cookers Model 002,,,2022-03-21,,Fresh,CAT0000005,Cookers,Large Home Appliances
+SKU0000640,PRD0000362,Red,,,,,,BRD0000021,SUB0000034,,Fresh Cookers Model 002,,,2022-03-21,,Fresh,CAT0000005,Cookers,Large Home Appliances
+SKU0000641,PRD0000363,Gray,,,,,,BRD0000059,SUB0000034,,Tornado Cookers Model 001,,,2023-11-14,,Tornado,CAT0000005,Cookers,Large Home Appliances
+SKU0000642,PRD0000364,Silver,,,,,,BRD0000059,SUB0000034,,Tornado Cookers Model 002,,,2022-07-09,,Tornado,CAT0000005,Cookers,Large Home Appliances
+SKU0000643,PRD0000365,White,,,,,,BRD0000008,SUB0000034,,Beko Cookers Model 001,,,2022-04-18,,Beko,CAT0000005,Cookers,Large Home Appliances
+SKU0000644,PRD0000366,White,,,,,,BRD0000008,SUB0000034,,Beko Cookers Model 002,,,2023-02-01,,Beko,CAT0000005,Cookers,Large Home Appliances
+SKU0000645,PRD0000367,Green,,,,,,BRD0000061,SUB0000034,,Unionaire Cookers Model 001,,,2023-09-14,,Unionaire,CAT0000005,Cookers,Large Home Appliances
+SKU0000646,PRD0000368,Blue,,,,,,BRD0000065,SUB0000034,,Zanussi Cookers Model 001,,,2023-02-23,2024-07-23,Zanussi,CAT0000005,Cookers,Large Home Appliances
+SKU0000647,PRD0000368,Green,,,,,,BRD0000065,SUB0000034,,Zanussi Cookers Model 001,,,2023-02-23,2024-07-23,Zanussi,CAT0000005,Cookers,Large Home Appliances
+SKU0000648,PRD0000369,White,,,,,,BRD0000011,SUB0000034,,Bosch Cookers Model 001,,,2022-01-06,,Bosch,CAT0000005,Cookers,Large Home Appliances
+SKU0000649,PRD0000369,Silver,,,,,,BRD0000011,SUB0000034,,Bosch Cookers Model 001,,,2022-01-06,,Bosch,CAT0000005,Cookers,Large Home Appliances
+SKU0000650,PRD0000370,,,,60.0,L,,BRD0000011,SUB0000035,,Bosch Built-in Ovens Model 001,,,2025-04-10,,Bosch,CAT0000005,Built-in Ovens,Large Home Appliances
+SKU0000651,PRD0000371,,,,90.0,L,,BRD0000011,SUB0000035,,Bosch Built-in Ovens Model 002,,,2022-04-13,,Bosch,CAT0000005,Built-in Ovens,Large Home Appliances
+SKU0000652,PRD0000372,,,,90.0,L,,BRD0000006,SUB0000035,,Ariston Built-in Ovens Model 001,,,2023-11-07,2024-11-07,Ariston,CAT0000005,Built-in Ovens,Large Home Appliances
+SKU0000653,PRD0000373,,,,80.0,L,,BRD0000006,SUB0000035,,Ariston Built-in Ovens Model 002,,,2023-09-17,2024-10-17,Ariston,CAT0000005,Built-in Ovens,Large Home Appliances
+SKU0000654,PRD0000374,,,,60.0,L,,BRD0000065,SUB0000035,,Zanussi Built-in Ovens Model 001,,,2023-03-05,2024-06-05,Zanussi,CAT0000005,Built-in Ovens,Large Home Appliances
+SKU0000655,PRD0000375,,,,70.0,L,,BRD0000008,SUB0000035,,Beko Built-in Ovens Model 001,,,2022-04-22,2023-05-22,Beko,CAT0000005,Built-in Ovens,Large Home Appliances
+SKU0000656,PRD0000376,,,,,,,BRD0000011,SUB0000036,,Bosch Built-in Hobs Model 001,,,2025-07-24,,Bosch,CAT0000005,Built-in Hobs,Large Home Appliances
+SKU0000657,PRD0000377,,,,,,,BRD0000011,SUB0000036,,Bosch Built-in Hobs Model 002,,,2023-08-11,,Bosch,CAT0000005,Built-in Hobs,Large Home Appliances
+SKU0000658,PRD0000378,,,,,,,BRD0000006,SUB0000036,,Ariston Built-in Hobs Model 001,,,2023-05-01,,Ariston,CAT0000005,Built-in Hobs,Large Home Appliances
+SKU0000659,PRD0000379,,,,,,,BRD0000006,SUB0000036,,Ariston Built-in Hobs Model 002,,,2022-03-27,,Ariston,CAT0000005,Built-in Hobs,Large Home Appliances
+SKU0000660,PRD0000380,,,,,,,BRD0000065,SUB0000036,,Zanussi Built-in Hobs Model 001,,,2024-03-13,2025-04-13,Zanussi,CAT0000005,Built-in Hobs,Large Home Appliances
+SKU0000661,PRD0000381,,,,,,,BRD0000008,SUB0000036,,Beko Built-in Hobs Model 001,,,2024-11-22,2025-12-22,Beko,CAT0000005,Built-in Hobs,Large Home Appliances
+SKU0000662,PRD0000382,,,,2.25,HP,,BRD0000015,SUB0000037,,Carrier Air Conditioners Model 001,,,2023-08-02,,Carrier,CAT0000005,Air Conditioners,Large Home Appliances
+SKU0000663,PRD0000383,,,,4.0,HP,,BRD0000015,SUB0000037,,Carrier Air Conditioners Model 002,,,2022-02-18,,Carrier,CAT0000005,Air Conditioners,Large Home Appliances
+SKU0000664,PRD0000384,,,,2.25,HP,,BRD0000015,SUB0000037,,Carrier Air Conditioners Model 003,,,2025-10-04,,Carrier,CAT0000005,Air Conditioners,Large Home Appliances
+SKU0000665,PRD0000385,,,,2.25,HP,,BRD0000015,SUB0000037,,Carrier Air Conditioners Model 004,,,2022-10-29,,Carrier,CAT0000005,Air Conditioners,Large Home Appliances
+SKU0000666,PRD0000386,,,,2.25,HP,,BRD0000035,SUB0000037,,LG Air Conditioners Model 001,,,2022-02-11,,LG,CAT0000005,Air Conditioners,Large Home Appliances
+SKU0000667,PRD0000387,,,,1.5,HP,,BRD0000035,SUB0000037,,LG Air Conditioners Model 002,,,2023-07-11,,LG,CAT0000005,Air Conditioners,Large Home Appliances
+SKU0000668,PRD0000388,,,,4.0,HP,,BRD0000035,SUB0000037,,LG Air Conditioners Model 003,,,2023-03-29,,LG,CAT0000005,Air Conditioners,Large Home Appliances
+SKU0000669,PRD0000389,,,,3.0,HP,,BRD0000021,SUB0000037,,Fresh Air Conditioners Model 001,,,2023-07-07,,Fresh,CAT0000005,Air Conditioners,Large Home Appliances
+SKU0000670,PRD0000390,,,,2.25,HP,,BRD0000021,SUB0000037,,Fresh Air Conditioners Model 002,,,2024-02-28,,Fresh,CAT0000005,Air Conditioners,Large Home Appliances
+SKU0000671,PRD0000391,,,,4.0,HP,,BRD0000021,SUB0000037,,Fresh Air Conditioners Model 003,,,2022-02-06,,Fresh,CAT0000005,Air Conditioners,Large Home Appliances
+SKU0000672,PRD0000392,,,,5.0,HP,,BRD0000048,SUB0000037,,Samsung Air Conditioners Model 001,,,2023-10-29,,Samsung,CAT0000005,Air Conditioners,Large Home Appliances
+SKU0000673,PRD0000393,,,,3.0,HP,,BRD0000048,SUB0000037,,Samsung Air Conditioners Model 002,,,2023-03-24,2024-05-24,Samsung,CAT0000005,Air Conditioners,Large Home Appliances
+SKU0000674,PRD0000394,,,,2.25,HP,,BRD0000059,SUB0000037,,Tornado Air Conditioners Model 001,,,2024-09-29,,Tornado,CAT0000005,Air Conditioners,Large Home Appliances
+SKU0000675,PRD0000395,,,,2.25,HP,,BRD0000059,SUB0000037,,Tornado Air Conditioners Model 002,,,2025-03-01,2025-12-31,Tornado,CAT0000005,Air Conditioners,Large Home Appliances
+SKU0000676,PRD0000396,,,,3.0,HP,,BRD0000051,SUB0000037,,Sharp Air Conditioners Model 001,,,2022-11-13,2024-08-13,Sharp,CAT0000005,Air Conditioners,Large Home Appliances
+SKU0000677,PRD0000397,,,,1.5,HP,,BRD0000051,SUB0000037,,Sharp Air Conditioners Model 002,,,2023-05-11,,Sharp,CAT0000005,Air Conditioners,Large Home Appliances
+SKU0000678,PRD0000398,,,,1.5,HP,,BRD0000027,SUB0000037,,Hisense Air Conditioners Model 001,,,2025-01-21,2025-12-31,Hisense,CAT0000005,Air Conditioners,Large Home Appliances
+SKU0000679,PRD0000399,,,,3.0,HP,,BRD0000027,SUB0000037,,Hisense Air Conditioners Model 002,,,2023-09-05,2025-01-05,Hisense,CAT0000005,Air Conditioners,Large Home Appliances
+SKU0000680,PRD0000400,,,,1.5,HP,,BRD0000061,SUB0000037,,Unionaire Air Conditioners Model 001,,,2023-07-20,2024-08-20,Unionaire,CAT0000005,Air Conditioners,Large Home Appliances
+SKU0000681,PRD0000401,Gold,,,6.0,L,,BRD0000047,SUB0000038,,Philips Air Fryers Model 001,,,2025-03-30,,Philips,CAT0000006,Air Fryers,Small Kitchen Appliances
+SKU0000682,PRD0000402,Gray,,,7.0,L,,BRD0000047,SUB0000038,,Philips Air Fryers Model 002,,,2025-11-05,,Philips,CAT0000006,Air Fryers,Small Kitchen Appliances
+SKU0000683,PRD0000403,Red,,,5.0,L,,BRD0000058,SUB0000038,,Tefal Air Fryers Model 001,,,2022-09-20,,Tefal,CAT0000006,Air Fryers,Small Kitchen Appliances
+SKU0000684,PRD0000403,Gold,,,6.0,L,,BRD0000058,SUB0000038,,Tefal Air Fryers Model 001,,,2022-09-20,,Tefal,CAT0000006,Air Fryers,Small Kitchen Appliances
+SKU0000685,PRD0000404,Green,,,4.0,L,,BRD0000058,SUB0000038,,Tefal Air Fryers Model 002,,,2023-01-06,2025-12-06,Tefal,CAT0000006,Air Fryers,Small Kitchen Appliances
+SKU0000686,PRD0000405,Gray,,,7.0,L,,BRD0000010,SUB0000038,,Black+Decker Air Fryers Model 001,,,2025-06-01,2025-12-31,Black+Decker,CAT0000006,Air Fryers,Small Kitchen Appliances
+SKU0000687,PRD0000406,Pink,,,7.0,L,,BRD0000010,SUB0000038,,Black+Decker Air Fryers Model 002,,,2023-09-30,,Black+Decker,CAT0000006,Air Fryers,Small Kitchen Appliances
+SKU0000688,PRD0000407,Gray,,,7.0,L,,BRD0000041,SUB0000038,,Moulinex Air Fryers Model 001,,,2022-07-12,,Moulinex,CAT0000006,Air Fryers,Small Kitchen Appliances
+SKU0000689,PRD0000407,Blue,,,8.0,L,,BRD0000041,SUB0000038,,Moulinex Air Fryers Model 001,,,2022-07-12,,Moulinex,CAT0000006,Air Fryers,Small Kitchen Appliances
+SKU0000690,PRD0000408,Black,,,4.0,L,,BRD0000033,SUB0000038,,Kenwood Air Fryers Model 001,,,2022-01-29,2023-09-29,Kenwood,CAT0000006,Air Fryers,Small Kitchen Appliances
+SKU0000691,PRD0000409,Blue,,,8.0,L,,BRD0000021,SUB0000038,,Fresh Air Fryers Model 001,,,2023-04-11,,Fresh,CAT0000006,Air Fryers,Small Kitchen Appliances
+SKU0000692,PRD0000410,Green,,,4.0,L,,BRD0000059,SUB0000038,,Tornado Air Fryers Model 001,,,2023-06-03,,Tornado,CAT0000006,Air Fryers,Small Kitchen Appliances
+SKU0000693,PRD0000410,Red,,,5.0,L,,BRD0000059,SUB0000038,,Tornado Air Fryers Model 001,,,2023-06-03,,Tornado,CAT0000006,Air Fryers,Small Kitchen Appliances
+SKU0000694,PRD0000411,Red,,,23.0,L,,BRD0000048,SUB0000039,,Samsung Microwaves Model 001,,,2025-01-16,,Samsung,CAT0000006,Microwaves,Small Kitchen Appliances
+SKU0000695,PRD0000412,Black,,,20.0,L,,BRD0000048,SUB0000039,,Samsung Microwaves Model 002,,,2024-10-08,,Samsung,CAT0000006,Microwaves,Small Kitchen Appliances
+SKU0000696,PRD0000412,White,,,23.0,L,,BRD0000048,SUB0000039,,Samsung Microwaves Model 002,,,2024-10-08,,Samsung,CAT0000006,Microwaves,Small Kitchen Appliances
+SKU0000697,PRD0000413,Pink,,,30.0,L,,BRD0000035,SUB0000039,,LG Microwaves Model 001,,,2022-12-26,,LG,CAT0000006,Microwaves,Small Kitchen Appliances
+SKU0000698,PRD0000414,Pink,,,30.0,L,,BRD0000035,SUB0000039,,LG Microwaves Model 002,,,2024-10-06,2025-12-31,LG,CAT0000006,Microwaves,Small Kitchen Appliances
+SKU0000699,PRD0000415,Gray,,,30.0,L,,BRD0000051,SUB0000039,,Sharp Microwaves Model 001,,,2025-01-25,2025-12-31,Sharp,CAT0000006,Microwaves,Small Kitchen Appliances
+SKU0000700,PRD0000416,Blue,,,40.0,L,,BRD0000051,SUB0000039,,Sharp Microwaves Model 002,,,2023-11-21,,Sharp,CAT0000006,Microwaves,Small Kitchen Appliances
+SKU0000701,PRD0000417,White,,,23.0,L,,BRD0000021,SUB0000039,,Fresh Microwaves Model 001,,,2022-10-11,2023-12-11,Fresh,CAT0000006,Microwaves,Small Kitchen Appliances
+SKU0000702,PRD0000417,Silver,,,25.0,L,,BRD0000021,SUB0000039,,Fresh Microwaves Model 001,,,2022-10-11,2023-12-11,Fresh,CAT0000006,Microwaves,Small Kitchen Appliances
+SKU0000703,PRD0000418,White,,,23.0,L,,BRD0000059,SUB0000039,,Tornado Microwaves Model 001,,,2024-07-09,,Tornado,CAT0000006,Microwaves,Small Kitchen Appliances
+SKU0000704,PRD0000419,Blue,,,1.5,L,,BRD0000047,SUB0000040,,Philips Blenders Model 001,,,2022-04-25,2023-08-25,Philips,CAT0000006,Blenders,Small Kitchen Appliances
+SKU0000705,PRD0000420,Blue,,,1.5,L,,BRD0000047,SUB0000040,,Philips Blenders Model 002,,,2022-08-25,,Philips,CAT0000006,Blenders,Small Kitchen Appliances
+SKU0000706,PRD0000421,Silver ,,,2.0,L,,BRD0000012,SUB0000040,,Braun Blenders Model 001,,,2024-09-05,2025-05-05,Braun,CAT0000006,Blenders,Small Kitchen Appliances
+SKU0000707,PRD0000422,Gray,,,1.0,L,,BRD0000012,SUB0000040,,Braun Blenders Model 002,,,2024-02-03,,Braun,CAT0000006,Blenders,Small Kitchen Appliances
+SKU0000708,PRD0000423,Gray,,,1.0,L,,BRD0000041,SUB0000040,,Moulinex Blenders Model 001,,,2023-07-06,,Moulinex,CAT0000006,Blenders,Small Kitchen Appliances
+SKU0000709,PRD0000424,Green,,,2.0,L,,BRD0000033,SUB0000040,,Kenwood Blenders Model 001,,,2023-03-15,,Kenwood,CAT0000006,Blenders,Small Kitchen Appliances
+SKU0000710,PRD0000425,Silver,,,2.0,L,,BRD0000010,SUB0000040,,Black+Decker Blenders Model 001,,,2022-08-25,2024-02-25,Black+Decker,CAT0000006,Blenders,Small Kitchen Appliances
+SKU0000711,PRD0000426,White,,,1.5,L,,BRD0000021,SUB0000040,,Fresh Blenders Model 001,,,2023-07-25,,Fresh,CAT0000006,Blenders,Small Kitchen Appliances
+SKU0000712,PRD0000427,White,,,2.5,L,,BRD0000041,SUB0000041,,Moulinex Food Processors Model 001,,,2022-09-21,,Moulinex,CAT0000006,Food Processors,Small Kitchen Appliances
+SKU0000713,PRD0000428,Black,,,2.0,L,,BRD0000041,SUB0000041,,Moulinex Food Processors Model 002,,,2024-07-26,,Moulinex,CAT0000006,Food Processors,Small Kitchen Appliances
+SKU0000714,PRD0000429,Silver,,,3.0,L,,BRD0000033,SUB0000041,,Kenwood Food Processors Model 001,,,2024-08-13,,Kenwood,CAT0000006,Food Processors,Small Kitchen Appliances
+SKU0000715,PRD0000430,Blue,,,2.5,L,,BRD0000033,SUB0000041,,Kenwood Food Processors Model 002,,,2022-02-10,,Kenwood,CAT0000006,Food Processors,Small Kitchen Appliances
+SKU0000716,PRD0000430,Green,,,3.0,L,,BRD0000033,SUB0000041,,Kenwood Food Processors Model 002,,,2022-02-10,,Kenwood,CAT0000006,Food Processors,Small Kitchen Appliances
+SKU0000717,PRD0000431,Pink,,,3.0,L,,BRD0000012,SUB0000041,,Braun Food Processors Model 001,,,2022-02-28,,Braun,CAT0000006,Food Processors,Small Kitchen Appliances
+SKU0000718,PRD0000432,Silver,,,3.0,L,,BRD0000047,SUB0000041,,Philips Food Processors Model 001,,,2024-01-20,,Philips,CAT0000006,Food Processors,Small Kitchen Appliances
+SKU0000719,PRD0000433,Gray,,,,,,BRD0000033,SUB0000042,,Kenwood Mixers Model 001,,,2023-08-15,,Kenwood,CAT0000006,Mixers,Small Kitchen Appliances
+SKU0000720,PRD0000434,White,,,,,,BRD0000033,SUB0000042,,Kenwood Mixers Model 002,,,2024-12-09,,Kenwood,CAT0000006,Mixers,Small Kitchen Appliances
+SKU0000721,PRD0000434,Silver,,,,,,BRD0000033,SUB0000042,,Kenwood Mixers Model 002,,,2024-12-09,,Kenwood,CAT0000006,Mixers,Small Kitchen Appliances
+SKU0000722,PRD0000435,Pink,,,,,,BRD0000012,SUB0000042,,Braun Mixers Model 001,,,2023-08-10,,Braun,CAT0000006,Mixers,Small Kitchen Appliances
+SKU0000723,PRD0000436,White,,,,,,BRD0000041,SUB0000042,,Moulinex Mixers Model 001,,,2024-01-07,,Moulinex,CAT0000006,Mixers,Small Kitchen Appliances
+SKU0000724,PRD0000437,Gold,,,,,,BRD0000047,SUB0000042,,Philips Mixers Model 001,,,2025-04-03,,Philips,CAT0000006,Mixers,Small Kitchen Appliances
+SKU0000725,PRD0000438,White,,,,,,BRD0000021,SUB0000042,,Fresh Mixers Model 001,,,2023-06-08,2025-03-08,Fresh,CAT0000006,Mixers,Small Kitchen Appliances
+SKU0000726,PRD0000438,Silver,,,,,,BRD0000021,SUB0000042,,Fresh Mixers Model 001,,,2023-06-08,2025-03-08,Fresh,CAT0000006,Mixers,Small Kitchen Appliances
+SKU0000727,PRD0000439, Gold,,,2.0,L,,BRD0000058,SUB0000043,,Tefal Electric Kettles Model 001,,,2023-10-08,,Tefal,CAT0000006,Electric Kettles,Small Kitchen Appliances
+SKU0000728,PRD0000440,White,,,1.5,L,,BRD0000058,SUB0000043,,Tefal Electric Kettles Model 002,,,2025-11-14,,Tefal,CAT0000006,Electric Kettles,Small Kitchen Appliances
+SKU0000729,PRD0000441,Blue,,,1.0,L,,BRD0000047,SUB0000043,,Philips Electric Kettles Model 001,,,2023-08-23,2024-12-23,Philips,CAT0000006,Electric Kettles,Small Kitchen Appliances
+SKU0000730,PRD0000441,Green,,,1.5,L,,BRD0000047,SUB0000043,,Philips Electric Kettles Model 001,,,2023-08-23,2024-12-23,Philips,CAT0000006,Electric Kettles,Small Kitchen Appliances
+SKU0000731,PRD0000442,Red,,,1.7,L,,BRD0000012,SUB0000043,,Braun Electric Kettles Model 001,,,2025-10-13,,Braun,CAT0000006,Electric Kettles,Small Kitchen Appliances
+SKU0000732,PRD0000442,Gold,,,2.0,L,,BRD0000012,SUB0000043,,Braun Electric Kettles Model 001,,,2025-10-13,,Braun,CAT0000006,Electric Kettles,Small Kitchen Appliances
+SKU0000733,PRD0000443,Gray,,,2.0,L,,BRD0000033,SUB0000043,,Kenwood Electric Kettles Model 001,,,2022-02-03,,Kenwood,CAT0000006,Electric Kettles,Small Kitchen Appliances
+SKU0000734,PRD0000443,Blue,,,1.0,L,,BRD0000033,SUB0000043,,Kenwood Electric Kettles Model 001,,,2022-02-03,,Kenwood,CAT0000006,Electric Kettles,Small Kitchen Appliances
+SKU0000735,PRD0000444,Gold,,,2.0,L,,BRD0000010,SUB0000043,,Black+Decker Electric Kettles Model 001,,,2023-02-07,,Black+Decker,CAT0000006,Electric Kettles,Small Kitchen Appliances
+SKU0000736,PRD0000445,Silver,,,1.7,L,,BRD0000021,SUB0000043,,Fresh Electric Kettles Model 001,,,2024-08-30,,Fresh,CAT0000006,Electric Kettles,Small Kitchen Appliances
+SKU0000737,PRD0000445,Gray,,,2.0,L,,BRD0000021,SUB0000043,,Fresh Electric Kettles Model 001,,,2024-08-30,,Fresh,CAT0000006,Electric Kettles,Small Kitchen Appliances
+SKU0000738,PRD0000446,Pink,,,1.0,L,,BRD0000059,SUB0000043,,Tornado Electric Kettles Model 001,,,2022-09-25,,Tornado,CAT0000006,Electric Kettles,Small Kitchen Appliances
+SKU0000739,PRD0000446,Black,,,1.0,L,,BRD0000059,SUB0000043,,Tornado Electric Kettles Model 001,,,2022-09-25,,Tornado,CAT0000006,Electric Kettles,Small Kitchen Appliances
+SKU0000740,PRD0000447,Red,,,1.0,L,,BRD0000047,SUB0000044,,Philips Coffee Makers Model 001,,,2025-09-09,,Philips,CAT0000006,Coffee Makers,Small Kitchen Appliances
+SKU0000741,PRD0000448,Pink,,,1.5,L,,BRD0000047,SUB0000044,,Philips Coffee Makers Model 002,,,2023-11-20,,Philips,CAT0000006,Coffee Makers,Small Kitchen Appliances
+SKU0000742,PRD0000449,Green,,,1.5,L,,BRD0000017,SUB0000044,,De'Longhi Coffee Makers Model 001,,,2023-11-27,2024-10-27,De'Longhi,CAT0000006,Coffee Makers,Small Kitchen Appliances
+SKU0000743,PRD0000449,Red,,,1.0,L,,BRD0000017,SUB0000044,,De'Longhi Coffee Makers Model 001,,,2023-11-27,2024-10-27,De'Longhi,CAT0000006,Coffee Makers,Small Kitchen Appliances
+SKU0000744,PRD0000450,Red,,,1.0,L,,BRD0000017,SUB0000044,,De'Longhi Coffee Makers Model 002,,,2023-01-15,,De'Longhi,CAT0000006,Coffee Makers,Small Kitchen Appliances
+SKU0000745,PRD0000451,Silver,,,1.5,L,,BRD0000033,SUB0000044,,Kenwood Coffee Makers Model 001,,,2023-09-16,,Kenwood,CAT0000006,Coffee Makers,Small Kitchen Appliances
+SKU0000746,PRD0000452,Silver,,,1.5,L,,BRD0000010,SUB0000044,,Black+Decker Coffee Makers Model 001,,,2024-06-24,,Black+Decker,CAT0000006,Coffee Makers,Small Kitchen Appliances
+SKU0000747,PRD0000453,Black,,,,,,BRD0000012,SUB0000045,,Braun Juicers Model 001,,,2025-04-30,,Braun,CAT0000006,Juicers,Small Kitchen Appliances
+SKU0000748,PRD0000453,White,,,,,,BRD0000012,SUB0000045,,Braun Juicers Model 001,,,2025-04-30,,Braun,CAT0000006,Juicers,Small Kitchen Appliances
+SKU0000749,PRD0000454,Pink,,,,,,BRD0000047,SUB0000045,,Philips Juicers Model 001,,,2024-05-29,2025-06-29,Philips,CAT0000006,Juicers,Small Kitchen Appliances
+SKU0000750,PRD0000455,Pink,,,,,,BRD0000041,SUB0000045,,Moulinex Juicers Model 001,,,2022-04-13,,Moulinex,CAT0000006,Juicers,Small Kitchen Appliances
+SKU0000751,PRD0000456,Gold,,,,,,BRD0000033,SUB0000045,,Kenwood Juicers Model 001,,,2023-06-08,,Kenwood,CAT0000006,Juicers,Small Kitchen Appliances
+SKU0000752,PRD0000457,Gray,,,,,,BRD0000021,SUB0000045,,Fresh Juicers Model 001,,,2023-10-05,,Fresh,CAT0000006,Juicers,Small Kitchen Appliances
+SKU0000753,PRD0000458,Black,,,,,,BRD0000058,SUB0000046,,Tefal Toasters Model 001,,,2022-12-15,,Tefal,CAT0000006,Toasters,Small Kitchen Appliances
+SKU0000754,PRD0000459,White,,,,,,BRD0000058,SUB0000046,,Tefal Toasters Model 002,,,2025-07-22,,Tefal,CAT0000006,Toasters,Small Kitchen Appliances
+SKU0000755,PRD0000460,White,,,,,,BRD0000047,SUB0000046,,Philips Toasters Model 001,,,2023-02-08,,Philips,CAT0000006,Toasters,Small Kitchen Appliances
+SKU0000756,PRD0000461,White,,,,,,BRD0000033,SUB0000046,,Kenwood Toasters Model 001,,,2024-12-21,2025-12-31,Kenwood,CAT0000006,Toasters,Small Kitchen Appliances
+SKU0000757,PRD0000461,Silver,,,,,,BRD0000033,SUB0000046,,Kenwood Toasters Model 001,,,2024-12-21,2025-12-31,Kenwood,CAT0000006,Toasters,Small Kitchen Appliances
+SKU0000758,PRD0000462,Gray,,,,,,BRD0000010,SUB0000046,,Black+Decker Toasters Model 001,,,2024-06-13,,Black+Decker,CAT0000006,Toasters,Small Kitchen Appliances
+SKU0000759,PRD0000463,Gold,,,,,,BRD0000058,SUB0000047,,Tefal Sandwich Makers Model 001,,,2024-08-04,,Tefal,CAT0000006,Sandwich Makers,Small Kitchen Appliances
+SKU0000760,PRD0000464,Gold,,,,,,BRD0000058,SUB0000047,,Tefal Sandwich Makers Model 002,,,2024-04-10,,Tefal,CAT0000006,Sandwich Makers,Small Kitchen Appliances
+SKU0000761,PRD0000465,Gray,,,,,,BRD0000010,SUB0000047,,Black+Decker Sandwich Makers Model 001,,,2023-09-04,,Black+Decker,CAT0000006,Sandwich Makers,Small Kitchen Appliances
+SKU0000762,PRD0000466,Gray,,,,,,BRD0000033,SUB0000047,,Kenwood Sandwich Makers Model 001,,,2024-06-02,,Kenwood,CAT0000006,Sandwich Makers,Small Kitchen Appliances
+SKU0000763,PRD0000467,Black,,,,,,BRD0000021,SUB0000047,,Fresh Sandwich Makers Model 001,,,2023-09-21,,Fresh,CAT0000006,Sandwich Makers,Small Kitchen Appliances
+SKU0000764,PRD0000467,White,,,,,,BRD0000021,SUB0000047,,Fresh Sandwich Makers Model 001,,,2023-09-21,,Fresh,CAT0000006,Sandwich Makers,Small Kitchen Appliances
+SKU0000765,PRD0000468,White,,,,,,BRD0000059,SUB0000047,,Tornado Sandwich Makers Model 001,,,2022-07-04,,Tornado,CAT0000006,Sandwich Makers,Small Kitchen Appliances
+SKU0000766,PRD0000469,Gray,,,,,,BRD0000058,SUB0000048,,Tefal Electric Grills Model 001,,,2023-08-07,2025-01-07,Tefal,CAT0000006,Electric Grills,Small Kitchen Appliances
+SKU0000767,PRD0000469,Blue,,,,,,BRD0000058,SUB0000048,,Tefal Electric Grills Model 001,,,2023-08-07,2025-01-07,Tefal,CAT0000006,Electric Grills,Small Kitchen Appliances
+SKU0000768,PRD0000470,White,,,,,,BRD0000058,SUB0000048,,Tefal Electric Grills Model 002,,,2024-06-11,,Tefal,CAT0000006,Electric Grills,Small Kitchen Appliances
+SKU0000769,PRD0000471,Green,,,,,,BRD0000010,SUB0000048,,Black+Decker Electric Grills Model 001,,,2023-03-23,,Black+Decker,CAT0000006,Electric Grills,Small Kitchen Appliances
+SKU0000770,PRD0000472,Red,,,,,,BRD0000033,SUB0000048,,Kenwood Electric Grills Model 001,,,2023-08-28,,Kenwood,CAT0000006,Electric Grills,Small Kitchen Appliances
+SKU0000771,PRD0000473,Black,,,,,,BRD0000021,SUB0000048,,Fresh Electric Grills Model 001,,,2022-03-12,,Fresh,CAT0000006,Electric Grills,Small Kitchen Appliances
+SKU0000772,PRD0000473,White,,,,,,BRD0000021,SUB0000048,,Fresh Electric Grills Model 001,,,2022-03-12,,Fresh,CAT0000006,Electric Grills,Small Kitchen Appliances
+SKU0000773,PRD0000474,Silver,,,1.5,L,,BRD0000041,SUB0000049,,Moulinex Choppers Model 001,,,2022-09-19,,Moulinex,CAT0000006,Choppers,Small Kitchen Appliances
+SKU0000774,PRD0000475,Red,,,0.5,L,,BRD0000041,SUB0000049,,Moulinex Choppers Model 002,,,2023-04-11,,Moulinex,CAT0000006,Choppers,Small Kitchen Appliances
+SKU0000775,PRD0000476,GRAY,,,0.5,L,,BRD0000021,SUB0000049,,Fresh Choppers Model 001,,,2023-09-21,2025-04-21,Fresh,CAT0000006,Choppers,Small Kitchen Appliances
+SKU0000776,PRD0000476,Blue,,,1.0,L,,BRD0000021,SUB0000049,,Fresh Choppers Model 001,,,2023-09-21,2025-04-21,Fresh,CAT0000006,Choppers,Small Kitchen Appliances
+SKU0000777,PRD0000477,Blue,,,1.0,L,,BRD0000021,SUB0000049,,Fresh Choppers Model 002,,,2022-01-02,2023-01-02,Fresh,CAT0000006,Choppers,Small Kitchen Appliances
+SKU0000778,PRD0000478,Gold,,,1.0,L,,BRD0000012,SUB0000049,,Braun Choppers Model 001,,,2024-06-12,,Braun,CAT0000006,Choppers,Small Kitchen Appliances
+SKU0000779,PRD0000479,Black,,,0.5,L,,BRD0000033,SUB0000049,,Kenwood Choppers Model 001,,,2023-04-08,2024-10-08,Kenwood,CAT0000006,Choppers,Small Kitchen Appliances
+SKU0000780,PRD0000480,Gray,,,0.5,L,,BRD0000059,SUB0000049,,Tornado Choppers Model 001,,,2025-05-29,,Tornado,CAT0000006,Choppers,Small Kitchen Appliances
+SKU0000781,PRD0000481,Silver,,,3.0,L,,BRD0000047,SUB0000050,,Philips Vacuum Cleaners Model 001,,,2024-06-27,2025-08-27,Philips,CAT0000007,Vacuum Cleaners,Home Care & Climate
+SKU0000782,PRD0000482,Black,,,1.5,L,,BRD0000047,SUB0000050,,Philips Vacuum Cleaners Model 002,,,2023-03-01,,Philips,CAT0000007,Vacuum Cleaners,Home Care & Climate
+SKU0000783,PRD0000482,White,,,2.0,L,,BRD0000047,SUB0000050,,Philips Vacuum Cleaners Model 002,,,2023-03-01,,Philips,CAT0000007,Vacuum Cleaners,Home Care & Climate
+SKU0000784,PRD0000483,Green,,,2.0,L,,BRD0000028,SUB0000050,,Hoover Vacuum Cleaners Model 001,,,2023-04-18,2024-05-18,Hoover,CAT0000007,Vacuum Cleaners,Home Care & Climate
+SKU0000785,PRD0000483,Red,,,3.0,L,,BRD0000028,SUB0000050,,Hoover Vacuum Cleaners Model 001,,,2023-04-18,2024-05-18,Hoover,CAT0000007,Vacuum Cleaners,Home Care & Climate
+SKU0000786,PRD0000484,Blue,,,1.5,L,,BRD0000028,SUB0000050,,Hoover Vacuum Cleaners Model 002,,,2024-03-06,,Hoover,CAT0000007,Vacuum Cleaners,Home Care & Climate
+SKU0000787,PRD0000485,Gold,,,4.0,L,,BRD0000011,SUB0000050,,Bosch Vacuum Cleaners Model 001,,,2024-09-30,,Bosch,CAT0000007,Vacuum Cleaners,Home Care & Climate
+SKU0000788,PRD0000486,Blue,,,1.5,L,,BRD0000011,SUB0000050,,Bosch Vacuum Cleaners Model 002,,,2024-01-23,2024-11-23,Bosch,CAT0000007,Vacuum Cleaners,Home Care & Climate
+SKU0000789,PRD0000487,Gold,,,4.0,L,,BRD0000048,SUB0000050,,Samsung Vacuum Cleaners Model 001,,,2022-10-25,,Samsung,CAT0000007,Vacuum Cleaners,Home Care & Climate
+SKU0000790,PRD0000488,Blue,,,1.5,L,,BRD0000048,SUB0000050,,Samsung Vacuum Cleaners Model 002,,,2024-05-01,,Samsung,CAT0000007,Vacuum Cleaners,Home Care & Climate
+SKU0000791,PRD0000489,Green,,,2.0,L,,BRD0000058,SUB0000050,,Tefal Vacuum Cleaners Model 001,,,2022-04-19,2023-03-19,Tefal,CAT0000007,Vacuum Cleaners,Home Care & Climate
+SKU0000792,PRD0000490,Pink,,,1.5,L,,BRD0000010,SUB0000050,,Black+Decker Vacuum Cleaners Model 001,,,2022-04-30,,Black+Decker,CAT0000007,Vacuum Cleaners,Home Care & Climate
+SKU0000793,PRD0000491,Pink,,,,,,BRD0000021,SUB0000051,,Fresh Fans Model 001,,,2025-04-21,2025-12-31,Fresh,CAT0000007,Fans,Home Care & Climate
+SKU0000794,PRD0000492,Gray,,,,,,BRD0000021,SUB0000051,,Fresh Fans Model 002,,,2023-02-13,,Fresh,CAT0000007,Fans,Home Care & Climate
+SKU0000795,PRD0000493,Pink,,,,,,BRD0000021,SUB0000051,,Fresh Fans Model 003,,,2024-01-14,,Fresh,CAT0000007,Fans,Home Care & Climate
+SKU0000796,PRD0000494,Red,,,,,,BRD0000059,SUB0000051,,Tornado Fans Model 001,,,2022-09-09,,Tornado,CAT0000007,Fans,Home Care & Climate
+SKU0000797,PRD0000494,Gold,,,,,,BRD0000059,SUB0000051,,Tornado Fans Model 001,,,2022-09-09,,Tornado,CAT0000007,Fans,Home Care & Climate
+SKU0000798,PRD0000495,White,,,,,,BRD0000059,SUB0000051,,Tornado Fans Model 002,,,2023-01-26,,Tornado,CAT0000007,Fans,Home Care & Climate
+SKU0000799,PRD0000495,Silver,,,,,,BRD0000059,SUB0000051,,Tornado Fans Model 002,,,2023-01-26,,Tornado,CAT0000007,Fans,Home Care & Climate
+SKU0000800,PRD0000496,Black,,,,,,BRD0000061,SUB0000051,,Unionaire Fans Model 001,,,2023-03-28,,Unionaire,CAT0000007,Fans,Home Care & Climate
+SKU0000801,PRD0000497,Gold,,,,,,BRD0000061,SUB0000051,,Unionaire Fans Model 002,,,2023-10-21,,Unionaire,CAT0000007,Fans,Home Care & Climate
+SKU0000802,PRD0000498,BLUE,,,,,,BRD0000021,SUB0000052,,Fresh Heaters Model 001,,,2022-11-17,,Fresh,CAT0000007,Heaters,Home Care & Climate
+SKU0000803,PRD0000499,Gold,,,,,,BRD0000021,SUB0000052,,Fresh Heaters Model 002,,,2023-04-09,,Fresh,CAT0000007,Heaters,Home Care & Climate
+SKU0000804,PRD0000500,White,,,,,,BRD0000059,SUB0000052,,Tornado Heaters Model 001,,,2022-03-19,,Tornado,CAT0000007,Heaters,Home Care & Climate
+SKU0000805,PRD0000500,Silver,,,,,,BRD0000059,SUB0000052,,Tornado Heaters Model 001,,,2022-03-19,,Tornado,CAT0000007,Heaters,Home Care & Climate
+SKU0000806,PRD0000501,Blue,,,,,,BRD0000059,SUB0000052,,Tornado Heaters Model 002,,,2024-07-28,,Tornado,CAT0000007,Heaters,Home Care & Climate
+SKU0000807,PRD0000502,Blue,,,,,,BRD0000061,SUB0000052,,Unionaire Heaters Model 001,,,2025-06-07,,Unionaire,CAT0000007,Heaters,Home Care & Climate
+SKU0000808,PRD0000503,Red,,,,,,BRD0000017,SUB0000052,,De'Longhi Heaters Model 001,,,2025-07-28,,De'Longhi,CAT0000007,Heaters,Home Care & Climate
+SKU0000809,PRD0000503,Gold,,,,,,BRD0000017,SUB0000052,,De'Longhi Heaters Model 001,,,2025-07-28,,De'Longhi,CAT0000007,Heaters,Home Care & Climate
+SKU0000810,PRD0000504,,,,60.0,L,,BRD0000021,SUB0000053,,Fresh Air Coolers Model 001,,,2022-06-25,2023-01-25,Fresh,CAT0000007,Air Coolers,Home Care & Climate
+SKU0000811,PRD0000505,,,,30.0,L,,BRD0000021,SUB0000053,,Fresh Air Coolers Model 002,,,2023-01-16,2024-06-16,Fresh,CAT0000007,Air Coolers,Home Care & Climate
+SKU0000812,PRD0000506,,,,60.0,L,,BRD0000059,SUB0000053,,Tornado Air Coolers Model 001,,,2023-05-19,,Tornado,CAT0000007,Air Coolers,Home Care & Climate
+SKU0000813,PRD0000507,,,,60.0,L,,BRD0000059,SUB0000053,,Tornado Air Coolers Model 002,,,2024-05-29,2025-02-28,Tornado,CAT0000007,Air Coolers,Home Care & Climate
+SKU0000814,PRD0000508,,,,60.0,L,,BRD0000061,SUB0000053,,Unionaire Air Coolers Model 001,,,2023-06-01,,Unionaire,CAT0000007,Air Coolers,Home Care & Climate
+SKU0000815,PRD0000509,White,,,,,,BRD0000047,SUB0000054,,Philips Air Purifiers Model 001,,,2022-09-19,,Philips,CAT0000007,Air Purifiers,Home Care & Climate
+SKU0000816,PRD0000510,Gold,,,,,,BRD0000047,SUB0000054,,Philips Air Purifiers Model 002,,,2025-10-31,,Philips,CAT0000007,Air Purifiers,Home Care & Climate
+SKU0000817,PRD0000510,Pink,,,,,,BRD0000047,SUB0000054,,Philips Air Purifiers Model 002,,,2025-10-31,,Philips,CAT0000007,Air Purifiers,Home Care & Climate
+SKU0000818,PRD0000511,Gray,,,,,,BRD0000064,SUB0000054,,Xiaomi Air Purifiers Model 001,,,2024-09-04,,Xiaomi,CAT0000007,Air Purifiers,Home Care & Climate
+SKU0000819,PRD0000512,Blue,,,,,,BRD0000051,SUB0000054,,,,,2022-11-24,,Sharp,CAT0000007,Air Purifiers,Home Care & Climate
+SKU0000820,PRD0000513,Blue,,,,,,BRD0000048,SUB0000054,,Samsung Air Purifiers Model 001,,,2023-09-07,,Samsung,CAT0000007,Air Purifiers,Home Care & Climate
+SKU0000821,PRD0000513,Green,,,,,,BRD0000048,SUB0000054,,Samsung Air Purifiers Model 001,,,2023-09-07,,Samsung,CAT0000007,Air Purifiers,Home Care & Climate
+SKU0000822,PRD0000514,,,,100.0,L,,BRD0000045,SUB0000055,,Olympic Electric Water Heaters Model 001,,,2024-06-18,,Olympic Electric,CAT0000007,Water Heaters,Home Care & Climate
+SKU0000823,PRD0000515,,,,30.0,L,,BRD0000045,SUB0000055,,Olympic Electric Water Heaters Model 002,,,2025-09-07,,Olympic Electric,CAT0000007,Water Heaters,Home Care & Climate
+SKU0000824,PRD0000516,,,,100.0,L,,BRD0000006,SUB0000055,,Ariston Water Heaters Model 001,,,2022-09-12,,Ariston,CAT0000007,Water Heaters,Home Care & Climate
+SKU0000825,PRD0000517,,,,40.0,L,,BRD0000006,SUB0000055,,Ariston Water Heaters Model 002,,,2022-07-25,2024-09-25,Ariston,CAT0000007,Water Heaters,Home Care & Climate
+SKU0000826,PRD0000518,,,,30.0,L,,BRD0000021,SUB0000055,,Fresh Water Heaters Model 001,,,2025-09-03,,Fresh,CAT0000007,Water Heaters,Home Care & Climate
+SKU0000827,PRD0000519,,,,40.0,L,,BRD0000059,SUB0000055,,Tornado Water Heaters Model 001,,,2022-08-05,,Tornado,CAT0000007,Water Heaters,Home Care & Climate
+SKU0000828,PRD0000520,,,,40.0,L,,BRD0000061,SUB0000055,,Unionaire Water Heaters Model 001,,,2022-11-01,,Unionaire,CAT0000007,Water Heaters,Home Care & Climate
+SKU0000829,PRD0000521,Green,,,,,,BRD0000021,SUB0000056,,Fresh Water Dispensers Model 001,,,2023-04-06,,Fresh,CAT0000007,Water Dispensers,Home Care & Climate
+SKU0000830,PRD0000522,Red,,,,,,BRD0000059,SUB0000056,,Tornado Water Dispensers Model 001,,,2023-02-22,,Tornado,CAT0000007,Water Dispensers,Home Care & Climate
+SKU0000831,PRD0000523,Gold,,,,,,BRD0000061,SUB0000056,,Unionaire Water Dispensers Model 001,,,2023-02-17,2023-11-17,Unionaire,CAT0000007,Water Dispensers,Home Care & Climate
+SKU0000832,PRD0000523,Pink,,,,,,BRD0000061,SUB0000056,,Unionaire Water Dispensers Model 001,,,2023-02-17,2023-11-17,Unionaire,CAT0000007,Water Dispensers,Home Care & Climate
+SKU0000833,PRD0000524,Gold,,,,,,BRD0000051,SUB0000056,,Sharp Water Dispensers Model 001,,,2025-10-08,,Sharp,CAT0000007,Water Dispensers,Home Care & Climate
+SKU0000834,PRD0000525,Black,,,,,,BRD0000058,SUB0000057,,Tefal Irons Model 001,,,2023-12-02,,Tefal,CAT0000007,Irons,Home Care & Climate
+SKU0000835,PRD0000525,White,,,,,,BRD0000058,SUB0000057,,Tefal Irons Model 001,,,2023-12-02,,Tefal,CAT0000007,Irons,Home Care & Climate
+SKU0000836,PRD0000526,Black,,,,,,BRD0000058,SUB0000057,,Tefal Irons Model 002,,,2023-01-30,,Tefal,CAT0000007,Irons,Home Care & Climate
+SKU0000837,PRD0000527,Red,,,,,,BRD0000047,SUB0000057,,Philips Irons Model 001,,,2022-10-31,,Philips,CAT0000007,Irons,Home Care & Climate
+SKU0000838,PRD0000527,Gold,,,,,,BRD0000047,SUB0000057,,Philips Irons Model 001,,,2022-10-31,,Philips,CAT0000007,Irons,Home Care & Climate
+SKU0000839,PRD0000528,Blue,,,,,,BRD0000012,SUB0000057,,Braun Irons Model 001,,,2023-10-11,2024-08-11,Braun,CAT0000007,Irons,Home Care & Climate
+SKU0000840,PRD0000528,Green,,,,,,BRD0000012,SUB0000057,,Braun Irons Model 001,,,2023-10-11,2024-08-11,Braun,CAT0000007,Irons,Home Care & Climate
+SKU0000841,PRD0000529,Pink,,,,,,BRD0000010,SUB0000057,,Black+Decker Irons Model 001,,,2023-05-10,,Black+Decker,CAT0000007,Irons,Home Care & Climate
+SKU0000842,PRD0000530,Red,,,,,,BRD0000021,SUB0000057,,Fresh Irons Model 001,,,2023-01-11,,Fresh,CAT0000007,Irons,Home Care & Climate
+SKU0000843,PRD0000531,Blue,,,,,,BRD0000056,SUB0000058,,TP-Link Routers Model 001,,,2023-06-24,,TP-Link,CAT0000008,Routers,Networking & Smart Home
+SKU0000844,PRD0000531,Green,,,,,,BRD0000056,SUB0000058,,TP-Link Routers Model 001,,,2023-06-24,,TP-Link,CAT0000008,Routers,Networking & Smart Home
+SKU0000845,PRD0000532,White,,,,,,BRD0000056,SUB0000058,,TP-LINK ROUTERS MODEL 002,,,2023-08-28,,TP-Link,CAT0000008,Routers,Networking & Smart Home
+SKU0000846,PRD0000533,Gray,,,,,,BRD0000056,SUB0000058,,TP-Link Routers Model 003,,,2023-09-04,,TP-Link,CAT0000008,Routers,Networking & Smart Home
+SKU0000847,PRD0000534,Silver,,,,,,BRD0000016,SUB0000058,,D-Link Routers Model 001,,,2022-04-15,2024-01-15,D-Link,CAT0000008,Routers,Networking & Smart Home
+SKU0000848,PRD0000535,Gold,,,,,,BRD0000016,SUB0000058,,D-Link Routers Model 002,,,2024-07-13,2025-09-13,D-Link,CAT0000008,Routers,Networking & Smart Home
+SKU0000849,PRD0000536,Gold,,,,,,BRD0000029,SUB0000058,,Huawei Routers Model 001,,,2025-06-25,,Huawei,CAT0000008,Routers,Networking & Smart Home
+SKU0000850,PRD0000537,Blue,,,,,,BRD0000029,SUB0000058,,Huawei Routers Model 002,,,2024-06-13,,Huawei,CAT0000008,Routers,Networking & Smart Home
+SKU0000851,PRD0000538,Silver,,,,,,BRD0000064,SUB0000058,,Xiaomi Routers Model 001,,,2024-11-03,2025-11-03,Xiaomi,CAT0000008,Routers,Networking & Smart Home
+SKU0000852,PRD0000539,Blue,,,,,,BRD0000064,SUB0000058,,Xiaomi Routers Model 002,,,2022-03-05,,Xiaomi,CAT0000008,Routers,Networking & Smart Home
+SKU0000853,PRD0000539,Green,,,,,,BRD0000064,SUB0000058,,Xiaomi Routers Model 002,,,2022-03-05,,Xiaomi,CAT0000008,Routers,Networking & Smart Home
+SKU0000854,PRD0000540,Black,,,,,,BRD0000039,SUB0000058,,Mercusys Routers Model 001,,,2022-04-26,,Mercusys,CAT0000008,Routers,Networking & Smart Home
+SKU0000855,PRD0000541,Blue,,,,,,BRD0000056,SUB0000059,,TP-Link Wi-Fi Extenders Model 001,,,2022-04-15,2023-02-15,TP-Link,CAT0000008,Wi-Fi Extenders,Networking & Smart Home
+SKU0000856,PRD0000542,Blue,,,,,,BRD0000056,SUB0000059,,TP-Link Wi-Fi Extenders Model 002,,,2024-04-11,2025-10-11,TP-Link,CAT0000008,Wi-Fi Extenders,Networking & Smart Home
+SKU0000857,PRD0000543,Pink,,,,,,BRD0000016,SUB0000059,,D-Link Wi-Fi Extenders Model 001,,,2022-06-27,,D-Link,CAT0000008,Wi-Fi Extenders,Networking & Smart Home
+SKU0000858,PRD0000544,Blue,,,,,,BRD0000016,SUB0000059,,D-Link Wi-Fi Extenders Model 002,,,2022-03-29,,D-Link,CAT0000008,Wi-Fi Extenders,Networking & Smart Home
+SKU0000859,PRD0000544,Green,,,,,,BRD0000016,SUB0000059,,D-Link Wi-Fi Extenders Model 002,,,2022-03-29,,D-Link,CAT0000008,Wi-Fi Extenders,Networking & Smart Home
+SKU0000860,PRD0000545,Pink,,,,,,BRD0000064,SUB0000059,,Xiaomi Wi-Fi Extenders Model 001,,,2025-08-18,,Xiaomi,CAT0000008,Wi-Fi Extenders,Networking & Smart Home
+SKU0000861,PRD0000546,Green,,,,,,BRD0000039,SUB0000059,,Mercusys Wi-Fi Extenders Model 001,,,2022-09-24,,Mercusys,CAT0000008,Wi-Fi Extenders,Networking & Smart Home
+SKU0000862,PRD0000546,Red,,,,,,BRD0000039,SUB0000059,,Mercusys Wi-Fi Extenders Model 001,,,2022-09-24,,Mercusys,CAT0000008,Wi-Fi Extenders,Networking & Smart Home
+SKU0000863,PRD0000547,Black,,,,,,BRD0000056,SUB0000060,,TP-Link Mesh Wi-Fi Systems Model 001,,,2024-01-15,,TP-Link,CAT0000008,Mesh Wi-Fi Systems,Networking & Smart Home
+SKU0000864,PRD0000548,Black,,,,,,BRD0000056,SUB0000060,,TP-Link Mesh Wi-Fi Systems Model 002,,,2025-07-04,,TP-Link,CAT0000008,Mesh Wi-Fi Systems,Networking & Smart Home
+SKU0000865,PRD0000549,Gray,,,,,,BRD0000029,SUB0000060,,Huawei Mesh Wi-Fi Systems Model 001,,,2024-04-14,2025-12-14,Huawei,CAT0000008,Mesh Wi-Fi Systems,Networking & Smart Home
+SKU0000866,PRD0000550,Red,,,,,,BRD0000029,SUB0000060,,Huawei Mesh Wi-Fi Systems Model 002,,,2025-04-30,2025-12-31,Huawei,CAT0000008,Mesh Wi-Fi Systems,Networking & Smart Home
+SKU0000867,PRD0000551,Gold,,,,,,BRD0000016,SUB0000060,,D-Link Mesh Wi-Fi Systems Model 001,,,2022-10-14,,D-Link,CAT0000008,Mesh Wi-Fi Systems,Networking & Smart Home
+SKU0000868,PRD0000552,Black,,,,,,BRD0000064,SUB0000060,,Xiaomi Mesh Wi-Fi Systems Model 001,,,2023-07-29,,Xiaomi,CAT0000008,Mesh Wi-Fi Systems,Networking & Smart Home
+SKU0000869,PRD0000553,Pink,,,,,,BRD0000056,SUB0000061,,TP-Link Network Switches Model 001,,,2022-07-30,,TP-Link,CAT0000008,Network Switches,Networking & Smart Home
+SKU0000870,PRD0000553,Black,,,,,,BRD0000056,SUB0000061,,TP-Link Network Switches Model 001,,,2022-07-30,,TP-Link,CAT0000008,Network Switches,Networking & Smart Home
+SKU0000871,PRD0000554,Gold,,,,,,BRD0000056,SUB0000061,,TP-Link Network Switches Model 002,,,2023-01-02,,TP-Link,CAT0000008,Network Switches,Networking & Smart Home
+SKU0000872,PRD0000555,Pink,,,,,,BRD0000016,SUB0000061,,D-Link Network Switches Model 001,,,2023-08-16,,D-Link,CAT0000008,Network Switches,Networking & Smart Home
+SKU0000873,PRD0000555,Black,,,,,,BRD0000016,SUB0000061,,D-Link Network Switches Model 001,,,2023-08-16,,D-Link,CAT0000008,Network Switches,Networking & Smart Home
+SKU0000874,PRD0000556,Black,,,,,,BRD0000016,SUB0000061,,D-Link Network Switches Model 002,,,2025-06-27,,D-Link,CAT0000008,Network Switches,Networking & Smart Home
+SKU0000875,PRD0000556,White,,,,,,BRD0000016,SUB0000061,,D-Link Network Switches Model 002,,,2025-06-27,,D-Link,CAT0000008,Network Switches,Networking & Smart Home
+SKU0000876,PRD0000557,White,,,,,,BRD0000039,SUB0000061,,Mercusys Network Switches Model 001,,,2025-01-08,2025-12-31,Mercusys,CAT0000008,Network Switches,Networking & Smart Home
+SKU0000877,PRD0000557,Silver,,,,,,BRD0000039,SUB0000061,,Mercusys Network Switches Model 001,,,2025-01-08,2025-12-31,Mercusys,CAT0000008,Network Switches,Networking & Smart Home
+SKU0000878,PRD0000558,Silver,,,,,,BRD0000056,SUB0000062,,TP-Link Smart Cameras Model 001,,,2022-11-23,2024-04-23,TP-Link,CAT0000008,Smart Cameras,Networking & Smart Home
+SKU0000879,PRD0000559,Silver,,,,,,BRD0000056,SUB0000062,,TP-Link Smart Cameras Model 002,,,2023-02-11,2025-01-11,TP-Link,CAT0000008,Smart Cameras,Networking & Smart Home
+SKU0000880,PRD0000559,Gray,,,,,,BRD0000056,SUB0000062,,TP-Link Smart Cameras Model 002,,,2023-02-11,2025-01-11,TP-Link,CAT0000008,Smart Cameras,Networking & Smart Home
+SKU0000881,PRD0000560,BLUE,,,,,,BRD0000019,SUB0000062,,EZVIZ Smart Cameras Model 001,,,2022-05-26,,EZVIZ,CAT0000008,Smart Cameras,Networking & Smart Home
+SKU0000882,PRD0000561,Silver,,,,,,BRD0000019,SUB0000062,,EZVIZ Smart Cameras Model 002,,,2024-06-14,2025-12-31,EZVIZ,CAT0000008,Smart Cameras,Networking & Smart Home
+SKU0000883,PRD0000562,Pink,,,,,,BRD0000026,SUB0000062,,Hikvision Smart Cameras Model 001,,,2023-04-02,,Hikvision,CAT0000008,Smart Cameras,Networking & Smart Home
+SKU0000884,PRD0000563,Silver,,,,,,BRD0000026,SUB0000062,,Hikvision Smart Cameras Model 002,,,2024-07-14,,Hikvision,CAT0000008,Smart Cameras,Networking & Smart Home
+SKU0000885,PRD0000563,Gray,,,,,,BRD0000026,SUB0000062,,Hikvision Smart Cameras Model 002,,,2024-07-14,,Hikvision,CAT0000008,Smart Cameras,Networking & Smart Home
+SKU0000886,PRD0000564,Pink,,,,,,BRD0000064,SUB0000062,,Xiaomi Smart Cameras Model 001,,,2024-03-27,2025-08-27,Xiaomi,CAT0000008,Smart Cameras,Networking & Smart Home
+SKU0000887,PRD0000565,Silver,,,,,,BRD0000064,SUB0000062,,Xiaomi Smart Cameras Model 002,,,2023-04-20,2025-02-20,Xiaomi,CAT0000008,Smart Cameras,Networking & Smart Home
+SKU0000888,PRD0000566,Red,,,,,,BRD0000056,SUB0000063,,TP-Link Smart Plugs Model 001,,,2022-10-24,,TP-Link,CAT0000008,Smart Plugs,Networking & Smart Home
+SKU0000889,PRD0000566,Gold,,,,,,BRD0000056,SUB0000063,,TP-Link Smart Plugs Model 001,,,2022-10-24,,TP-Link,CAT0000008,Smart Plugs,Networking & Smart Home
+SKU0000890,PRD0000567,Green,,,,,,BRD0000056,SUB0000063,,TP-Link Smart Plugs Model 002,,,2022-11-17,,TP-Link,CAT0000008,Smart Plugs,Networking & Smart Home
+SKU0000891,PRD0000567,Red,,,,,,BRD0000056,SUB0000063,,TP-Link Smart Plugs Model 002,,,2022-11-17,,TP-Link,CAT0000008,Smart Plugs,Networking & Smart Home
+SKU0000892,PRD0000567,Gold,,,,,,BRD0000056,SUB0000063,,TP-Link Smart Plugs Model 002,,,2022-11-17,,TP-Link,CAT0000008,Smart Plugs,Networking & Smart Home
+SKU0000893,PRD0000568,Gray,,,,,,BRD0000064,SUB0000063,,Xiaomi Smart Plugs Model 001,,,2024-10-23,2025-05-23,Xiaomi,CAT0000008,Smart Plugs,Networking & Smart Home
+SKU0000894,PRD0000569,Green,,,,,,BRD0000052,SUB0000063,,Sonoff Smart Plugs Model 001,,,2022-05-30,2023-09-30,Sonoff,CAT0000008,Smart Plugs,Networking & Smart Home
+SKU0000895,PRD0000570,Silver,,,,,,BRD0000056,SUB0000064,,TP-Link Smart Lighting Model 001,,,2024-12-03,,TP-Link,CAT0000008,Smart Lighting,Networking & Smart Home
+SKU0000896,PRD0000571,Gray,,,,,,BRD0000064,SUB0000064,,Xiaomi Smart Lighting Model 001,,,2022-07-29,,Xiaomi,CAT0000008,Smart Lighting,Networking & Smart Home
+SKU0000897,PRD0000572,Gold,,,,,,BRD0000052,SUB0000064,,Sonoff Smart Lighting Model 001,,,2025-02-23,,Sonoff,CAT0000008,Smart Lighting,Networking & Smart Home
+SKU0000898,PRD0000573,White,,,,,,BRD0000056,SUB0000065,,TP-Link Smart Sensors Model 001,,,2025-08-26,,TP-Link,CAT0000008,Smart Sensors,Networking & Smart Home
+SKU0000899,PRD0000574,Blue,,,,,,BRD0000064,SUB0000065,,Xiaomi Smart Sensors Model 001,,,2023-03-10,,Xiaomi,CAT0000008,Smart Sensors,Networking & Smart Home
+SKU0000900,PRD0000575,Blue,,,,,,BRD0000052,SUB0000065,,Sonoff Smart Sensors Model 001,,,2022-06-07,,Sonoff,CAT0000008,Smart Sensors,Networking & Smart Home
+SKU0000901,PRD0000575,Green,,,,,,BRD0000052,SUB0000065,,Sonoff Smart Sensors Model 001,,,2022-06-07,,Sonoff,CAT0000008,Smart Sensors,Networking & Smart Home
+SKU0000902,PRD0000575,Red,,,,,,BRD0000052,SUB0000065,,Sonoff Smart Sensors Model 001,,,2022-06-07,,Sonoff,CAT0000008,Smart Sensors,Networking & Smart Home
