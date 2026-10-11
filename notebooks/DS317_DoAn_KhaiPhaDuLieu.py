@@ -8,7 +8,7 @@
 
 # %%
 import sys, os
-os.chdir("..")  # dam bao working directory la project/
+os.chdir("..")
 sys.path.insert(0, "src")
 
 import pandas as pd
