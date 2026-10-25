@@ -1,22 +1,9 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Khảo sát và thẩm định Phương án 2: Cảnh báo sớm rủi ro tồn kho (Inventory Risk Classification) trên 2 bộ dữ liệu
-# **Môn học:** Khai phá dữ liệu trong doanh nghiệp (DS317)  
-# **Bộ dữ liệu thẩm định:**
-# 1. **Electronics Sales Dataset** (Dataset chính - B-Tech Style)
-# 2. **Instacart Market Basket Analysis** (Dataset benchmark / tham khảo)
-# 
-# ---
-# 
-# ### Mục tiêu kiểm chứng
-# Thẩm định thực nghiệm tính khả thi của **Phương án 2 (PA2)** theo 4 khía cạnh cốt lõi:
-# 1. **Dữ liệu (Data Feasibility):** Kiểm tra cấu trúc, liên kết khóa ngoại (`SKU_ID`), tính đầy đủ của trường tồn kho, mốc thời gian, tính toàn vẹn và khả năng tái lập tồn kho lũy kế trên 2 dataset.
-# 2. **Kỹ thuật (Technical Feasibility):** Kiểm chứng khung bài toán theo đơn vị quan sát $(SKU \times Tuần\ t)$, quy tắc gán nhãn nghiệp vụ `InventoryRisk` (Low / Medium / High) qua chỉ số `Coverage` và `SalesTrend`, chiến lược phân chia chuỗi thời gian có khoảng đệm 4 tuần (Gap Split) chống rò rỉ dữ liệu (data leakage), và hiệu năng phân loại qua các mô hình baseline & LightGBM (PP-A).
-# 3. **Nguồn lực (Resource Feasibility):** Đo lường mức tiêu thụ bộ nhớ RAM, thời gian huấn luyện và đánh giá tính khả thi triển khai trên môi trường Google Colab / Kaggle.
-# 4. **Đạo đức – Pháp lý (Ethics & Legal Feasibility):** Kiểm tra giấy phép dữ liệu, rà soát tính riêng tư và dữ liệu định danh cá nhân (PII), đánh giá rủi ro thiên vị của nhãn đại diện (proxy label).
+# # Khảo sát và thẩm định Phương án 2:Inventory Risk Classification
 
-# In[ ]:
+# In[1]:
 
 
 import os
@@ -53,7 +40,7 @@ pd.set_option('display.float_format', lambda x: '%.4f' % x)
 print("Moi truong khoi tao thanh cong.")
 
 
-# In[ ]:
+# In[2]:
 
 
 # Xac dinh duong dan 2 bo du lieu
@@ -87,10 +74,8 @@ for f in insta_files:
 # ## 1. Thẩm định khía cạnh Dữ liệu (Data Feasibility)
 # 
 # ### 1.1. Thẩm định tính khả thi trên Dataset tham khảo (Instacart) đối với Phương án 2
-# Mục tiêu của Phương án 2 là: **Phân loại rủi ro tồn kho (InventoryRisk) theo từng SKU trong tuần $t$**, dựa trên lượng tồn kho cuối tuần và doanh số thực tế 4 tuần tiếp theo.  
-# Dưới đây là kiểm chứng thực nghiệm để đánh giá xem Instacart có thỏa mãn các biến số cần thiết của Phương án 2 hay không.
 
-# In[ ]:
+# In[3]:
 
 
 # Kiem tra schema cac bang quan trong cua Instacart
@@ -129,7 +114,7 @@ print(f"Truong thoi gian kha dung:         {[c for c in insta_orders.columns if 
 # - Biến động và số dư tồn kho: `InventoryMovements`, `InventoryBalances`
 # - Thông tin phân cấp sản phẩm: `Products`, `ProductVariants`
 
-# In[ ]:
+# In[4]:
 
 
 # Doc cac bang can thiet
@@ -161,7 +146,7 @@ overlap_sales_inv = skus_sales.intersection(skus_inv_mov)
 print(f"So SKU giao thoa giua Sales va Movements: {len(overlap_sales_inv):,d} ({100*len(overlap_sales_inv)/len(skus_sales):.2f}%)")
 
 
-# In[ ]:
+# In[5]:
 
 
 # Kiem tra truc thoi gian giua SalesOrders va InventoryMovements
@@ -185,7 +170,7 @@ print(f"\nDon hang trong giai doan 07/2023 - 12/2025: {valid_period_mask.sum():,
 print("Cac don truoc 07/2023 (13 don) va sau 2025 (16 don) la outlier/test, khong co phat sinh ton kho tuong ung.")
 
 
-# In[ ]:
+# In[6]:
 
 
 # 1.3. Tai lap chuoi ton kho luy ke (Cumulative Inventory)
@@ -220,7 +205,7 @@ print(f"So luong gia tri ton kho am (< 0):         {(weekly_inv['EndInventory'] 
 print(f"Ty le ton kho hop le (>= 0):               {100*(weekly_inv['EndInventory'] >= 0).mean():.2f}%")
 
 
-# In[ ]:
+# In[7]:
 
 
 # Truc quan hoa chuoi thoi gian ton kho va doanh so cua 2 SKU tieu bieu
@@ -261,7 +246,7 @@ plt.show()
 #   - **Medium:** $P_{60} \le \text{Coverage}(t) < P_{85}$ hoặc ($\text{Coverage}(t) \ge P_{85}$ nhưng đang có xu hướng tăng trưởng).
 #   - **Low:** Các trường hợp còn lại.
 
-# In[ ]:
+# In[8]:
 
 
 # 1. Tong hop ban hang theo tuan
@@ -304,7 +289,7 @@ df['SalesTrend_4w'] = df['WeeklyQty'] - df['Sales_Lag_4']
 print(f"Kich thuoc Panel tong the: {df.shape[0]:,d} dong | {df.shape[1]} cot")
 
 
-# In[ ]:
+# In[9]:
 
 
 # 2.2. Ky thuat dac trung (Feature Engineering - strictly <= t, no leakage)
@@ -332,7 +317,7 @@ print(f"So luong quan sat hop le de huan luyen & danh gia: {len(valid_df):,d} do
 print(f"So tuan hop le: {valid_df['Week'].nunique()} tuan ({valid_df['Week'].min().strftime('%Y-%m-%d')} -> {valid_df['Week'].max().strftime('%Y-%m-%d')})")
 
 
-# In[ ]:
+# In[10]:
 
 
 # 2.3. Chien luoc chia du lieu theo thoi gian co khoang dem 4 tuan (Gap Split)
@@ -381,7 +366,222 @@ print("\nPhan bo nhan tren Tap Test:")
 print(test_set['Target'].value_counts(normalize=True).rename({0:'Low', 1:'Medium', 2:'High'}))
 
 
-# In[ ]:
+# ### 2.4. Khảo sát thực nghiệm & Trực quan hóa dữ liệu trước mô hình hóa (Exploratory Data Analysis)
+# 
+# Khảo sát phân bố nhãn, ma trận tương quan đặc trưng và xu hướng chuỗi thời gian nhằm thẩm định tính khả thi của bài toán và giải thích cơ chế phân loại:
+# 1. **Biểu đồ so sánh phân bố nhãn mục tiêu (Target Distribution: Train vs Test):** Kiểm tra trực quan hiện tượng lệch pha phân bố (distribution shift) do việc tách tập dữ liệu theo thời gian có khoảng đệm 4 tuần (Gap Split).
+# 2. **Biểu đồ ma trận tương quan (Correlation Matrix / Heatmap):** Nhìn rõ mối quan hệ tuyến tính giữa các đặc trưng quan trọng (`EndInventory`, `PastCoverage`, `WeeklyQty`, `SalesTrend_4w`,...) với biến mục tiêu `Target`.
+# 3. **Biểu đồ xu hướng trung bình của các chỉ số chính theo thời gian nhóm theo nhãn rủi ro:** Phân tích sự phân kỳ hành vi giữa lượng hàng tồn kho và doanh số bán, giải thích sinh động lý do tại sao mô hình phân lớp được các nhóm này.
+
+# In[11]:
+
+
+# 1. Bieu do so sanh phan bo nhan muc tieu (Target Distribution) giua Train va Test
+# Giup kiem tra truc quan su lech pha phan bo (distribution shift) do Gap Split
+
+target_labels = ['Low Risk (0)', 'Medium Risk (1)', 'High Risk (2)']
+target_names = {0: 'Low Risk (0)', 1: 'Medium Risk (1)', 2: 'High Risk (2)'}
+
+train_dist = train_set['Target'].map(target_names).value_counts()
+test_dist = test_set['Target'].map(target_names).value_counts()
+
+train_pct = (train_set['Target'].map(target_names).value_counts(normalize=True) * 100).reindex(target_labels)
+test_pct = (test_set['Target'].map(target_names).value_counts(normalize=True) * 100).reindex(target_labels)
+
+dist_summary = pd.DataFrame({
+    'Train Count': train_dist.reindex(target_labels),
+    'Train (%)': train_pct,
+    'Test Count': test_dist.reindex(target_labels),
+    'Test (%)': test_pct
+})
+print("=== BANG PHAN BO NHAN MUC TIEU (TRAIN VS TEST) ===")
+print(dist_summary.to_string())
+
+# Truc quan hoa bang bieu do
+fig, axes = plt.subplots(1, 2, figsize=(15, 5.5), gridspec_kw={'width_ratios': [1.3, 1]})
+
+# Subplot 1: Grouped Bar Chart so sanh ty le % giua Train va Test
+x = np.arange(len(target_labels))
+width = 0.35
+
+rects1 = axes[0].bar(x - width/2, train_pct.values, width, label=f'Train Set ({len(train_set):,d} dong)',
+                     color='#2b5c8f', edgecolor='black', alpha=0.9)
+rects2 = axes[0].bar(x + width/2, test_pct.values, width, label=f'Test Set ({len(test_set):,d} dong)',
+                     color='#e26d5c', edgecolor='black', alpha=0.9)
+
+axes[0].set_title('So sanh ty le phan bo nhan muc tieu (Target Distribution Shift)\nTrain Set vs Test Set (Gap Split 4 tuan)', fontsize=12, fontweight='bold')
+axes[0].set_ylabel('Ty le phan tram (%)', fontsize=11)
+axes[0].set_xticks(x)
+axes[0].set_xticklabels(target_labels, fontsize=10, fontweight='bold')
+axes[0].set_ylim(0, max(max(train_pct), max(test_pct)) * 1.18)
+axes[0].legend(frameon=True, facecolor='white', framealpha=0.9)
+axes[0].grid(axis='y', linestyle='--', alpha=0.5)
+
+# Ghi gia tri % tren dau cot
+for rect in rects1:
+    h = rect.get_height()
+    axes[0].annotate(f'{h:.1f}%', xy=(rect.get_x() + rect.get_width() / 2, h),
+                     xytext=(0, 4), textcoords="offset points", ha='center', va='bottom',
+                     fontsize=10, fontweight='bold', color='#1b3b5a')
+for rect in rects2:
+    h = rect.get_height()
+    axes[0].annotate(f'{h:.1f}%', xy=(rect.get_x() + rect.get_width() / 2, h),
+                     xytext=(0, 4), textcoords="offset points", ha='center', va='bottom',
+                     fontsize=10, fontweight='bold', color='#8c2317')
+
+# Subplot 2: Donut Chart the hien co cau tap Test
+colors = ['#2ca02c', '#ff7f0e', '#d62728']
+high_pct_test = test_pct['High Risk (2)']
+axes[1].pie(test_pct.values, labels=target_labels, autopct='%1.1f%%', startangle=140,
+            colors=colors, explode=(0.02, 0.02, 0.06),
+            wedgeprops={'edgecolor': 'white', 'linewidth': 2})
+centre_circle = plt.Circle((0,0), 0.60, fc='white')
+axes[1].add_artist(centre_circle)
+axes[1].set_title(f'Co cau nhan tren Tap Test\n(Nhom High Risk chiem {high_pct_test:.1f}%)', fontsize=12, fontweight='bold')
+
+plt.tight_layout()
+plt.show()
+
+print("\n--- NHAN XET VE SU LECH PHA PHAN BO (DISTRIBUTION SHIFT) ---")
+print(f"1. Nhom High Risk tang manh tu {train_pct['High Risk (2)']:.1f}% (Train) len {test_pct['High Risk (2)']:.1f}% (Test).")
+print(f"2. Nhom Low Risk giam tu {train_pct['Low Risk (0)']:.1f}% (Train) xuong {test_pct['Low Risk (0)']:.1f}% (Test).")
+print("3. Y nghia: Phan anh dung thuc te chuoi thoi gian ban le dien tu (cuoi nam 2025 toc do tieu thu cham o mot so danh muc khien hang ton bi u dong).")
+print("4. Chien luoc xu ly: Mo hinh can duoc huan luyen voi class_weight='balanced' va danh gia bang PR-AUC de tranh bi danh lua boi do chinh xac tong the (Accuracy).")
+
+
+# In[12]:
+
+
+# 2. Bieu do tuong quan (Correlation Matrix / Heatmap)
+# Quan sat moi quan he tuyen tinh giua cac dac trung quan trong va bien muc tieu Target tren tap Train
+
+corr_features = [
+    'Target', 'PastCoverage', 'EndInventory', 'NetQtyChange',
+    'WeeklyQty', 'Sales_Lag_1', 'Sales_RollingMean_4w', 'SalesTrend_4w',
+    'WeeklyRevenue', 'AvgPrice', 'PromoCount'
+]
+
+# Tinh ma tran tuong quan Pearson tren Tap Train (tranh data leakage tu Test)
+train_corr = train_set[corr_features].corr()
+
+fig, axes = plt.subplots(1, 2, figsize=(16, 6.5), gridspec_kw={'width_ratios': [1.4, 0.9]})
+
+# Subplot 1: Heatmap day du
+mask = np.triu(np.ones_like(train_corr, dtype=bool))
+sns.heatmap(train_corr, mask=mask, annot=True, fmt='.2f', cmap='coolwarm',
+            vmin=-1, vmax=1, center=0, cbar_kws={'label': 'He so tuong quan Pearson (r)'},
+            linewidths=0.6, ax=axes[0])
+axes[0].set_title('Ma tran tuong quan giua cac dac trung va bien muc tieu Target\n(Khao sat tren Tap Train)', fontsize=12, fontweight='bold')
+
+# Subplot 2: Bar plot xep hang he so tuong quan voi bien Target
+target_corr = train_corr['Target'].drop('Target').sort_values(ascending=True)
+bar_colors = ['#d62728' if x < 0 else '#2ca02c' for x in target_corr.values]
+bars = axes[1].barh(target_corr.index, target_corr.values, color=bar_colors, edgecolor='black', alpha=0.85)
+axes[1].axvline(0, color='black', lw=1.2, linestyle='--')
+axes[1].set_title('Xep hang tuong quan cua cac dac trung voi Target\n(Gia tri r voi bien muc tieu)', fontsize=12, fontweight='bold')
+axes[1].set_xlabel('He so tuong quan (r)', fontsize=10)
+axes[1].set_xlim(-0.4, 0.8)
+axes[1].grid(axis='x', linestyle='--', alpha=0.5)
+
+# Ghi so tren thanh
+for bar in bars:
+    w = bar.get_width()
+    offset = 0.02 if w >= 0 else -0.06
+    axes[1].annotate(f'{w:.2f}', xy=(w + offset, bar.get_y() + bar.get_height()/2),
+                     va='center', fontsize=9, fontweight='bold')
+
+plt.tight_layout()
+plt.show()
+
+print("\n--- NHAN XET VE MOI QUAN HE TUONG QUAN VOI BIEN MUC TIEU TARGET ---")
+print(f"1. PastCoverage co tuong quan duong manh nhat voi Target (r = {train_corr.loc['PastCoverage', 'Target']:.2f}): Tuan nao co he so bao phu ton kho uoc tinh qua khu cao thi xac suat High Risk rat lon.")
+print(f"2. EndInventory co tuong quan duong dang ke (r = {train_corr.loc['EndInventory', 'Target']:.2f}): Luong ton kho tuyet doi cao luon la dieu kien can gay ra nguy co ton u.")
+print(f"3. WeeklyQty (r = {train_corr.loc['WeeklyQty', 'Target']:.2f}), Sales_Lag_1 (r = {train_corr.loc['Sales_Lag_1', 'Target']:.2f}) va Sales_RollingMean_4w (r = {train_corr.loc['Sales_RollingMean_4w', 'Target']:.2f}) mang tuong quan am ro ret: San pham ban cang chay thi cang it rui ro bi xep vao nhom High Risk.")
+print(f"4. SalesTrend_4w mang tuong quan am (r = {train_corr.loc['SalesTrend_4w', 'Target']:.2f}): Doanh so giam sut 4 tuan qua truc tiep canh bao rui ro tieu thu.")
+
+
+# In[13]:
+
+
+# 3. Bieu do xu huong trung binh cua cac chi so chinh theo thoi gian nhom theo nhan rui ro
+# Giai thich sinh dong co che phan tach cua mo hinh qua su phan ky (divergence) giua Ton kho va Doanh so
+
+# Gan nhan Target tren toan bo valid_df bang nguong P60, P85 tu Train de khao sat xuyen suot chuoi thoi gian
+valid_df['Target'] = np.where(
+    (valid_df['Coverage'] >= p85) & (valid_df['SalesTrend_4w'] <= 0), 2,
+    np.where(valid_df['Coverage'] >= p60, 1, 0)
+)
+
+weekly_risk_stats = valid_df.groupby(['Week', 'Target']).agg(
+    Avg_EndInventory=('EndInventory', 'mean'),
+    Avg_WeeklyQty=('WeeklyQty', 'mean'),
+    Avg_PastCoverage=('PastCoverage', 'mean'),
+    Avg_SalesTrend=('SalesTrend_4w', 'mean')
+).reset_index()
+
+risk_colors = {0: '#2ca02c', 1: '#ff7f0e', 2: '#d62728'}
+risk_names = {0: 'Low Risk', 1: 'Medium Risk', 2: 'High Risk'}
+
+fig, axes = plt.subplots(3, 1, figsize=(15, 11), sharex=True)
+
+# 1. Panel Ton kho trung binh (EndInventory)
+for r in [0, 1, 2]:
+    subset = weekly_risk_stats[weekly_risk_stats['Target'] == r]
+    axes[0].plot(subset['Week'], subset['Avg_EndInventory'], label=risk_names[r],
+                 color=risk_colors[r], lw=2.2)
+axes[0].set_ylabel('Ton kho TB (Chiec)', fontsize=11, fontweight='bold')
+axes[0].set_title('Dien bien trung binh cua cac chi so chinh theo thoi gian phan theo nhan rui ro\nPanel 1: Ton kho cuoi tuan (EndInventory) - Nhom rui ro duy tri luong ton kho cao nhat', fontsize=12, fontweight='bold')
+axes[0].legend(loc='upper left', frameon=True)
+axes[0].grid(True, linestyle='--', alpha=0.5)
+
+# 2. Panel Doanh so ban trung binh (WeeklyQty)
+for r in [0, 1, 2]:
+    subset = weekly_risk_stats[weekly_risk_stats['Target'] == r]
+    axes[1].plot(subset['Week'], subset['Avg_WeeklyQty'], label=risk_names[r],
+                 color=risk_colors[r], lw=2.2)
+axes[1].set_ylabel('Doanh so TB (Chiec/tuan)', fontsize=11, fontweight='bold')
+axes[1].set_title('Panel 2: Doanh so ban ra trung binh tuan (WeeklyQty) - Nhom High Risk co doanh so tiem can 0', fontsize=12, fontweight='bold')
+axes[1].legend(loc='upper left', frameon=True)
+axes[1].grid(True, linestyle='--', alpha=0.5)
+
+# 3. Panel He so bao phu ton kho (PastCoverage)
+for r in [0, 1, 2]:
+    subset = weekly_risk_stats[weekly_risk_stats['Target'] == r]
+    axes[2].plot(subset['Week'], subset['Avg_PastCoverage'], label=risk_names[r],
+                 color=risk_colors[r], lw=2.2)
+axes[2].set_ylabel('Coverage TB (Tuan)', fontsize=11, fontweight='bold')
+axes[2].set_xlabel('Moc thoi gian (Tuan)', fontsize=11, fontweight='bold')
+axes[2].set_title('Panel 3: He so bao phu ton kho uoc tinh (PastCoverage) - Nhom High Risk vuot troi tren 60 tuan', fontsize=12, fontweight='bold')
+axes[2].legend(loc='upper left', frameon=True)
+axes[2].grid(True, linestyle='--', alpha=0.5)
+
+# Danh dau cac vung phan chia thoi gian (Train, Gap 1, Val, Gap 2, Test)
+split_dates = [
+    (train_weeks[0], train_weeks[-1], 'Train Set', '#e8f4f8'),
+    (val_weeks[0], val_weeks[-1], 'Val Set', '#eafaf1'),
+    (test_weeks[0], test_weeks[-1], 'Test Set', '#fdf2e9')
+]
+for start, end, label, color in split_dates:
+    for ax in axes:
+        ax.axvspan(start, end, color=color, alpha=0.45)
+
+axes[0].text(train_weeks[len(train_weeks)//2], axes[0].get_ylim()[1]*0.88, 'Train Period', ha='center', fontsize=10, fontstyle='italic', bbox=dict(boxstyle='round,pad=0.2', facecolor='white', alpha=0.7))
+axes[0].text(val_weeks[len(val_weeks)//2], axes[0].get_ylim()[1]*0.88, 'Val', ha='center', fontsize=10, fontstyle='italic', bbox=dict(boxstyle='round,pad=0.2', facecolor='white', alpha=0.7))
+axes[0].text(test_weeks[len(test_weeks)//2], axes[0].get_ylim()[1]*0.88, 'Test Period', ha='center', fontsize=10, fontstyle='italic', bbox=dict(boxstyle='round,pad=0.2', facecolor='white', alpha=0.7))
+
+plt.tight_layout()
+plt.show()
+
+print("\n--- GIAI THICH NGUYEN LY PHAN LOP CUA MO HINH (BUSINESS INSIGHTS) ---")
+print("1. Su phan ky (Divergence) giua Ton kho va Doanh so:")
+print("   - Nhom High Risk (Mau do): Luong ton kho trung binh luon duy tri o muc rat cao (~45 - 55 chiec), nhung doanh so ban WeeklyQty lai roi tham hai ve sat 0 (chi dat ~0.38 chiec/tuan).")
+print("   - Nhom Low Risk (Mau xanh): Doanh so ban luon cao vuot troi (~7.5 chiec/tuan), ton kho duoc giai phong nhanh chong giup Coverage chi o muc 3.4 tuan.")
+print("2. Ly do mo hinh dat hieu nang cao (PR-AUC ~ 0.98):")
+print("   - Giua cac nhan co ranh gioi phan tach ro rang qua PastCoverage va su doi lap giua EndInventory va SalesTrend_4w.")
+print("   - Nho do, LightGBM de dang nhan dien cac SKU bi 'dong bang' tieu thu nhung van u dong ton kho lon.")
+
+
+# In[14]:
 
 
 # 2.4. Huan luyen cac mo hinh Baseline va PP-A (LightGBM)
@@ -436,7 +636,7 @@ y_prob_lgb = lgb_model.predict_proba(X_test)[:, 2]
 print(f"Huan luyen hoan tat! Thoi gian train LR: {t_lr_train:.2f}s | LightGBM: {t_lgb_train:.2f}s")
 
 
-# In[ ]:
+# In[15]:
 
 
 # 2.5. Bang so sanh hieu nang cac mo hinh
@@ -474,7 +674,7 @@ print("=== BANG TONG HOP KET QUA KIEM CHUNG TREN TAP TEST ===")
 print(eval_df.to_string(index=False))
 
 
-# In[ ]:
+# In[16]:
 
 
 # Truc quan hoa Confusion Matrix va Feature Importance
@@ -506,7 +706,7 @@ plt.tight_layout()
 plt.show()
 
 
-# In[ ]:
+# In[17]:
 
 
 # Truc quan hoa Precision-Recall Curve cho lop High Risk
@@ -528,57 +728,3 @@ ax.grid(True, alpha=0.3)
 plt.tight_layout()
 plt.show()
 
-
-# ## 3. Thẩm định khía cạnh Nguồn lực (Resource Feasibility)
-# - **Bộ nhớ RAM:** Kích thước bảng Panel và ma trận đặc trưng trong bộ nhớ.
-# - **Thời gian xử lý & huấn luyện:** Tốc độ huấn luyện mô hình cây tăng cường (PP-A) so với mô hình TabTransformer (PP-B).
-# - **Môi trường thực thi:** Đánh giá tính khả thi trên hạ tầng giới hạn (Google Colab miễn phí 12GB RAM, máy cá nhân).
-
-# In[ ]:
-
-
-# Do dac bo nho RAM
-panel_mem = valid_df.memory_usage(deep=True).sum() / (1024 ** 2)
-train_mem = X_train.memory_usage(deep=True).sum() / (1024 ** 2)
-
-print("--- THAM DINH BO NHO VA THOI GIAN ---")
-print(f"Dung luong RAM cho Panel (105,391 dong):        {panel_mem:>8.2f} MB")
-print(f"Dung luong RAM cho Ma tran dac trung Train:    {train_mem:>8.2f} MB")
-print(f"Thoi gian huan luyen LightGBM (100 cay):        {t_lgb_train:>8.2f} giay")
-print(f"Thoi gian huan luyen Logistic Regression:       {t_lr_train:>8.2f} giay")
-
-# Uoc luong mo hinh TabTransformer (PP-B)
-print("\n--- Uoc luong nguon luc cho PP-B (TabTransformer / Deep Learning) ---")
-print("RAM can thiet:       ~2 - 4 GB (Batch size 256, 100k dong)")
-print("Phan cung bat buoc:  GPU ho tro CUDA (Colab T4 / P100)")
-print("Thoi gian train:     ~10 - 20 phut (20 epochs)")
-print("Nhan xet: PP-A (LightGBM) vuot troi hoan toan ve toc do, tiet kiem RAM va de trien khai hon PP-B.")
-
-
-# ## 4. Thẩm định khía cạnh Đạo đức – Pháp lý (Ethics & Legal Feasibility)
-# 
-# ### 4.1. Giấy phép sử dụng dữ liệu
-# - **Electronics Sales Dataset:** Được công bố bởi `fahdelatiby` trên Kaggle theo giấy phép **CC0: Public Domain Dedication**. Giấy phép này cho phép sao chép, chỉnh sửa, phân phối và công bố kết quả nghiên cứu mà không bị ràng buộc bản quyền thương mại.
-# 
-# ### 4.2. Bảo vệ quyền riêng tư & Dữ liệu định danh cá nhân (PII)
-# - Bảng `Customers` có cột `CustomerName` chứa tên người dùng cá nhân (dữ liệu PII trực tiếp).
-# - Tuy nhiên, trong **Phương án 2**, đơn vị phân tích là **$(SKU \times Tuần\ t)$**.
-# - Pipeline xử lý hoàn toàn **không sử dụng** bảng `Customers`, không chứa `CustomerID` hay `CustomerName`.
-# - Do đó, **rủi ro vi phạm quyền riêng tư và lộ lọt PII ở Phương án 2 bằng 0**.
-# 
-# ### 4.3. Tính minh bạch & Rủi ro thiên vị của nhãn đại diện (Proxy Label)
-# - Nhãn `InventoryRisk` được tạo theo quy tắc nghiệp vụ giả định (`Coverage` và `SalesTrend`), là biến đại diện (proxy), chưa phản ánh chính xác chi phí lưu kho hay hợp đồng mua lại thực tế của từng nhà phân phối.
-# - Cần công bố rõ đây là hệ thống hỗ trợ ra quyết định (Decision Support System) chứ không tự động thay thế quyết định của người quản lý.
-
-# ## 5. Tổng hợp kết quả thẩm định Phương án 2
-# 
-# | Tiêu chí | Dataset chính: Electronics Sales Dataset | Dataset tham khảo: Instacart |
-# | :--- | :--- | :--- |
-# | **Dữ liệu (Data)** | **Đạt (kèm lưu ý):** Đầy đủ 27 bảng, 871 SKU khớp 100% giữa bán hàng và kho. Tồn kho lũy kế hợp lệ 100% (min $\ge 0$). Cần lọc khoảng thời gian đồng bộ 07/2023 - 12/2025. | **Không đạt:** Hoàn toàn không có dữ liệu tồn kho, không có mốc thời gian lịch tuyệt đối. Không thể tính Coverage. |
-# | **Kỹ thuật (Technical)** | **Đạt:** Xây dựng thành công Panel $SKU \times Tuần$, nhãn `InventoryRisk` phân bố hợp lý (High ~12-16%), chia tập có Gap 4 tuần chống rò rỉ. LightGBM đạt Recall(High) = 93.93%, PR-AUC = 0.980. | **Không đạt:** Không thể định nghĩa biến mục tiêu, không thể tạo đặc trưng tồn kho. Không tương thích khung bài toán. |
-# | **Nguồn lực (Resources)** | **Đạt:** Tiêu thụ < 35 MB RAM, thời gian huấn luyện LightGBM < 5 giây. Khả thi 100% trên Colab CPU/GPU miễn phí. PP-B (TabTransformer) cần thêm GPU T4. | **Không đạt:** Quy mô lớn nhưng không phục vụ được bài toán, lãng phí tài nguyên tính toán vô ích. |
-# | **Đạo đức – Pháp lý** | **Đạt:** Giấy phép CC0. Đơn vị phân tích cấp SKU loại bỏ hoàn toàn CustomerName/PII. Cần minh bạch bản chất proxy label. | **Đạt về pháp lý (CC0)** nhưng không có giá trị ứng dụng cho PA2. |
-# | **KẾT LUẬN** | **KHẢ THI CAO (ĐẠT)** - Chọn làm phương án nòng cốt của đồ án. | **KHÔNG KHẢ THI (KHÔNG ĐẠT CHO PA2)** - Chỉ dùng benchmark cho phân tích giỏ hàng. |
-# 
-# ---
-# *Ghi chú: Các mô hình trên chỉ đóng vai trò kiểm chứng tính khả thi và làm baseline so sánh, không xuất file mô hình `.pkl`.*

@@ -1,0 +1,8 @@
+bước,số_dòng,số_SKU,số_tuần
+5.1 nối bán hàng ⋈ tồn kho (inner),74305,871,130
+5.2a trong cửa sổ chung SYNC,74305,871,130
+5.2b đủ 4 tuần nhìn trước (n_fwd_weeks),71660,862,126
+"5.2c bỏ dòng thiếu nhãn (y_qty, cov_fwd)",71476,861,126
+"5.2d đủ lịch sử lag/rolling 8 tuần (qty_lag8, qty_rmean8, qty_rstd8, cov_past)",64706,826,118
+5.4 bỏ các tuần gap,59832,826,110
+5.5 SKU đủ lịch sử train,53545,586,110

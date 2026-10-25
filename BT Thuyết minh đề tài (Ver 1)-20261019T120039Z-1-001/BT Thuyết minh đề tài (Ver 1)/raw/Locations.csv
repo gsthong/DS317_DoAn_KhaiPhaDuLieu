@@ -1,0 +1,24 @@
+LocationID,LocationName,LocationType,GovernorateID,CityArea,BranchFormat,PrimaryDCID,CapacitySharePct
+LOC0000001,East Cairo Distribution Center,Distribution Center,GOV0000005,10th of Ramadan City,,,45
+LOC0000002,West Cairo Distribution Center,Distribution Center,GOV0000002,6th of October City,,,35
+LOC0000003,Alexandria Distribution Center,Distribution Center,GOV0000003,Borg El Arab,,,20
+LOC0000004,Nasr City,Branch,GOV0000001,Nasr City,Flagship,LOC0000001,
+LOC0000005,Heliopolis,Branch,GOV0000001,Heliopolis,Standard,LOC0000001,
+LOC0000006,New Cairo,Branch,GOV0000001,New Cairo,Flagship,LOC0000001,
+LOC0000007,Maadi,Branch,GOV0000001,Maadi,Standard,LOC0000002,
+LOC0000008,Shubra,Branch,GOV0000001,Shubra,Standard,LOC0000001,
+LOC0000009,Mohandessin,Branch,GOV0000002,Mohandessin,Standard,LOC0000002,
+LOC0000010,Dokki,Branch,GOV0000002,Dokki,Standard,LOC0000002,
+LOC0000011,6th of October,Branch,GOV0000002,6th of October,Flagship,LOC0000002,
+LOC0000012,Sheikh Zayed,Branch,GOV0000002,Sheikh Zayed,Flagship,LOC0000002,
+LOC0000013,Smouha,Branch,GOV0000003,Smouha,Flagship,LOC0000003,
+LOC0000014,Sidi Gaber,Branch,GOV0000003,Sidi Gaber,Standard,LOC0000003,
+LOC0000015,Miami,Branch,GOV0000003,Miami,Standard,LOC0000003,
+LOC0000016,Mansoura,Branch,GOV0000004,Mansoura,Flagship,LOC0000001,
+LOC0000017,Tanta,Branch,GOV0000006,Tanta,Standard,LOC0000003,
+LOC0000018,Zagazig,Branch,GOV0000005,Zagazig,Standard,LOC0000001,
+LOC0000019,Ismailia,Branch,GOV0000017,Ismailia,Standard,LOC0000001,
+LOC0000020,Suez,Branch,GOV0000018,Suez,Standard,LOC0000001,
+LOC0000021,Port Said,Branch,GOV0000019,Port Said,Standard,LOC0000001,
+LOC0000022,Minya,Branch,GOV0000010,Minya,Standard,LOC0000002,
+LOC0000023,Assiut,Branch,GOV0000011,Assiut,Standard,LOC0000002,

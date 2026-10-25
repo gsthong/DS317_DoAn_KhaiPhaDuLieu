@@ -1,0 +1,6 @@
+PaymentMethodID,PaymentMethodName,ScopeDescription
+PMT0000001,Cash,Primarily store payments; COD only under approved fulfillment policy
+PMT0000002,Debit Card,Stores and online
+PMT0000003,Credit Card,Stores and online
+PMT0000004,Mobile Wallet,Stores and online
+PMT0000005,Installment,High-value purchases; simplified provider and tenure

@@ -1,0 +1,4 @@
+SalesChannelID,ChannelName,ChannelRole
+CHN0000001,Physical Store,Primary channel; immediate takeaway or home delivery
+CHN0000002,Website,Main e-commerce channel
+CHN0000003,Mobile App,E-commerce channel with stronger repeat/loyal customer tendency

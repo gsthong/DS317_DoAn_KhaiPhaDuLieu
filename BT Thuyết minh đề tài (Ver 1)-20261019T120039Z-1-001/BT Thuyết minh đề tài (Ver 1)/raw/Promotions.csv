@@ -1,0 +1,35 @@
+PromotionID,PromotionName,PromotionType,StartDate,EndDate
+PRO0000001,Summer Cooling 2023,Brand / Category Campaign,2023-07-01,2023-08-31
+PRO0000002,Back-to-School Tech 2023,Brand / Category Campaign,2023-09-01,2023-09-30
+PRO0000003,Mega Campaign 2023,Direct Product Discount,2023-11-01,2023-11-30
+PRO0000004,Year-End 2023,Payment / Installment Offer,2023-12-01,2023-12-31
+PRO0000005,Ramadan and Eid 2024,Brand / Category Campaign,2024-03-01,2024-04-30
+PRO0000006,Summer 2024,Brand / Category Campaign,2024-06-01,2024-08-31
+PRO0000007,Back-to-School 2024,Brand / Category Campaign,2024-09-01,2024-09-30
+PRO0000008,Mega Campaign 2024,Direct Product Discount,2024-11-01,2024-11-30
+PRO0000009,Year-End 2024,Payment / Installment Offer,2024-12-01,2024-12-31
+PRO0000010,Ramadan and Eid 2025,Brand / Category Campaign,2025-03-01,2025-04-30
+PRO0000011,Summer 2025,Brand / Category Campaign,2025-06-01,2025-08-31
+PRO0000012,Back-to-School 2025,Brand / Category Campaign,2025-09-01,2025-09-30
+PRO0000013,Mega Campaign 2025,Direct Product Discount,2025-11-01,2025-11-30
+PRO0000014,Year-End 2025,Payment / Installment Offer,2025-12-01,2025-12-31
+PRO0000015,Mobile Flash 2023-07,Direct Product Discount,2023-07-10,2023-07-18
+PRO0000016,Bundle Week 2023-08,Bundle Discount,2023-08-12,2023-08-20
+PRO0000017,Installment Days 2023-10,Payment / Installment Offer,2023-10-08,2023-10-18
+PRO0000018,Home Upgrade 2023-10,Brand / Category Campaign,2023-10-20,2023-10-31
+PRO0000019,New Year Tech 2024,Direct Product Discount,2024-01-10,2024-01-22
+PRO0000020,Bundle Week 2024-02,Bundle Discount,2024-02-05,2024-02-14
+PRO0000021,Installment Days 2024-05,Payment / Installment Offer,2024-05-06,2024-05-17
+PRO0000022,Kitchen Focus 2024-05,Brand / Category Campaign,2024-05-20,2024-05-31
+PRO0000023,Tech Flash 2024-07,Direct Product Discount,2024-07-08,2024-07-17
+PRO0000024,Bundle Week 2024-10,Bundle Discount,2024-10-06,2024-10-15
+PRO0000025,Payment Days 2024-10,Payment / Installment Offer,2024-10-20,2024-10-31
+PRO0000026,Appliance Focus 2024-12,Brand / Category Campaign,2024-12-08,2024-12-18
+PRO0000027,New Year Tech 2025,Direct Product Discount,2025-01-09,2025-01-20
+PRO0000028,Bundle Week 2025-02,Bundle Discount,2025-02-05,2025-02-15
+PRO0000029,Payment Days 2025-05,Payment / Installment Offer,2025-05-05,2025-05-16
+PRO0000030,Kitchen Focus 2025-05,Brand / Category Campaign,2025-05-19,2025-05-30
+PRO0000031,Tech Flash 2025-07,Direct Product Discount,2025-07-07,2025-07-17
+PRO0000032,Bundle Week 2025-10,Bundle Discount,2025-10-05,2025-10-15
+PRO0000033,Payment Days 2025-10,Payment / Installment Offer,2025-10-19,2025-10-31
+PRO0000034,Appliance Focus 2025-12,Brand / Category Campaign,2025-12-08,2025-12-18
