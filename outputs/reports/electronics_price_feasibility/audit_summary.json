@@ -1,0 +1,175 @@
+{
+  "scope": "Local data audit, train/validation dynamics only; not source authenticity verification or final benchmark",
+  "raw_table_count": 27,
+  "quality": [
+    {
+      "table": "SalesOrders",
+      "raw_rows": 322577,
+      "full_duplicates": 845,
+      "conflicting_key_rows": 0,
+      "missing_key_rows": 0
+    },
+    {
+      "table": "SalesOrderLines",
+      "raw_rows": 579572,
+      "full_duplicates": 0,
+      "conflicting_key_rows": 0,
+      "missing_key_rows": 0
+    },
+    {
+      "table": "ProductVariants",
+      "raw_rows": 902,
+      "full_duplicates": 0,
+      "conflicting_key_rows": 0,
+      "missing_key_rows": 0
+    },
+    {
+      "table": "Products",
+      "raw_rows": 576,
+      "full_duplicates": 1,
+      "conflicting_key_rows": 0,
+      "missing_key_rows": 0
+    },
+    {
+      "table": "Brands",
+      "raw_rows": 66,
+      "full_duplicates": 0,
+      "conflicting_key_rows": 0,
+      "missing_key_rows": 0
+    },
+    {
+      "table": "Subcategories",
+      "raw_rows": 65,
+      "full_duplicates": 0,
+      "conflicting_key_rows": 0,
+      "missing_key_rows": 0
+    },
+    {
+      "table": "Categories",
+      "raw_rows": 8,
+      "full_duplicates": 0,
+      "conflicting_key_rows": 0,
+      "missing_key_rows": 0
+    },
+    {
+      "table": "Promotions",
+      "raw_rows": 34,
+      "full_duplicates": 0,
+      "conflicting_key_rows": 0,
+      "missing_key_rows": 0
+    }
+  ],
+  "orphan_counts": {
+    "SalesOrderLines.SalesOrderID->SalesOrders": 0,
+    "SalesOrderLines.SKU_ID->ProductVariants": 0,
+    "ProductVariants.ProductID->Products": 0,
+    "Products.BrandID->Brands": 0,
+    "Products.SubcategoryID->Subcategories": 0,
+    "Subcategories.CategoryID->Categories": 0
+  },
+  "completed_orders_within_period": 308750,
+  "retained_full_week_lines": 553261,
+  "weekly_observed_rows": 68317,
+  "skus": 871,
+  "full_weeks": 130,
+  "sku_observed_weeks_quantiles": {
+    "0.0": 1.0,
+    "0.1": 16.0,
+    "0.25": 41.5,
+    "0.5": 81.0,
+    "0.75": 126.0,
+    "0.9": 130.0,
+    "1.0": 130.0
+  },
+  "sku_coverage_within_observed_span_quantiles": {
+    "0.0": 0.07692307692307693,
+    "0.1": 0.6796875,
+    "0.25": 0.9494743288761865,
+    "0.5": 1.0,
+    "0.75": 1.0,
+    "0.9": 1.0,
+    "1.0": 1.0
+  },
+  "sku_with_at_least_32_observed_weeks": 699,
+  "weekly_qty_quantiles": {
+    "0.1": 2.0,
+    "0.5": 7.0,
+    "0.9": 19.0
+  },
+  "sku_constant_regular_unit_price_count": 50,
+  "sku_constant_actual_line_price_count": 22,
+  "line_actual_equals_regular_pct": 90.59666233477509,
+  "discount_without_promotion_pct": 0.0,
+  "actual_above_regular_count": 0,
+  "missing_unit_cost_pct": 0.0,
+  "pretest_labeled_origins_with_history_le4_pct": 5.729109974238961,
+  "split_summary": [
+    {
+      "split": "test",
+      "eligible_origins": 16730,
+      "observed_labels": 12324,
+      "label_coverage_pct": 73.66407650926479,
+      "skus": 869,
+      "target_week_min": "2025-08-11",
+      "target_week_max": "2025-12-22"
+    },
+    {
+      "split": "train",
+      "eligible_origins": 52429,
+      "observed_labels": 44182,
+      "label_coverage_pct": 84.27015582978886,
+      "skus": 744,
+      "target_week_min": "2023-07-10",
+      "target_week_max": "2025-03-24"
+    },
+    {
+      "split": "validation",
+      "eligible_origins": 14609,
+      "observed_labels": 10940,
+      "label_coverage_pct": 74.88534465055787,
+      "skus": 797,
+      "target_week_min": "2025-03-31",
+      "target_week_max": "2025-08-04"
+    }
+  ],
+  "train_validation_dynamics": [
+    {
+      "split": "train",
+      "rows": 44182,
+      "last_price_WAPE_pct": 0.9750013879126923,
+      "last_price_MAE_source_currency": 138.67978926405576,
+      "unchanged_within_1cent_pct": 62.781223122538584,
+      "median_relative_change_pct": 0.0,
+      "change_gt_0.001_pct": 36.23647639310126,
+      "change_gt_0.001_count": 16010,
+      "change_gt_0.01_pct": 28.101941967317007,
+      "change_gt_0.01_count": 12416,
+      "change_gt_0.05_pct": 6.389479878683627,
+      "change_gt_0.05_count": 2823,
+      "change_gt_0.1_pct": 1.3240686252319949,
+      "change_gt_0.1_count": 585
+    },
+    {
+      "split": "validation",
+      "rows": 10940,
+      "last_price_WAPE_pct": 1.086468147929376,
+      "last_price_MAE_source_currency": 162.48309600369575,
+      "unchanged_within_1cent_pct": 57.04753199268738,
+      "median_relative_change_pct": 1.1102230246251565e-14,
+      "change_gt_0.001_pct": 41.252285191956126,
+      "change_gt_0.001_count": 4513,
+      "change_gt_0.01_pct": 30.219378427787934,
+      "change_gt_0.01_count": 3306,
+      "change_gt_0.05_pct": 7.120658135283364,
+      "change_gt_0.05_count": 779,
+      "change_gt_0.1_pct": 1.526508226691042,
+      "change_gt_0.1_count": 167
+    }
+  ],
+  "limitations": [
+    "Synthetic/real provenance, license and currency not verified by this audit",
+    "No ingest timestamp; actual availability latency unknown",
+    "No controlled benchmark of model gains yet",
+    "History sparsity is heterogeneous; not automatically cold start or few-shot"
+  ]
+}

@@ -1,0 +1,9 @@
+﻿table,raw_rows,full_duplicates,conflicting_key_rows,missing_key_rows
+SalesOrders,322577,845,0,0
+SalesOrderLines,579572,0,0,0
+ProductVariants,902,0,0,0
+Products,576,1,0,0
+Brands,66,0,0,0
+Subcategories,65,0,0,0
+Categories,8,0,0,0
+Promotions,34,0,0,0

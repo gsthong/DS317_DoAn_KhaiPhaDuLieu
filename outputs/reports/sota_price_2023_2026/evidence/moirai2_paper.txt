@@ -1,0 +1,2396 @@
+Moirai 2.0: When Less Is More for Time Series Forecasting
+Skip to main content
+Report GitHub Issue
+×
+Title:
+Content selection saved. Describe the issue below:
+Description:
+Submit without GitHub
+Submit in GitHub
+Why HTML?
+Report Issue
+Back to Abstract
+Download PDF
+Contents
+Reading mode
+Colour theme
+Abstract
+1
+Introduction
+2
+Background & Related Work
+3
+Model Architecture and Training
+3.1
+Model Architecture
+Input Projection
+Stacked Transformer
+Output Projection
+Loss Function
+3.2
+Training and Inference
+Training
+Inference
+3.3
+Discussion and Comparison on Moirai 2.0 and Moirai 1.0
+Decoder-only in Moirai 2.0 vs Masked encoder in Moirai 1.0
+Multi patch size vs Single patch size
+Quantile forecast vs Distribution forecast
+4
+Pretraining Datasets
+Gift-Eval Pretrain and Gift-Eval TrainTest
+Chronos-Mixup
+KernelSynth
+Internal Salesforce data
+5
+Evaluation
+5.1
+Results on GIFT-Eval Benchmark
+Fine Grained Results
+5.2
+Efficiency Comparison
+5.3
+Scaling Experiments
+5.4
+Ablation Study
+6
+Limitations and Future Work
+7
+Conclusion
+References
+A
+Appendix
+License: CC BY 4.0
+arXiv:2511.11698v3 [cs.LG] 03 Feb 2026
+Moirai 2.0: When Less Is More for Time Series Forecasting
+Chenghao Liu Taha Aksu
+1
+1
+footnotemark:
+1
+Juncheng Liu
+1
+1
+footnotemark:
+1
+Xu Liu
+1
+1
+footnotemark:
+1
+Hanshu Yan  Quang Pham  Silvio Savarese  Doyen Sahoo  Caiming Xiong  Junnan Li
+Salesforce AI Research
+https://github.com/SalesforceAIResearch/uni2ts
+https://huggingface.co/Salesforce/moirai-2.0-R-small
+†
+†
+thanks:
+Equal Contribution.
+†
+†
+thanks:
+Corresponding author. Email: junnan.li@salesforce.com
+Abstract
+We introduce Moirai 2.0, a decoder-only time-series foundation model trained on a new corpus of 36M series. The model adopts quantile forecasting and multi-token prediction, improving both probabilistic accuracy and inference efficiency. On the
+Gift-Eval
+benchmark, it ranks among the top pretrained models while achieving a strong trade-off between accuracy, speed, and model size.
+Compared to Moirai 1.0, Moirai 2.0 replaces masked-encoder training, multi-patch inputs, and mixture-distribution outputs with a simpler decoder-only architecture, single patch, and quantile loss. Ablation studies isolate these changes—showing that the decoder-only backbone along with recursive multi-quantile decoding contribute most to the gains. Additional experiments show that Moirai 2.0 outperforms larger models from the same family and exhibits robust domain-level results. In terms of efficiency and model size, Moirai 2.0 is twice as fast and thirty times smaller than its prior best version, Moirai 1.0-Large, while also performing better. Model performance plateaus with increasing parameter count and declines at longer horizons, motivating future work on data scaling and long-horizon modeling. We release code and evaluation details to support further research.
+1
+Introduction
+Time series forecasting underpins capacity planning, anomaly response, and risk management across cloud infrastructure, observability, finance, energy, retail, and healthcare.
+Unlike text or images, time series exhibit nonstationarity, multi-scale temporal structure, irregular sampling, and incomplete observations, making generalization beyond a single domain both important and challenging.
+To tackle these, some early attempts on foundation models (FMs) for time series have been proposed and shown some promising results on cross-domain reuse, zero/few-shot adaptation, and unified deployment at scale.
+Moreover, foundation models for time series have rapidly evolved from early exploratory attempts just a few years ago to becoming a central research direction with significantly growing adoption in industry. Today, the landscape includes dozens of pretrained time series foundation models from both academia and industry. Representative examples from industry include TimesFM
+[
+9
+]
+from Google, Chronos/Chronos-Bolt
+[
+3
+]
+and Chronos 2
+[
+2
+]
+from Amazon, TOTO
+[
+8
+]
+from Datadog, and YingLong
+[
+32
+]
+from Alibaba.
+Community benchmarks from industry, such as
+Gift-Eval
+benchmark
+[
+1
+]
+and
+fev-bench
+[
+29
+]
+, also have accelerated progress by standarizing datasets, metrics and reporting performance of different models.
+A clear sign of this progress is that the
+Gift-Eval
+benchmark
+[
+1
+]
+has already received 25 foundation model submissions since its launch, showing the growing interest from the community.
+Our previous work, Moirai 1.0
+[
+34
+]
+, was among the first attempts to scale the transformer architecture for time series. It demonstrated that large-scale time-series pretraining can yield strong generalization across domains, while also providing a blueprint for subsequent foundation models. While effective,  Moirai 1.0 has also revealed several limitations. Its masked-encoder design led to inefficient data utilization during training, and the multi-patch setup constrained learning across different temporal frequencies. Moreover, while outputting a mixture of distributions was an intuitive way to enhance probabilistic forecasting, it proved empirically less effective in practice and added substantial complexity to both the model design and optimization process.
+In this work, we introduce Moirai 2.0, a successor model that incorporates several architectural and training refinements. Key improvements include the adoption of quantile-based predictions with a refined loss function, a decoder-only autoregressive architecture, and multi-token prediction strategy with a single patch size, along with additional optimization techniques applied during both pretraining and inference. We have also curated a new pretraining datasets to train this model which includes
+36
+​
+M
+36M
+time series and
+∼
+295
+​
+B
+\sim 295B
+observations. These changes substantially improve the accuracy and efficiency of our model, making it the best-performing model at the time of its release. As of today, it remains highly competitive, ranking 5th among 37 foundation models (including all size variants) on the
+Gift-Eval
+leaderboard, while offering one of the most favorable trade-offs between inference speed, model size, and accuracy.
+The remainder of this paper is organized as follows. In
+Section
+2
+, we provide the background and discuss related work on time series foundation models.
+Section
+3
+introduces the architectural design and training strategies behind Moirai 2.0.
+Section
+4
+lists the datasets we used to pretrain our new model.
+Section
+5
+presents evaluations on the
+Gift-Eval
+benchmark, including efficiency comparisons, scaling experiments, and ablation studies.
+Section
+6
+outlines the limitations of our current approach and highlights future research directions. Finally,
+Section
+7
+summarizes our findings and concludes the paper.
+2
+Background & Related Work
+The time series point forecasting task is defined as predicting the future H values given a historical sequence with c values,
+i.e.
+let the historical context be
+Y
+1
+:
+c
+=
+{
+y
+1
+,
+y
+2
+,
+…
+,
+y
+c
+}
+Y_{1:c}=\{y_{1},y_{2},...,y_{c}\}
+the target sequence to predict would be
+Y
+c
++
+1
+:
+c
++
+H
+=
+{
+y
+c
++
+1
+,
+y
+c
++
+2
+,
+…
+,
+y
+c
++
+H
+}
+Y_{c+1:c+H}=\{y_{c+1},y_{c+2},...,y_{c+H}\}
+. The forecasting task can naturally extend to the multivariate setting where one is expected to predict multiple variates simultaneously
+i.e.
+Y
+1
+c
++
+1
+:
+c
++
+H
+,
+Y
+2
+c
++
+1
+:
+c
++
+H
+,
+…
+Y
+N
+c
++
+1
+:
+c
++
+H
+Y^{1}_{c+1:c+H},Y^{2}_{c+1:c+H},...Y^{N}_{c+1:c+H}
+. Moirai 2.0, however, does not support cross-variate forecasting. Instead, we treat multivariate forecasting as a collection of independent univariate tasks. Moirai 2.0 does not only predict point but quantile forecast, where the difference in definition comes at the prediction level. For quantile forecast given the same historical context
+Y
+1
+:
+c
+Y_{1:c}
+, the target prediction is now the quantile levels for each future time step
+Q
+c
++
+1
+:
+c
++
+H
+=
+{
+Q
+c
++
+1
+,
+Q
+c
++
+2
+,
+…
+,
+Q
+c
++
+H
+}
+Q_{c+1:c+H}=\{Q_{c+1},Q_{c+2},...,Q_{c+H}\}
+where
+Q
+i
+=
+{
+q
+l
+1
+i
+,
+q
+l
+2
+i
+,
+…
+,
+q
+l
+q
+i
+,
+}
+Q_{i}=\{q_{l_{1}}^{i},q_{l_{2}}^{i},...,q_{l_{q}}^{i},\}
+,
+l
+1
+l_{1}
+through
+l
+q
+l_{q}
+being the quantile levels. We set the quantile levels as
+{
+0.1
+,
+0.2
+,
+…
+,
+0.9
+}
+\{0.1,0.2,...,0.9\}
+. Quantile forecasts offer a principled way to model uncertainty, as they are directly optimized for probabilistic forecasting accuracy.
+The family of time series forecasting models can be categorized into 3 classes: statistical models, deep-learning models and foundation models. The statistical models work locally and rely solely on historical data statistics to predict future values. Some of the most widely used ones are ETS
+[
+18
+]
+, Theta
+[
+13
+]
+, and ARIMA
+[
+5
+]
+.
+Deep learning models, in contrast, are often dataset-specific, as each dataset typically requires training a dedicated model. Examples include N-BEATS
+[
+26
+]
+, DLinear
+[
+37
+]
+, and DeepAR
+[
+12
+]
+, which are based on pre-transformer architectures. In contrast, transformer-based approaches such as Autoformer
+[
+35
+]
+, Crossformer
+[
+39
+]
+, and PatchTST
+[
+24
+]
+have also been proposed.
+In the last few years, the success of foundation models in language and vision has also attracted time series researchers. What initially started as a handful of early attempts
+[
+14
+,
+28
+,
+34
+]
+has now grown into a rapidly expanding landscape, with more than 25 time series foundation models being publicized in the last 2 years.
+The architecture and training strategies of time series foundation models vary considerably. Notably, two prominent approaches do not directly rely on transformer architectures: TabPFN-TS
+[
+17
+]
+, which employs a Prior-Data Fitted Network (PFN), and TiRex
+[
+4
+]
+, which is built on an xLSTM. The majority of other models, however, rely on transformer variants. Within the transformer family, some models adopt an encoder-only design, such as Chronos-2
+[
+2
+]
+, Yinglong
+[
+32
+]
+, and the first version of our Moirai
+[
+34
+]
+. In this setup, a forecasting head is placed on top of the encoder backbone. This approach can mitigate error accumulation and accelerate inference, particularly when autoregression is avoided. In contrast, another group follows the decoder-only paradigm inspired by large language models (LLMs). Examples include Moirai-MoE
+[
+21
+]
+, TimesFM family of models
+[
+9
+]
+, and Sundial
+[
+22
+]
+. Others adopt a hybrid encoder–decoder architecture, such as Kairos
+[
+11
+]
+, Chronos, Chronos-Bolt
+[
+3
+]
+, and FlowState
+[
+15
+]
+. A further axis of differentiation is the choice of output representation and loss function. Some models predict point forecasts directly
+[
+9
+,
+11
+]
+. Others, like Moirai, predict full distributions
+[
+34
+]
+, or employ flow-based losses to learn continuous distributions from which forecasts can be sampled as applied by
+Graf et al. [15]
+,
+Liu et al. [22]
+, or directly output quantiles
+[
+2
+,
+4
+,
+32
+,
+3
+]
+.
+Moirai 2.0 adopts a decoder-only architecture, with newly incorporated training and inference strategies to limit error accumulation and inference slowdown. Unlike point or distribution-based approaches, it outputs quantile forecasts, directly aligned with the CRPS metric through optimization with the quantile (pinball) loss.
+3
+Model Architecture and Training
+Figure 1:
+Overview of the Moirai 2.0 architecture. Panel 1 illustrates the end-to-end pipeline from patched input time series through the transformer backbone to predicted quantiles. Panel 2 highlights the quantile loss, which compares each ground-truth value against all predicted quantiles without requiring quantile labels, enforcing correct ordering and spacing. Panel 3 depicts patch-level random masking used to improve robustness. Panel 4 shows a simplified view of the autoregressive multi-step quantile decoding strategy, where quantile forecasts are recursively rolled out to construct predictive distributions across the horizon.
+In this section, we first describe the model architecture of Moirai 2.0 in
+Section
+3.1
+and present the details of training and inference in
+Section
+3.2
+.
+Finally, in
+Section
+3.3
+, we discuss and summarize the differences between Moirai 2.0 and Moirai 1.0.
+3.1
+Model Architecture
+For efficient training, Moirai 2.0 is structured as a decoder-only model built upon the Transformer architecture. We provide an overview of our architecture in
+Figure
+1
+.
+Input Projection
+The input layers are responsible for preprocessing the raw time-series into input tokens for the transformer architecture. Currently, Moirai 2.0 is designed for univariate time-series input. Multivariate data is accommodated by treating each variable as an independent univariate series, an approach often found to perform well
+[
+24
+]
+. Instance normalization
+[
+20
+]
+is applied to each time series individually to ensure the model is robust to diverse and non-stationary input scales. Adhering to established practices
+[
+34
+]
+, the input time-series is first partitioned into contiguous, non-overlapping
+T
+T
+patches. Missing values are explicitly handled by concatenating a corresponding binary indicator
+𝐦
+i
+\mathbf{m}_{i}
+(representing presence or absence) with the value at each time step within the patch. Each resulting patch, augmented with this missing value information as
+𝐱
+^
+i
+=
+𝐱
+i
+|
+|
+𝐦
+i
+\hat{\mathbf{x}}_{i}=\mathbf{x}_{i}||\mathbf{m}_{i}
+, is then processed into an input token with a residual block
+[
+16
+]
+. Formally, given an input patch size of
+p
+i
+​
+n
+p_{in}
+and token embedding dimension
+d
+d
+, this input projection with a residual block defines a mapping
+ℝ
+2
+​
+p
+i
+​
+n
+→
+ℝ
+d
+\mathbb{R}^{2p_{in}}\rightarrow\mathbb{R}^{d}
+as shown below:
+𝐳
+i
+=
+PatchEmbed
+(
+𝐱
+^
+i
+)
+=
+SiLU
+(
+𝐖
+(
+𝐱
+^
+i
+)
++
+𝐛
+)
++
+𝐱
+^
+i
+∈
+ℝ
+d
+,
+i
+=
+1
+,
+…
+T
+,
+\mathbf{z}_{i}=\text{PatchEmbed}(\hat{\mathbf{x}}_{i})=\text{SiLU}(\mathbf{W}(\hat{\mathbf{x}}_{i})+\mathbf{b})+\hat{\mathbf{x}}_{i}\in\mathbb{R}^{d},i=1,...T,
+(1)
+where
+𝐖
+\mathbf{W}
+and
+𝐛
+\mathbf{b}
+are weights and bias for the input projection.
+Additionally, we also apply normalization before input projection. Notably, as mentioned in
+Liu et al. [21]
+, applying instance normalization globally risks future information leakage in decoder-only models. We aim to avoids this by computing normalization statistics solely from the first 30
+%
+\%
+of the time series, reserving the subsequent 70
+%
+\%
+segment for the causal pre-training task.
+Stacked Transformer
+Following the input projection, the sequence of tokens is processed by multiple stacked Transformer layers,
+c.f.
+Panel
+1
+1
+in
+Figure
+1
+. Each layer within this stack adheres to the standard Transformer architecture
+[
+30
+]
+, primarily comprising two sub-layers: a causal multi-head self-attention mechanism followed by a feed-forward network. The causal nature of the self-attention ensures that the prediction for a given token depends only on valid preceding tokens and the current token itself, maintaining the autoregressive property required by the decoder-only framework. Residual connections are employed around each of the two sub-layers, followed by layer normalization, promoting stable training and effective gradient flow through the deep network. The output sequence from the final Transformer layer represents the learned contextual embeddings of the input patches.
+Output Projection
+The final stage involves projecting the sequence of processed token embeddings, derived from the stacked transformer layers, onto the target prediction space. An output residual block
+[
+16
+]
+performs this transformation, converting each
+d
+d
+-dimensional token embedding into forecasts. Two key features are incorporated into this projection: First, to facilitate probabilistic predictions, the output dimension is scaled to accommodate
+n
+q
+n_{q}
+quantile estimates per time step
+[
+33
+]
+. Second, the model employs
+multi-token prediction
+, generating forecasts for
+n
+t
+​
+o
+​
+k
+​
+e
+​
+n
+n_{token}
+future patches from each output token representation to improve effectiveness and efficiency for long term forecast. Thus, for an output patch size
+p
+p
+, the output projection layer effectively realizes a mapping
+ℝ
+d
+→
+ℝ
+n
+t
+​
+o
+​
+k
+​
+e
+​
+n
+×
+n
+q
+×
+p
+\mathbb{R}^{d}\rightarrow\mathbb{R}^{n_{token}\times n_{q}\times p}
+, transforming the learned representations into structured quantile forecasts for multiple future patches.
+We choose multi-token prediction instead of single-token prediction to improve efficiency, especially for long-term forecasting with relatively large prediction lengths.
+Additionally, multi-token prediction also helps to reduce the error accumulation in long-term forecasting.
+Loss Function
+To support probabilistic forecasting capabilities, Moirai 2.0 is trained by optimizing the quantile loss (also known as the pinball loss). This objective function enables the model to learn the conditional distribution of future time series values. Specifically, the model is configured to predict
+n
+q
+=
+9
+n_{q}=9
+distinct quantile levels, equidistantly spaced from
+0.1
+0.1
+to
+0.9
+0.9
+(
+Q
+=
+{
+0.1
+,
+0.2
+,
+…
+,
+0.9
+}
+Q=\{0.1,0.2,\dots,0.9\}
+). The quantile loss for a single prediction at time step
+t
+t
+, for a given quantile level
+q
+∈
+Q
+q\in Q
+, is defined as:
+ℓ
+q
+​
+(
+y
+t
+,
+y
+^
+t
+(
+q
+)
+)
+=
+{
+q
+⁡
+(
+y
+t
+−
+y
+^
+t
+(
+q
+)
+)
+if
+​
+y
+t
+≥
+y
+^
+t
+(
+q
+)
+,
+(
+1
+−
+q
+)
+​
+(
+y
+^
+t
+(
+q
+)
+−
+y
+t
+)
+if
+​
+y
+t
+<
+y
+^
+t
+(
+q
+)
+,
+\ell_{q}(y_{t},\hat{y}_{t}^{(q)})=\begin{cases}q(y_{t}-\hat{y}_{t}^{(q)})&\text{if }y_{t}\geq\hat{y}_{t}^{(q)},\\
+(1-q)(\hat{y}_{t}^{(q)}-y_{t})&\text{if }y_{t}<\hat{y}_{t}^{(q)},\end{cases}
+where
+y
+t
+y_{t}
+is the ground truth value at time
+t
+t
+, and
+y
+^
+t
+q
+\hat{y}_{t}^{q}
+is the model’s predicted value for the
+q
+q
+-th quantile at that time step. During training, the total loss is calculated by averaging the quantile loss across all predicted quantile levels (
+q
+∈
+Q
+q\in Q
+) and all
+H
+H
+time steps in
+K
+K
+predicted patches, while ignoring contributions from any masked or missing target values. We formalize the total loss as follows:
+ℒ
+Q
+\displaystyle\mathcal{L}_{\text{Q}}
+=
+1
+H
+​
+|
+Q
+|
+​
+∑
+t
+=
+1
+H
+∑
+q
+∈
+Q
+ℓ
+q
+​
+(
+y
+t
+,
+y
+^
+t
+(
+q
+)
+)
+\displaystyle=\frac{1}{H\,|Q|}\sum_{t=1}^{H}\sum_{q\in Q}\ell_{q}(y_{t},\hat{y}_{t}^{(q)})
+(2)
+=
+1
+H
+​
+|
+Q
+|
+​
+∑
+t
+=
+1
+H
+∑
+q
+∈
+Q
+[
+q
+​
+max
+⁡
+(
+y
+t
+−
+y
+^
+t
+(
+q
+)
+,
+0
+)
++
+(
+1
+−
+q
+)
+​
+max
+⁡
+(
+y
+^
+t
+(
+q
+)
+−
+y
+t
+,
+0
+)
+]
+,
+H
+=
+K
+​
+p
+,
+\displaystyle=\frac{1}{H\,|Q|}\sum_{t=1}^{H}\sum_{q\in Q}\left[q\,\max\big(y_{t}-\hat{y}^{(q)}_{t},\,0\big)+(1-q)\,\max\big(\hat{y}^{(q)}_{t}-y_{t},\,0\big)\right],\quad H=Kp,
+(3)
+Note that, by default , we treat all quantile levels equally, which if often preferable in practice and encourages accurate and well-calibrated quantile forecasts.
+However, when specific regions of the distribution are of greater interest, we can assign different weights (e.g.,
+w
+q
+w_{q}
+) on selected quantiles to emphasize them.
+We discuss more on this in the last paragraph of
+Section
+3.3
+3.2
+Training and Inference
+Training
+To enhance model robustness,
+patch-level random masking
+is utilized:
+50
+%
+50\%
+of input patches in each training sample are randomly masked before being processed by the model. This encourages robust representation learning and improves handling of missing data segments.
+Since normalization statistics are computed using only the initial
+30
+%
+30\%
+segment of each sample, distribution shifts between this segment and the remaining
+70
+%
+70\%
+utilized for training may arise, potentially causing significant instability during the training process. To mitigate this, we employ z-score based anomaly detection, samples are filtered out if the latter
+70
+%
+70\%
+segment exhibits significant statistical deviation from the initial segment used for normalization. Following a similar training procedure as Moirai 1.0
+[
+34
+]
+, Moirai 2.0 is trained for
+100,000
+100,000
+steps with a batch size of
+256
+256
+. We utilize the AdamW optimizer configured with a learning rate of
+1
+×
+10
+−
+3
+1\times 10^{-3}
+, weight decay of
+1
+×
+10
+−
+1
+1\times 10^{-1}
+,
+β
+1
+=
+0.9
+\beta_{1}=0.9
+, and
+β
+2
+=
+0.98
+\beta_{2}=0.98
+. The learning rate schedule includes a linear warmup over the first 10,000 steps, followed by cosine annealing. Training is conducted using bf16 mixed-precision arithmetic to enhance efficiency.
+Inference
+In standard autoregressive decoding, a model generates forecasts step by step by feeding its output back as input. This works naturally when the model predicts a single value per step, since the input and output dimensions match.
+For
+quantile forecasting
+, however, the model outputs multiple values (quantiles) at each step. Feeding all quantiles directly back into the model creates a dimensional mismatch, and collapsing them to a single value (e.g., the median or mean
+[
+9
+]
+) discards important information about uncertainty.
+To address this, we propose to use
+autoregressive multi-quantile decoding
+. Conceptually, this procedure resembles a
+beam search with depth 2
+.
+Given the forecast with multiple quantiles at the previous step
+t
+−
+1
+t-1
+, instead of committing to a single quantile path with the median value, we temporarily expand the search tree at the current step
+t
+t
+, then collapse it back to a fixed set of quantiles.
+At each decoding step
+t
+t
+, we first
+expand
+the forecast with several quantiles from step
+t
+−
+1
+t-1
+into a larger number of candidate quantiles (e.g.,
+9
+×
+9
+=
+81
+9\times 9=81
+). Then, we
+collapse
+these samples back into the desired quantile set (e.g., 9 levels) by sampling from the expanded set and use the collapsed quantiles as the forecast for step
+t
+t
+. This procedure preserves forecast uncertainty while keeping the inference tractable.
+Algorithm 1
+Autoregressive Multi-Quantile Decoding with Initialization (depth-2 expand
+→
+\rightarrow
+collapse)
+1:
+Context
+Y
+1
+:
+c
+Y_{1:c}
+; target quantile set
+𝒬
+\mathcal{Q}
+with
+m
+=
+|
+𝒬
+|
+m{=}|\mathcal{Q}|
+; horizon
+H
+H
+2:
+Initialization (first prediction, no expansion).
+3:
+Predict the first-step quantiles directly from the context:
+{
+y
+^
+c
++
+1
+(
+q
+)
+}
+q
+∈
+𝒬
+←
+Moirai2
+(
+Y
+1
+:
+c
+)
+\{\hat{y}_{c+1}^{(q)}\}_{q\in\mathcal{Q}}\leftarrow\textsc{Moirai2}(Y_{1:c})
+.
+4:
+Append
+{
+y
+^
+c
++
+1
+(
+q
+)
+:
+q
+∈
+𝒬
+}
+\{\hat{y}_{c+1}^{(q)}:q\in\mathcal{Q}\}
+to the context.
+5:
+Autoregressive steps (beam-search depth 2).
+6:
+for
+t
+=
+c
++
+1
+t=c+1
+to
+c
++
+H
+−
+1
+c+H-1
+do
+7:
+Expand:
+form
+m
+m
+histories by appending each
+y
+^
+t
+(
+q
+1
+)
+\hat{y}_{t}^{(q_{1})}
+to the current context.
+8:
+From each expanded history, decode one step ahead to obtain
+{
+y
+^
+t
++
+1
+(
+q
+1
+,
+q
+2
+)
+}
+q
+2
+∈
+𝒬
+\{\hat{y}_{t+1}^{(q_{1},q_{2})}\}_{q_{2}\in\mathcal{Q}}
+; pool all candidates
+𝒮
+t
++
+1
+←
+{
+y
+^
+t
++
+1
+(
+q
+1
+,
+q
+2
+)
+:
+q
+1
+,
+q
+2
+∈
+𝒬
+}
+,
+|
+𝒮
+t
++
+1
+|
+=
+m
+2
+.
+\mathcal{S}_{t+1}\leftarrow\bigl\{\hat{y}_{t+1}^{(q_{1},q_{2})}:q_{1},q_{2}\in\mathcal{Q}\bigr\},\quad|\mathcal{S}_{t+1}|=m^{2}.
+9:
+Collapse:
+for each
+q
+∈
+𝒬
+q\in\mathcal{Q}
+, set
+y
+^
+t
++
+1
+(
+q
+)
+←
+Quantile
+q
+⁡
+(
+𝒮
+t
++
+1
+)
+.
+\hat{y}_{t+1}^{(q)}\leftarrow\Quantile_{q}\!\left(\mathcal{S}_{t+1}\right).
+10:
+Append
+{
+y
+^
+t
++
+1
+(
+q
+)
+:
+q
+∈
+𝒬
+}
+\{\hat{y}_{t+1}^{(q)}:q\in\mathcal{Q}\}
+to the context.
+11:
+end
+for
+12:
+Note (patch-level decoding).
+For clarity the pseudocode shows single-value prediction; in practice, the model outputs multiple patch tokens per iteration.
+In practice, this approach allows us to maintain the benefits of quantile forecasting while avoiding dimensional mismatch. It can be viewed as sampling multiple plausible futures (expansion) and then summarizing them into a coherent set of quantiles (collapse).
+3.3
+Discussion and Comparison on Moirai 2.0 and Moirai 1.0
+In this section, we provide some discussions and comparisons on architecture changes from Moirai 1.0 to Moirai 2.0.
+From the architecture perspective, we mainly have 3 changes: 1) use decoder-only for Moirai 2.0 instead of masked encoder in Moirai 1.0,
+2) change to single-path size in Moirai 2.0 from multi-patch size in Moirai 1.0,
+3) formulate the training loss as quantile loss in Moirai 2.0 instead of distribution loss Moirai 1.0.
+Decoder-only in Moirai 2.0 vs Masked encoder in Moirai 1.0
+Moirai 1.0
+[
+34
+]
+adopts a masked-encoder architecture, where both context and prediction lengths are randomly sampled during training to support flexible downstream usage. However, this design yields only a single loss per sampled input configuration, leading to suboptimal data utilization and slower training efficiency. In contrast, Moirai 2.0 replaces the masked encoder with a decoder-only architecture, enabling more effective use of training data and simplifying the overall modeling pipeline.
+In terms of data efficiency during training, Moirai 2.0, built upon causal decoder-only transformers, directly computes
+T
+−
+1
+T{-}1
+losses across all tokens or patches for a time series with
+T
+T
+tokens. In contrast, the masked-encoder architecture used in Moirai-1.0, assuming a masking rate of 15%, engages only 15% of tokens in the loss computation, producing a single loss value for each specific pair of context and prediction lengths. This difference in training strategy makes Moirai 2.0 substantially more data-efficient during training.
+Another advantage of using the decoder-only autoregressive architecture is the potential inference speedup with KV caches
+[
+27
+]
+. A KV cache stores the intermediate key–value attention representations computed from the input tokens during the first forward pass; at later decoding steps, the model can reuse these cached representations instead of recomputing them, reducing inference cost.
+Thus, when the model is asked to provide predictions repeatedly (e.g., n times), autoregressive models such as Moirai 2.0 can pre-fill the context once and reuse cached KV states, avoiding redundant computation. In contrast, masked-encoder models such as Moirai 1.0 must recompute key–value features n times from scratch, making them less efficient for repeated queries.
+This scenario is not uncommon in real-world forecasting, where end users often do not know the exact prediction horizon in advance—they may start by forecasting a few steps and then gradually extend the prediction as needed. To quantify the potential benefit, we conducted a case study by implementing a KV-cache–enabled version of Moirai 2.0. The results show that inference speedup scales with both context and prediction length: for a context of approximately 10K and a prediction length of 1K, KV caching provides up to a
+4
+×
+4\times
+speedup, while extending the prediction length to 10K increases the gain to
+17
+×
+17\times
+.
+Multi patch size vs Single patch size
+In Moirai 2.0, we standardize to a single patch size, in contrast to the multi-patch design of Moirai 1.0. Empirically, this simplification improves both computational efficiency and forecasting accuracy, while also simplifying the implementation of training and inference stages.
+Quantile forecast vs Distribution forecast
+In Moirai 1.0, the model outputs the distribution parameters for a mixture of distributions,and generates forecasts by sampling from this mixture. During inference, 100 samples per step are typically drawn, and during training the distribution negative log likelihood (NLL) loss is used.
+In contrast, we use quantile loss for training Moirai 2.0, which generates
+|
+Q
+|
+|Q|
+quantiles as the forecast.
+The quantile loss can directly optimize operational quantiles (e.g., using
+q
+=
+0.9
+q=0.9
+for capacity planning) and it naturally handles asymmetric penalties (over- vs under-prediction).
+Compared to the distribution NLL loss, which may suffer from variance collapse, explosion, or unstable gradients under outliers, the quantile loss is more robust to extreme tails.
+4
+Pretraining Datasets
+Our pretraining corpus is constructed from five complementary sources:
+(1) the non-leaking
+Gift-Eval Pretrain
+dataset, (2) train split of
+Gift-Eval TrainTest
+dataset
+[
+1
+]
+(3) additional series generated via Chronos-Mixup,
+(4) KernelSynth data
+[
+3
+]
+,
+and (5) anonymized internal Salesforce CloudOps telemetry data. In combination these five components add up to
+36
+​
+M
+36M
+time series, with
+∼
+295
+​
+B
+\sim 295B
+observations, providing a diverse mixture of real-world and synthetic time series, covering a wide range of domains, frequencies, and temporal characteristics. We describe each component in more detail below.
+Gift-Eval Pretrain and Gift-Eval TrainTest
+The original Moirai model, reported in the GIFT-Eval leaderboard, was trained using a non-leaking version of the pretraining corpus
+Gift-Eval Pretrain
+[
+1
+]
+. Our new pretraining corpus also includes this same non-leaking dataset as its foundation. It has
+3.25
+3.25
+M time series with a total of
+230
+230
+B observations
+1
+1
+1
+Note that GIFT-Eval Pretrain is a subset of LOTSA introduced by
+Woo et al. [34]
+. While the original paper reports the dataset size as 27B observations, this discrepancy arises solely from differences in counting: they treat each multivariate series as a single observation, whereas in our accounting each variable is counted independently.
+.
+Gift-Eval Pretrain
+provides a large and diverse set of time series carefully curated to avoid overlap with benchmark evaluation tasks. Additionally we add the train split of
+Gift-Eval TrainTest
+dataset to train Moirai 2.0, which includes
+144
+144
+K time series. For details about both datasets composition and construction methodology, we refer the reader to
+Aksu et al. [1]
+.
+Chronos-Mixup
+Time Series Mixup (TSMixup) is proposed originally by
+Ansari et al. [3]
+which takes inspiration from original Mixup used in image classification
+[
+38
+]
+. It randomly samples
+k
+∼
+𝒰
+​
+{
+1
+,
+K
+}
+k\sim\mathcal{U}\{1,K\}
+time series of length
+l
+∼
+𝒰
+⁡
+{
+l
+m
+​
+i
+​
+n
+,
+l
+m
+​
+a
+​
+x
+}
+l\sim\mathcal{U}\{l_{min},l_{max}\}
+from a distribution of training data then takes their convex combination.
+We follow
+Auer et al. [4]
+, and generate significantly more and longer series and following their configuration we set the max value of
+K
+=
+4
+K=4
+, and set
+L
+m
+​
+i
+​
+n
+=
+128
+L_{min}=128
+,
+L
+m
+​
+a
+​
+x
+=
+4096
+L_{max}=4096
+. We only use non leaking subset of datasets from Chronos data to generate the mixup to keep our training free of leakage. We generate
+30
+30
+M time series that add up to
+63
+63
+B observations in total.
+KernelSynth
+We also include the KernelSynth data provided by
+Ansari et al. [3]
+which generate synthetic time series using Gaussian processes. Their method constructs a kernel bank including kernels for trend, local change and seasonalities. The final kernel time series is constructed by sampling kernel from the bank and combining them with random binary operations
++
++
+or
+×
+\times
+. This set contains
+1
+1
+M time series, with
+1.02
+1.02
+B observation in total.
+Internal Salesforce data
+A core component of our pre-training corpus is derived from internal salesforce telemetry data. This dataset comprises approximately 2.15M univariate time series, totaling roughly 1.48B observations at a daily granularity. The data covers a period of approximately one year, starting from January 2024. To ensure data quality, time series containing substantial amounts of missing values were filtered out prior to training.
+Figure 2:
+GiftEval
+benchmark results for pretrained, zero-shot foundation models. Ensemble methods and models lacking reproducible code are excluded. Bars show normalized MASE (left) and normalized CRPS (right), where lower is better. Moirai 2.0 and its large variant rank among the top models under both metrics.
+Figure 3:
+GiftEval
+leaderboard results broken down by domain. For each domain, we display the top-10 foundation models ordered by their MASE rank (lower is better).
+5
+Evaluation
+In this section, we present experimental results that demonstrate the capabilities of our model compared to other state-of-the-art foundation models. We primarily evaluate on the GIFT-Eval benchmark
+[
+1
+]
+, comparing against all available pretrained foundation models with reproducible code and no test-data leakage. In addition to overall benchmark performance, we analyze Moirai 2.0 from several perspectives: inference speed and models size and their relationship with accuracy compared to top leaderboard models, and the effect of scaling Moirai 2.0 to larger parameter counts. We also report domain-specific results across models and conclude with an ablation study to quantify the contribution of individual components.
+Figure 4:
+GiftEval
+leaderboard results broken down by prediction length. For each domain, we display the top-10 foundation models ordered by their MASE rank (lower is better).
+5.1
+Results on GIFT-Eval Benchmark
+We evaluate Moirai 2.0 on the comprehensive GIFT-Eval benchmark, comparing it against state-of-the-art foundation models listed on the leaderboard. GIFT-Eval covers 97 task configurations across 55 datasets, spanning diverse domains, frequencies, and prediction lengths. For this study, we exclude agentic solutions, fine-tuned models, and foundation models without publicly available replication code. This filtering leaves 30 foundation models for comparison, including
+Chronos-2
+[
+2
+]
+,
+TimesFM-2.5
+,
+TimesFM-2.0
+,
+TimesFM
+[
+9
+]
+,
+TiRex
+[
+4
+]
+,
+FlowState
+and
+Granite-FlowState-R1
+[
+15
+]
+,
+Kairos (10/23/50M)
+[
+11
+]
+,
+Toto
+[
+8
+]
+,
+Sundial
+[
+22
+]
+,
+TabPFN-TS
+[
+17
+]
+,
+YingLong (6/50/110/300M)
+[
+32
+]
+,
+Chronos (small/base/large)
+and
+Chronos-Bolt (small/base)
+[
+3
+]
+,
+Moirai (small/base/large)
+[
+34
+]
+,
+TTM-R1-Pretrained
+[
+10
+]
+, and
+Lag-Llama
+[
+28
+]
+.
+Following leaderboard protocols, we report normalized MASE and CRPS, where each model’s score is divided by the seasonal-naive baseline and aggregated using the geometric mean across tasks. As shown in
+Figure
+2
+, Moirai 2.0 attains the 5th and 6th positions on MASE and CRPS, respectively—substantially outperforming its predecessor Moirai-Large despite having fewer parameters.
+Fine Grained Results
+Beyond overall benchmark scores, we analyze Moirai 2.0’s performance across domains in GIFT-Eval. As shown in
+Figure
+3
+, Moirai 2.0 consistently appears in the top-10 across most domains, with the notable exception of Nature tasks. This gap may suggest that the pretraining corpus underrepresents natural and environmental time series, motivating future work to balance domain coverage. Compared to its predecessor Moirai-Large, Moirai 2.0 delivers stronger results in nearly all domains, with Transport being the only case where Moirai-Large remains highly competitive. An additional perspective emerges when grouping tasks by forecast horizon
+Figure
+4
+: Moirai 2.0 ranks 4th, 6th, and 8th on short, medium, and long prediction lengths, respectively. This trend highlights that while the model is highly competitive for short-range forecasting, its relative advantage diminishes as the prediction horizon grows.
+Figure 5:
+Speed–parameter count comparison across foundation models. Each point shows inference time (x-axis) vs. model size (y-axis), annotated with performance rank. The left plot annotates model rank by MASE, while the right plot by CRPS (lower is better). Moirai 2.0 variants achieve competitive accuracy while offering favorable size and inference efficiency.
+5.2
+Efficiency Comparison
+To assess inference efficiency, we conducted experiments on 12 representative tasks from GIFT-Eval, selected to cover diverse dataset–frequency combinations and forecast horizons. Specifically, we included short-horizon tasks such as
+M4--yearly
+,
+M4--hourly
+,
+Hospital--monthly
+,
+US Births--weekly
+,
+Electricity--daily
+,
+Saugeenday--daily
+,
+Bizitobs_l2c--hourly
+,
+SZ_Taxi--15 minutely
+, and
+Solar--hourly
+, as well as medium/long-horizon tasks including
+SZ_Taxi--15 minutely
+,
+Solar--hourly
+, and
+Bizitobs_l2c--hourly
+. These tasks were chosen solely to maximize diversity in frequency and prediction length; accuracy on this subset is not emphasized, as we continue to use the full set of 97 tasks for performance reporting. For efficiency, we timed each model’s total inference time to generate forecasts on all selected tasks, running on a single H200 GPU and using the official replication code provided in the GIFT-Eval repository.
+2
+2
+2
+Replication code for all leaderboard models is available at:
+https://github.com/SalesforceAIResearch/gift-eval/tree/main/notebooks
+.
+Figure
+5
+summarizes the trade-offs between model size, inference time, and predictive performance. Among baseline models,
+Kairos-50M
+emerges as the fastest, although it lags behind Moirai 2.0 in benchmark accuracy and is nearly five times larger in parameter count.
+Granite-FlowState-R1
+, on the other hand, achieves stronger accuracy than Moirai 2.0 while being smaller in size, but it is roughly three times slower in inference speed. Most notably, Moirai 2.0 demonstrates a substantial leap in efficiency compared to its predecessor: it is approximately 30
+×
+\times
+smaller and 2
+×
+\times
+faster than Moirai-Large, while simultaneously achieving significantly better accuracy.
+5.3
+Scaling Experiments
+We further investigate the effect of scaling model size on performance by training two larger variants of Moirai 2.0, namely base and large, which increase the parameter count by approximately
+8
+×
+8\times
+and
+30
+×
+30\times
+compared to the small version. As shown in
+Table
+1
+, we do not observe scaling benefits: both larger variants underperform the small model on GIFT-Eval in terms of MASE and CRPS. In fact, the small variant already appears sufficient to fully exploit the available pretraining data, and simply increasing the parameter count does not translate into better results. This finding suggests that improvements may require further scaling of pretraining data, architectural innovations, or targeted regularization strategies, rather than model size alone.
+Table 1:
+Performance of different Moirai 2.0 sizes.
+Model
+Params (M)
+MASE
+CRPS
+Moirai 2.0 small
+11.4
+0.728
+0.516
+Moirai 2.0 base
+87.1
+0.732
+0.525
+Moirai 2.0 large
+305
+0.743
+0.530
+This trend is consistent with the broader observations reported in the GIFT-Eval benchmark paper, where scaling across model families does not systematically lead to improved forecasting performance
+[
+1
+]
+. At the same time, other recent studies suggest that scaling parameter counts can yield benefits
+[
+11
+,
+32
+]
+. We hypothesize that the interaction between model size and pretraining data availability is the critical factor here, without aligned increases in data scale and diversity, parameter growth alone does not guarantee gains
+[
+19
+]
+.
+5.4
+Ablation Study
+We conduct an ablation study to trace the evolution from Moirai 1.0 to Moirai 2.0, with results summarized in
+Table
+2
+. Starting from the original Moirai 1.0 small, which uses an encoder-only architecture and a distributional loss.
+To disentangle the effect of new pretraining data, we first trained a v0 of decoder-only architecture with GIFT-Eval Pretrain, which applies the new decoder-only architecture with the original distributional loss. This resulted in improvements for MASE and minimal change for CRPS. Next in v1, we train the same architecture with the newly curated corpus and observe a substantial improvement on both metrics. The v2 version replaces the distributional loss with quantile loss, yielding the largest single improvement across the ablations. Building on this, v3 augments the decoder-only design with recursive decoding, further reducing error. In v4, we additionally apply random masking during pretraining. While this modification alone slightly degrades performance, we retained it in combination with multi-token prediction, where its benefits became more apparent in v5. Multi-token prediction enabled alongside recursive decoding and random masking yields the best CRPS while retaining similar MASE. The final version of Moirai 2.0 strengthens the projection layer by replacing the linear head with a residual block, while keeping quantile loss, decoder-only architecture, and all three pretraining/inference strategies. This final variant achieves the best overall performance, completing the incremental path of design decisions.
+Table 2:
+Ablation study of Moirai 2.0 design choices. Starting from the Moirai 1.0 followed by a decoder-only variant using the original GIFT-Eval pretraining and distributional loss (v0), new pretraining corpus (v1), quantile loss (v2), autoregressive quantile decoding (v3), random masking (v4), and multi-token prediction (v5). The final Moirai 2.0 additionally replaces the linear projection with a residual block, achieving the best overall results.
+Variant
+Pretrain Data
+Loss
+Architecture
+Projection
+Multitoken pred.
+Autoreg. quantiale dec.
+Random mask
+MASE
+CRPS
+Moirai 1.0 small
+GIFT-Eval Pretrain
+distribution
+enc-only
+linear
+—
+—
+—
+0.946
+0.65
+v0
+GIFT-Eval Pretrain
+distribution
+dec-only
+linear
+—
+—
+—
+0.9288
+0.6469
+v1
+New Corpus
+distribution
+dec-only
+linear
+—
+—
+—
+0.85
+0.58
+v2
+New Corpus
+quantile
+dec-only
+linear
+—
+—
+—
+0.744
+0.553
+v3
+New Corpus
+quantile
+dec-only
+linear
+—
+✓
+—
+0.736
+0.533
+v4
+New Corpus
+quantile
+dec-only
+linear
+—
+✓
+✓
+0.772
+0.56
+v5
+New Corpus
+quantile
+dec-only
+linear
+✓
+✓
+✓
+0.739
+0.527
+Moirai 2.0
+New Corpus
+quantile
+dec-only
+residual block
+✓
+✓
+✓
+0.728
+0.516
+6
+Limitations and Future Work
+Seeing minimal benefit in doing so, we have dropped support for multivariate forecasting and the use of covariates in Moirai 2.0. This observation likely stems from the limited availability of high-quality datasets with such properties, which may be revisited in future versions once this limitation is resolved — potentially through synthetic data generation, as demonstrated by
+Ansari et al. [2]
+.
+While Moirai 2.0 benefits substantially from its architectural changes—achieving better performance with a smaller parameter count—it also introduces new challenges for scaling. Counterintuitively, increasing the number of parameters degrades performance, suggesting a mismatch between the model architecture and the available data. Furthermore, the model exhibits weaker performance as the forecast horizons gets longer. In future work we would like to explore bridging this gap between architecture and data, enabling scalable model growth and potentially yielding further performance improvements.
+For future work there are several exciting directions we believe are worth to explore. First, agentic solutions that combine time-series analysis capabilities with the reasoning power of large language models (LLMs) represent a highly promising avenue. The recent agent-based submissions to the GIFT-Eval benchmark further demonstrate the potential of this paradigm. We anticipate that such approaches will become increasingly practical and relevant as new benchmarks emerge that demand deeper reasoning and contextual understanding.
+Another important direction lies in developing foundation models capable of multimodal reasoning, integrating text, image, and time-series modalities. While some early works have begun exploring this space
+[
+6
+,
+25
+,
+31
+,
+36
+,
+7
+,
+23
+]
+, much remains to be discovered. We believe that forecasting and time-series analysis will become far more valuable for both businesses and everyday users when enriched with additional contextual information which makes multimodal integration an exciting path for future research.
+7
+Conclusion
+In this technical report we introduced our new model, Moirai 2.0 a decoder-only time-series foundation model that pairs quantile forecasting with multi-token prediction and trained on a newly curated diverse pretraining data with 36 million time series. Evaluated on the comprehensive
+Gift-Eval
+benchmark, Moirai 2.0 is highly competitive—achieving top 5 performance among pretrained models while offering a favorable trade-off between accuracy, inference speed, and parameter count.
+Our ablations isolate the effect of each design choice and show that switching from encoder-only to decoder-only architecture, together with recursive multi-quantile decoding accounts for most of the observed gains.
+Along these advances, we also discussed limitations of Moirai 2.0. We observed diminishing returns from parameter scaling, and degraded performance as forecast horizons lengthen. Addressing these challenges may require: data scaling aligned with model capacity; and architectural improvements aimed at long-horizon performance. By releasing code, documenting and evaluating design choices, and reporting limitations, we hope to support and accelerate progress in this direction.
+References
+[1]
+T. Aksu, G. Woo, J. Liu, X. Liu, C. Liu, S. Savarese, C. Xiong, and D. Sahoo
+(2024)
+Gift-eval: a benchmark for general time series forecasting model evaluation
+.
+arXiv preprint arXiv:2410.10393
+.
+Cited by:
+§1
+,
+§4
+,
+§4
+,
+§5.3
+,
+§5
+.
+[2]
+A. F. Ansari, O. Shchur, J. Küken, A. Auer, B. Han, P. Mercado, S. S. Rangapuram, H. Shen, L. Stella, X. Zhang, M. Goswami, S. Kapoor, D. C. Maddix, P. Guerron, T. Hu, J. Yin, N. Erickson, P. M. Desai, H. Wang, H. Rangwala, G. Karypis, Y. Wang, and M. Bohlke-Schneider
+(2025)
+Chronos-2: from univariate to universal forecasting
+.
+arXiv preprint arXiv:2510.15821
+.
+External Links:
+Link
+Cited by:
+§1
+,
+§2
+,
+§5.1
+,
+§6
+.
+[3]
+A. F. Ansari, L. Stella, C. Turkmen, X. Zhang, P. Mercado, H. Shen, O. Shchur, S. S. Rangapuram, S. Pineda Arango, S. Kapoor, J. Zschiegner, D. C. Maddix, M. W. Mahoney, K. Torkkola, A. Gordon Wilson, M. Bohlke-Schneider, and Y. Wang
+(2024)
+Chronos: learning the language of time series
+.
+Transactions on Machine Learning Research
+.
+External Links:
+ISSN 2835-8856
+,
+Link
+Cited by:
+§1
+,
+§2
+,
+§4
+,
+§4
+,
+§4
+,
+§5.1
+.
+[4]
+A. Auer, P. Podest, D. Klotz, S. Böck, G. Klambauer, and S. Hochreiter
+(2025)
+TiRex: zero-shot forecasting across long and short horizons with enhanced in-context learning
+.
+arXiv preprint arXiv:2505.23719
+.
+Cited by:
+§2
+,
+§4
+,
+§5.1
+.
+[5]
+G. E. P. Box and D. A. Pierce
+(1970)
+Distribution of residual autocorrelations in autoregressive-integrated moving average time series models
+.
+Journal of the American Statistical Association
+65
+(
+332
+),
+pp. 1509–1526
+.
+Cited by:
+§2
+.
+[6]
+Y. Cai, A. Srinivasan, M. Goswami, A. Choudhry, and A. Dubrawski
+(2024)
+JoLT: Jointly Learned Representations of Language and Time-Series for Clinical Time-Series Interpretation (Student Abstract)
+.
+Proceedings of the AAAI Conference on Artificial Intelligence
+38
+(
+21
+),
+pp. 23447–23448
+.
+External Links:
+ISSN 2374-3468, 2159-5399
+,
+Link
+,
+Document
+Cited by:
+§6
+.
+[7]
+W. Chow, L. Gardiner, H. T. Hallgrímsson, M. A. Xu, and S. Y. Ren
+(2024)
+Towards Time Series Reasoning with LLMs
+.
+arXiv
+.
+Note:
+arXiv:2409.11376 [cs]
+External Links:
+Link
+,
+Document
+Cited by:
+§6
+.
+[8]
+B. Cohen, E. Khwaja, K. Wang, C. Masson, E. Ramé, Y. Doubli, and O. Abou-Amal
+(2024)
+Toto: time series optimized transformer for observability
+.
+arXiv preprint arXiv:2407.07874
+.
+Cited by:
+§1
+,
+§5.1
+.
+[9]
+A. Das, W. Kong, R. Sen, and Y. Zhou
+(2024)
+A decoder-only foundation model for time-series forecasting
+.
+In
+Forty-first International Conference on Machine Learning
+,
+Cited by:
+§1
+,
+§2
+,
+§3.2
+,
+§5.1
+.
+[10]
+V. Ekambaram, A. Jati, P. Dayama, S. Mukherjee, N. Nguyen, W. M. Gifford, C. Reddy, and J. Kalagnanam
+(2024)
+Tiny time mixers (ttms): fast pre-trained models for enhanced zero/few-shot forecasting of multivariate time series
+.
+Advances in Neural Information Processing Systems
+37
+,
+pp. 74147–74181
+.
+Cited by:
+§5.1
+.
+[11]
+K. Feng, S. Lan, Y. Fang, W. He, L. Ma, X. Lu, and K. Ren
+(2025)
+Kairos: towards adaptive and generalizable time series foundation models
+.
+arXiv preprint arXiv:2509.25826
+.
+Cited by:
+§2
+,
+§5.1
+,
+§5.3
+.
+[12]
+V. Flunkert, D. Salinas, and J. Gasthaus
+(2017)
+DeepAR: probabilistic forecasting with autoregressive recurrent networks
+.
+ArXiv
+abs/1704.04110
+.
+External Links:
+Link
+Cited by:
+§2
+.
+[13]
+F. Garza, M. M. Canseco, C. Challu, and K. G. Olivares
+(2022)
+StatsForecast: lightning fast forecasting with statistical and econometric models
+.
+Note:
+Presented at PyCon Salt Lake City, Utah, USURL:
+https://github.com/Nixtla/statsforecast
+Cited by:
+§2
+.
+[14]
+M. Goswami, K. Szafer, A. Choudhry, Y. Cai, S. Li, and A. Dubrawski
+(2024)
+MOMENT: a family of open time-series foundation models
+.
+ArXiv
+abs/2402.03885
+.
+External Links:
+Link
+Cited by:
+§2
+.
+[15]
+L. Graf, T. Ortner, S. WoĹşniak, A. Pantazi,
+et al.
+(2025)
+Flowstate: sampling rate invariant time series forecasting
+.
+arXiv preprint arXiv:2508.05287
+.
+Cited by:
+§2
+,
+§5.1
+.
+[16]
+K. He, X. Zhang, S. Ren, and J. Sun
+(2016)
+Deep residual learning for image recognition
+.
+In
+Proceedings of the IEEE conference on computer vision and pattern recognition
+,
+pp. 770–778
+.
+Cited by:
+§3.1
+,
+§3.1
+.
+[17]
+S. B. Hoo, S. Müller, D. Salinas, and F. Hutter
+(2025)
+From tables to time: how tabpfn-v2 outperforms specialized time series forecasting models
+.
+arXiv preprint arXiv:2501.02945
+.
+Cited by:
+§2
+,
+§5.1
+.
+[18]
+R. Hyndman, A. B. Koehler, J. K. Ord, and R. D. Snyder
+(2008)
+Forecasting with exponential smoothing: the state space approach
+.
+Springer
+.
+Cited by:
+§2
+.
+[19]
+J. Kaplan, S. McCandlish, T. Henighan, T. B. Brown, B. Chess, R. Child, S. Gray, A. Radford, J. Wu, and D. Amodei
+(2020)
+Scaling laws for neural language models
+.
+arXiv preprint arXiv:2001.08361
+.
+Cited by:
+§5.3
+.
+[20]
+T. Kim, J. Kim, Y. Tae, C. Park, J. Choi, and J. Choo
+(2021)
+Reversible instance normalization for accurate time-series forecasting against distribution shift
+.
+In
+International conference on learning representations
+,
+Cited by:
+§3.1
+.
+[21]
+X. Liu, J. Liu, G. Woo, T. Aksu, Y. Liang, R. Zimmermann, C. Liu, S. Savarese, C. Xiong, and D. Sahoo
+(2024)
+Moirai-moe: empowering time series foundation models with sparse mixture of experts
+.
+arXiv preprint arXiv:2410.10469
+.
+Cited by:
+§2
+,
+§3.1
+.
+[22]
+Y. Liu, G. Qin, Z. Shi, Z. Chen, C. Yang, X. Huang, J. Wang, and M. Long
+(2025)
+Sundial: a family of highly capable time series foundation models
+.
+arXiv preprint arXiv:2502.00816
+.
+Cited by:
+§2
+,
+§5.1
+.
+[23]
+M. A. Merrill, M. Tan, V. Gupta, T. Hartvigsen, and T. Althoff
+(2024)
+Language Models Still Struggle to Zero-shot Reason about Time Series
+.
+arXiv
+.
+Note:
+arXiv:2404.11757 [cs]
+External Links:
+Link
+,
+Document
+Cited by:
+§6
+.
+[24]
+Y. Nie, N. H. Nguyen, P. Sinthong, and J. Kalagnanam
+A time series is worth 64 words: long-term forecasting with transformers
+.
+In
+The Eleventh International Conference on Learning Representations
+,
+Cited by:
+§2
+,
+§3.1
+.
+[25]
+W. Niu, Z. Xie, Y. Sun, W. He, M. Xu, and C. Hao
+(2025)
+LangTime: A Language-Guided Unified Model for Time Series Forecasting with Proximal Policy Optimization
+.
+arXiv
+.
+Note:
+arXiv:2503.08271 [cs]
+External Links:
+Link
+,
+Document
+Cited by:
+§6
+.
+[26]
+B. N. Oreshkin, D. Carpov, N. Chapados, and Y. Bengio
+(2019)
+N-beats: neural basis expansion analysis for interpretable time series forecasting
+.
+ArXiv
+abs/1905.10437
+.
+External Links:
+Link
+Cited by:
+§2
+.
+[27]
+R. Pope, S. Douglas, A. Chowdhery, J. Devlin, J. Bradbury, J. Heek, K. Xiao, S. Agrawal, and J. Dean
+(2023)
+Efficiently scaling transformer inference
+.
+Proceedings of machine learning and systems
+5
+,
+pp. 606–624
+.
+Cited by:
+§3.3
+.
+[28]
+K. Rasul, A. Ashok, A. R. Williams, H. Ghonia, R. Bhagwatkar, A. Khorasani, M. J. D. Bayazi, G. Adamopoulos, R. Riachi, N. Hassen,
+et al.
+(2023)
+Lag-llama: towards foundation models for probabilistic time series forecasting
+.
+arXiv preprint arXiv:2310.08278
+.
+Cited by:
+§2
+,
+§5.1
+.
+[29]
+O. Shchur, A. F. Ansari, C. Turkmen, L. Stella, N. Erickson, P. Guerron, M. Bohlke-Schneider, and Y. Wang
+(2025)
+Fev-bench: a realistic benchmark for time series forecasting
+.
+arXiv preprint arXiv:2509.26468
+.
+Cited by:
+§1
+.
+[30]
+A. Vaswani, N. Shazeer, N. Parmar, J. Uszkoreit, L. Jones, A. N. Gomez, Ł. Kaiser, and I. Polosukhin
+(2017)
+Attention is all you need
+.
+Advances in neural information processing systems
+30
+.
+Cited by:
+§3.1
+.
+[31]
+C. Wang, Q. Qi, J. Wang, H. Sun, Z. Zhuang, J. Wu, L. Zhang, and J. Liao
+(2024)
+ChatTime: A Unified Multimodal Time Series Foundation Model Bridging Numerical and Textual Data
+.
+arXiv
+.
+Note:
+arXiv:2412.11376
+External Links:
+Link
+,
+Document
+Cited by:
+§6
+.
+[32]
+X. Wang, T. Zhou, J. Gao, B. Ding, and J. Zhou
+(2025)
+Output scaling: yinglong-delayed chain of thought in a large pretrained time series forecasting model
+.
+arXiv preprint arXiv:2506.11029
+.
+Cited by:
+§1
+,
+§2
+,
+§5.1
+,
+§5.3
+.
+[33]
+R. Wen, K. Torkkola, B. Narayanaswamy, and D. Madeka
+(2017)
+A multi-horizon quantile recurrent forecaster
+.
+arXiv preprint arXiv:1711.11053
+.
+Cited by:
+§3.1
+.
+[34]
+G. Woo, C. Liu, A. Kumar, C. Xiong, S. Savarese, and D. Sahoo
+(2024)
+Unified training of universal time series forecasting transformers
+.
+In
+Forty-first International Conference on Machine Learning
+,
+Cited by:
+§1
+,
+§2
+,
+§2
+,
+§3.1
+,
+§3.2
+,
+§3.3
+,
+§5.1
+,
+footnote 1
+.
+[35]
+H. Wu, J. Xu, J. Wang, and M. Long
+(2021)
+Autoformer: decomposition transformers with auto-correlation for long-term series forecasting
+.
+In
+Neural Information Processing Systems
+,
+External Links:
+Link
+Cited by:
+§2
+.
+[36]
+Z. Xie, Z. Li, X. He, L. Xu, X. Wen, T. Zhang, J. Chen, R. Shi, and D. Pei
+(2024)
+ChatTS: Aligning Time Series with LLMs via Synthetic Data for Enhanced Understanding and Reasoning
+.
+arXiv
+.
+Note:
+arXiv:2412.03104 [cs]
+External Links:
+Link
+,
+Document
+Cited by:
+§6
+.
+[37]
+A. Zeng, M. Chen, L. Zhang, and Q. Xu
+(2022)
+Are transformers effective for time series forecasting?
+.
+In
+AAAI Conference on Artificial Intelligence
+,
+External Links:
+Link
+Cited by:
+§2
+.
+[38]
+H. Zhang, M. Cisse, Y. N. Dauphin, and D. Lopez-Paz
+(2017)
+Mixup: beyond empirical risk minimization
+.
+arXiv preprint arXiv:1710.09412
+.
+Cited by:
+§4
+.
+[39]
+Y. Zhang and J. Yan
+(2023)
+Crossformer: transformer utilizing cross-dimension dependency for multivariate time series forecasting
+.
+In
+The Eleventh International Conference on Learning Representations
+,
+External Links:
+Link
+Cited by:
+§2
+.
+Appendix A
+Appendix
+Figure 6:
+GiftEval
+leaderboard results broken down by variate type. For both univariate and multivariate, we display the top-10 foundation models ordered by their MASE rank (lower is better).
+Figure 7:
+GiftEval
+leaderboard results broken down by frequency. For each frequency type, we display the top-10 foundation models ordered by their MASE rank (lower is better).
+Figure 8:
+GiftEval
+leaderboard results broken down by trendiness of time series. High value indicates strong trend and vice versa. We display the top-10 foundation models ordered by their MASE rank (lower is better).
+Figure 9:
+GiftEval
+leaderboard results broken down by seasonal strength of the time series. High value indicates strong seasonal patterns and vice versa. We display the top-10 foundation models ordered by their MASE rank (lower is better).
+Figure 10:
+GiftEval
+leaderboard results broken down by entropy of the time series. Entopy measures the “forecastability” of a time series, where low values indicate a high signal-to-noise ratio and high values occur when a series is difficult to forecast. We display the top-10 foundation models ordered by their MASE rank (lower is better).
+Figure 11:
+GiftEval
+leaderboard results broken down by hurts value of the time series. Hurst indicates the long-term memory or persistence of a time series and whether future values are likely to be influenced by past trends, revert to the mean, or behave randomly. Higher values indicate more persistence. We display the top-10 foundation models ordered by their MASE rank (lower is better).
+Figure 12:
+GiftEval
+leaderboard results broken down by stability of the time series. Stability is the variance of the means. Lower values indicate more stable data. We display the top-10 foundation models ordered by their MASE rank (lower is better).
+Figure 13:
+GiftEval
+leaderboard results broken down by lumpiness of the time series. Lumpiness is the variability of the variance across different segments of the time series. A high value of lumpiness indicates significant fluctuations in variability. We display the top-10 foundation models ordered by their MASE rank (lower is better).
+Experimental support, please
+view the build logs
+for errors. Generated by
+L
+A
+T
+E
+xml
+.
+Instructions for reporting errors
+We are continuing to improve HTML versions of papers, and your feedback helps enhance accessibility and mobile
+      support. To report errors in the HTML that will help us improve conversion and rendering, choose any of the
+      methods listed below:
+Click the "Report Issue"
+(
+)
+button, located in the page header.
+Tip:
+You can select the relevant text first, to include it in your report.
+Our team has already identified
+the following issues
+. We appreciate your time reviewing and reporting rendering errors we
+      may not have found yet. Your efforts will help us improve the HTML versions for all readers, because disability
+      should not be a barrier to accessing research. Thank you for your continued support in championing open access for
+      all.
+Have a free development cycle? Help support accessibility at arXiv! Our collaborators at LaTeXML maintain a
+list of packages that need conversion
+, and welcome
+developer contributions
+.
+We gratefully acknowledge support from our
+major funders
+,
+member institutions
+,
+,
+        and all contributors.
+About
+·
+Help
+·
+Contact
+·
+Subscribe
+·
+Copyright
+·
+Privacy
+·
+Accessibility
+·
+Operational Status
+(opens in new tab)

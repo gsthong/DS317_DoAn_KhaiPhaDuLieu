@@ -1,0 +1,1097 @@
+{
+  "id": "tirex2_paper",
+  "url": "https://arxiv.org/html/2607.01204v1",
+  "retrieved_at_utc": "2026-11-06T14:55:20.548857+00:00",
+  "status_code": 200,
+  "sha256": "df0a12976867681f513c117ae5fa55b8c7d2905930f85df8fae00ce532c9cbb4",
+  "tables": [
+    {
+      "id": "S4.T1",
+      "caption": "Table 1 : Ablation study on fev-bench and the subset with future-known covariates.\nThe baseline row reports mean MASE ± \\pm std., other rows report mean deltas\nwith original std. over six seeds. Rows below the baseline remove or replace a\nsingle component of TiRex-2 (lower is better).",
+      "rows": [
+        [
+          "Configuration",
+          "All fev-bench MASE / Δ \\Delta",
+          "Future-known cov. subset MASE / Δ \\Delta"
+        ],
+        [
+          "TiRex-2 (full)",
+          "1.527 ± \\pm 0.006",
+          "0.990 ± \\pm 0.007"
+        ],
+        [
+          "No group attention",
+          "+0.220 ± \\pm 0.056",
+          "+0.278 ± \\pm 0.048"
+        ],
+        [
+          "No binary-aware scaler",
+          "+0.014 ± \\pm 0.007",
+          "+0.001 ± \\pm 0.004"
+        ],
+        [
+          "Forward only",
+          "+0.022 ± \\pm 0.006",
+          "+0.077 ± \\pm 0.007"
+        ],
+        [
+          "sLSTM only",
+          "+0.008 ± \\pm 0.008",
+          "+0.002 ± \\pm 0.004"
+        ],
+        [
+          "8k → \\to 2k context",
+          "+0.002 ± \\pm 0.004",
+          "+0.003 ± \\pm 0.005"
+        ],
+        [
+          "No future-known covariates",
+          "+0.033 ± \\pm 0.006",
+          "+0.114 ± \\pm 0.009"
+        ]
+      ]
+    },
+    {
+      "id": "A2.T2",
+      "caption": "Table 2: Past and future-covariate support and target-causality preservation across\nmultivariate and covariate-aware time series foundation models. ✓ \\checkmark = supported/preserved, × \\times = not supported/not preserved.",
+      "rows": [
+        [
+          "Model",
+          "Past covariates",
+          "Future covariates",
+          "Target causality"
+        ],
+        [
+          "TiRex-2 (ours)",
+          "✓ \\checkmark",
+          "✓ \\checkmark",
+          "✓ \\checkmark"
+        ],
+        [
+          "Multivariate TSFMs"
+        ],
+        [
+          "Moirai ( Woo et al., 2024 )",
+          "✓ \\checkmark",
+          "✓ \\checkmark",
+          "× \\times"
+        ],
+        [
+          "Moirai-MoE ( Liu et al., 2025a )",
+          "✓ \\checkmark",
+          "✓ \\checkmark",
+          "× \\times"
+        ],
+        [
+          "Toto ( Cohen et al., 2025 )",
+          "× \\times",
+          "× \\times",
+          "✓ \\checkmark"
+        ],
+        [
+          "Chronos-2 ( Ansari et al., 2025 )",
+          "✓ \\checkmark",
+          "✓ \\checkmark",
+          "× \\times"
+        ],
+        [
+          "TabPFN-TS ( Hoo et al., 2024 )",
+          "× \\times",
+          "✓ \\checkmark",
+          "× \\times"
+        ],
+        [
+          "GTT ( Feng et al., 2024 )",
+          "✓ \\checkmark",
+          "× \\times",
+          "× \\times"
+        ],
+        [
+          "MORPHEUS ( Patil et al., 2025 )",
+          "✓ \\checkmark",
+          "✓ \\checkmark",
+          "× \\times"
+        ],
+        [
+          "Covariate-aware single-target TSFMs"
+        ],
+        [
+          "COSMIC ( Auer et al., 2025a )",
+          "✓ \\checkmark",
+          "✓ \\checkmark",
+          "× \\times"
+        ],
+        [
+          "TimesFM-ICF ( Faw et al., 2025 )",
+          "✓ \\checkmark",
+          "× \\times",
+          "✓ \\checkmark"
+        ]
+      ]
+    },
+    {
+      "id": "A4.T3",
+      "caption": "Table 3 : Training hyperparameters of TiRex-2 for the pretraining and\nlong-context posttraining phases.",
+      "rows": [
+        [
+          "",
+          "Pretraining",
+          "Posttraining"
+        ],
+        [
+          "Optimization"
+        ],
+        [
+          "Optimizer",
+          "AdamW ( Loshchilov and Hutter, 2019 )"
+        ],
+        [
+          "Weight decay",
+          "0.01 0.01"
+        ],
+        [
+          "Gradient clipping (value)",
+          "1.0 1.0"
+        ],
+        [
+          "Precision",
+          "bf16-mixed"
+        ],
+        [
+          "Hardware",
+          "2 × 2\\times NVIDIA H100"
+        ],
+        [
+          "Total steps",
+          "700,000 700{,}000",
+          "100,000 100{,}000"
+        ],
+        [
+          "Effective batch size",
+          "64 64 (per-GPU 32 32 , no grad. accumulation)"
+        ],
+        [
+          "Wall-clock time",
+          "≈ 50 \\approx 50 h",
+          ""
+        ],
+        [
+          "Initialization",
+          "random",
+          ""
+        ],
+        [
+          "Learning-rate schedule (OneCycle)"
+        ],
+        [
+          "Peak LR η max \\eta_{\\max}",
+          "1.2 ⋅ 10 − 3 1.2\\cdot 10^{-3}",
+          "1.2 ⋅ 10 − 4 1.2\\cdot 10^{-4}"
+        ],
+        [
+          "Warmup fraction",
+          "5 % 5\\%"
+        ],
+        [
+          "Initial divisor",
+          "50 50"
+        ],
+        [
+          "Final divisor",
+          "10 4 10^{4}"
+        ],
+        [
+          "Architecture"
+        ],
+        [
+          "Blocks N N",
+          "12 12 (alternating mLSTM / sLSTM)"
+        ],
+        [
+          "Embedding dim d model d_{\\text{model}}",
+          "512 512"
+        ],
+        [
+          "Heads h h",
+          "4 4"
+        ],
+        [
+          "FFN dim d ff d_{\\text{ff}}",
+          "2,048 2{,}048"
+        ],
+        [
+          "Normalization",
+          "QK-norm"
+        ],
+        [
+          "Dropout",
+          "0.1 0.1"
+        ],
+        [
+          "Output clamp",
+          "Clamp of sinh \\mathrm{sinh} input to ± 20 \\pm 20 during re-scaling"
+        ],
+        [
+          "Quantile levels K K",
+          "99 99"
+        ],
+        [
+          "Sequence layout"
+        ],
+        [
+          "Context length L ctx L_{\\text{ctx}}",
+          "2,048 2{,}048",
+          "8,192 8{,}192"
+        ],
+        [
+          "Prediction horizon L pred L_{\\text{pred}}",
+          "320 320",
+          "512 512"
+        ],
+        [
+          "Input / output patch size",
+          "32 32 / 32 32"
+        ],
+        [
+          "Input / output tokens",
+          "64 64 / 10 10",
+          "256 256 / 16 16"
+        ],
+        [
+          "Streaming prediction horizon (tested)",
+          "2 16 = 65,536 2^{16}=65{,}536"
+        ],
+        [
+          "Objective"
+        ],
+        [
+          "Loss",
+          "Quantile loss with soft sample-impact capping"
+        ],
+        [
+          "Quantile levels K K",
+          "99 99 (equidistant in ( 0 , 1 ) (0,1) )"
+        ]
+      ]
+    },
+    {
+      "id": "A5.T4",
+      "caption": "Table 4 : Training datasets — Salesforce/lotsa_data .",
+      "rows": [
+        [
+          "Dataset",
+          "TiRex-2-fev",
+          "TiRex-2-GIFT-Eval"
+        ],
+        [
+          "lotsa_data/BEIJING_SUBWAY_30MIN",
+          "✓",
+          "✓"
+        ],
+        [
+          "lotsa_data/HZMETRO",
+          "✓",
+          "✓"
+        ],
+        [
+          "lotsa_data/LOS_LOOP",
+          "✓",
+          "✓"
+        ],
+        [
+          "lotsa_data/PEMS03",
+          "✓",
+          "✓"
+        ],
+        [
+          "lotsa_data/PEMS04",
+          "✓",
+          "✓"
+        ],
+        [
+          "lotsa_data/PEMS07",
+          "✓",
+          "✓"
+        ],
+        [
+          "lotsa_data/PEMS08",
+          "✓",
+          "✓"
+        ],
+        [
+          "lotsa_data/PEMS_BAY",
+          "✓",
+          "✓"
+        ],
+        [
+          "lotsa_data/Q-TRAFFIC",
+          "✓",
+          "✓"
+        ],
+        [
+          "lotsa_data/SHMETRO",
+          "✓",
+          "✓"
+        ],
+        [
+          "lotsa_data/alibaba_cluster_trace_2018",
+          "✓",
+          "—"
+        ],
+        [
+          "lotsa_data/australian_electricity_demand",
+          "✓",
+          "—"
+        ],
+        [
+          "lotsa_data/azure_vm_traces_2017",
+          "✓",
+          "—"
+        ],
+        [
+          "lotsa_data/bdg-2_bear",
+          "✓",
+          "—"
+        ],
+        [
+          "lotsa_data/bdg-2_fox",
+          "✓",
+          "—"
+        ],
+        [
+          "lotsa_data/bdg-2_panther",
+          "✓",
+          "—"
+        ],
+        [
+          "lotsa_data/bdg-2_rat",
+          "✓",
+          "—"
+        ],
+        [
+          "lotsa_data/beijing_air_quality",
+          "✓",
+          "✓"
+        ],
+        [
+          "lotsa_data/bitcoin_with_missing",
+          "✓",
+          "—"
+        ],
+        [
+          "lotsa_data/borealis",
+          "✓",
+          "✓"
+        ],
+        [
+          "lotsa_data/borg_cluster_data_2011",
+          "✓",
+          "—"
+        ],
+        [
+          "lotsa_data/buildings_900k",
+          "✓",
+          "✓"
+        ],
+        [
+          "lotsa_data/bull",
+          "✓",
+          "✓"
+        ],
+        [
+          "lotsa_data/car_parts_with_missing",
+          "✓",
+          "—"
+        ],
+        [
+          "lotsa_data/cdc_fluview_ilinet",
+          "✓",
+          "✓"
+        ],
+        [
+          "lotsa_data/cdc_fluview_who_nrevss",
+          "✓",
+          "✓"
+        ],
+        [
+          "lotsa_data/china_air_quality",
+          "✓",
+          "✓"
+        ],
+        [
+          "lotsa_data/cif_2016_12",
+          "✓",
+          "—"
+        ],
+        [
+          "lotsa_data/cif_2016_6",
+          "✓",
+          "—"
+        ],
+        [
+          "lotsa_data/cmip6_* (years 1850–2010, every 5 yr; 33)",
+          "✓",
+          "—"
+        ],
+        [
+          "lotsa_data/cockatoo",
+          "✓",
+          "✓"
+        ],
+        [
+          "lotsa_data/covid19_energy",
+          "✓",
+          "✓"
+        ],
+        [
+          "lotsa_data/covid_deaths",
+          "✓",
+          "—"
+        ],
+        [
+          "lotsa_data/covid_mobility",
+          "✓",
+          "✓"
+        ],
+        [
+          "lotsa_data/elecdemand",
+          "✓",
+          "—"
+        ],
+        [
+          "lotsa_data/elf",
+          "✓",
+          "✓"
+        ],
+        [
+          "lotsa_data/era5_* (years 1991–2018; 28)",
+          "✓",
+          "—"
+        ],
+        [
+          "lotsa_data/extended_web_traffic_with_missing",
+          "✓",
+          "✓"
+        ],
+        [
+          "lotsa_data/favorita_sales",
+          "✓",
+          "✓"
+        ],
+        [
+          "lotsa_data/favorita_transactions",
+          "—",
+          "✓"
+        ],
+        [
+          "lotsa_data/gfc12_load",
+          "—",
+          "✓"
+        ],
+        [
+          "lotsa_data/gfc14_load",
+          "—",
+          "✓"
+        ],
+        [
+          "lotsa_data/gfc17_load",
+          "—",
+          "✓"
+        ],
+        [
+          "lotsa_data/godaddy",
+          "✓",
+          "✓"
+        ],
+        [
+          "lotsa_data/hog",
+          "✓",
+          "✓"
+        ],
+        [
+          "lotsa_data/ideal",
+          "✓",
+          "✓"
+        ],
+        [
+          "lotsa_data/kaggle_web_traffic_weekly",
+          "✓",
+          "✓"
+        ],
+        [
+          "lotsa_data/kdd2022",
+          "—",
+          "✓"
+        ],
+        [
+          "lotsa_data/largest_2017",
+          "✓",
+          "✓"
+        ],
+        [
+          "lotsa_data/largest_2018",
+          "✓",
+          "✓"
+        ],
+        [
+          "lotsa_data/largest_2019",
+          "✓",
+          "✓"
+        ],
+        [
+          "lotsa_data/largest_2020",
+          "✓",
+          "✓"
+        ],
+        [
+          "lotsa_data/largest_2021",
+          "✓",
+          "✓"
+        ],
+        [
+          "lotsa_data/lcl",
+          "✓",
+          "—"
+        ],
+        [
+          "lotsa_data/london_smart_meters_with_missing",
+          "—",
+          "✓"
+        ],
+        [
+          "lotsa_data/m1_monthly",
+          "✓",
+          "—"
+        ],
+        [
+          "lotsa_data/m1_quarterly",
+          "✓",
+          "—"
+        ],
+        [
+          "lotsa_data/m1_yearly",
+          "✓",
+          "—"
+        ],
+        [
+          "lotsa_data/m4_quarterly",
+          "✓",
+          "—"
+        ],
+        [
+          "lotsa_data/m4_yearly",
+          "✓",
+          "—"
+        ],
+        [
+          "lotsa_data/monash_m3_monthly",
+          "✓",
+          "—"
+        ],
+        [
+          "lotsa_data/monash_m3_other",
+          "✓",
+          "✓"
+        ],
+        [
+          "lotsa_data/monash_m3_quarterly",
+          "✓",
+          "—"
+        ],
+        [
+          "lotsa_data/monash_m3_yearly",
+          "✓",
+          "—"
+        ],
+        [
+          "lotsa_data/nn5_daily_with_missing",
+          "✓",
+          "—"
+        ],
+        [
+          "lotsa_data/nn5_weekly",
+          "✓",
+          "—"
+        ],
+        [
+          "lotsa_data/oikolab_weather",
+          "✓",
+          "✓"
+        ],
+        [
+          "lotsa_data/pdb",
+          "✓",
+          "✓"
+        ],
+        [
+          "lotsa_data/pedestrian_counts",
+          "—",
+          "✓"
+        ],
+        [
+          "lotsa_data/project_tycho",
+          "✓",
+          "✓"
+        ],
+        [
+          "lotsa_data/residential_load_power",
+          "✓",
+          "✓"
+        ],
+        [
+          "lotsa_data/residential_pv_power",
+          "✓",
+          "✓"
+        ],
+        [
+          "lotsa_data/saugeenday",
+          "✓",
+          "—"
+        ],
+        [
+          "lotsa_data/sceaux",
+          "✓",
+          "✓"
+        ],
+        [
+          "lotsa_data/smart",
+          "✓",
+          "✓"
+        ],
+        [
+          "lotsa_data/solar_power",
+          "✓",
+          "✓"
+        ],
+        [
+          "lotsa_data/spain",
+          "✓",
+          "✓"
+        ],
+        [
+          "lotsa_data/subseasonal",
+          "✓",
+          "✓"
+        ],
+        [
+          "lotsa_data/subseasonal_precip",
+          "✓",
+          "✓"
+        ],
+        [
+          "lotsa_data/sunspot_with_missing",
+          "✓",
+          "✓"
+        ],
+        [
+          "lotsa_data/taxi_30min",
+          "✓",
+          "—"
+        ],
+        [
+          "lotsa_data/tourism_monthly",
+          "✓",
+          "✓"
+        ],
+        [
+          "lotsa_data/tourism_quarterly",
+          "✓",
+          "—"
+        ],
+        [
+          "lotsa_data/tourism_yearly",
+          "✓",
+          "—"
+        ],
+        [
+          "lotsa_data/traffic_hourly",
+          "✓",
+          "—"
+        ],
+        [
+          "lotsa_data/traffic_weekly",
+          "✓",
+          "—"
+        ],
+        [
+          "lotsa_data/uber_tlc_daily",
+          "—",
+          "✓"
+        ],
+        [
+          "lotsa_data/uber_tlc_hourly",
+          "—",
+          "✓"
+        ],
+        [
+          "lotsa_data/us_births",
+          "✓",
+          "—"
+        ],
+        [
+          "lotsa_data/vehicle_trips_with_missing",
+          "✓",
+          "✓"
+        ],
+        [
+          "lotsa_data/weather",
+          "✓",
+          "—"
+        ],
+        [
+          "lotsa_data/wiki-rolling_nips",
+          "✓",
+          "✓"
+        ],
+        [
+          "lotsa_data/wind_power",
+          "✓",
+          "✓"
+        ]
+      ]
+    },
+    {
+      "id": "A5.T5",
+      "caption": "Table 5 : Training datasets — autogluon/chronos_datasets .",
+      "rows": [
+        [
+          "Dataset",
+          "TiRex-2-fev",
+          "TiRex-2-GIFT-Eval"
+        ],
+        [
+          "chronos_datasets/dominick",
+          "✓",
+          "✓"
+        ],
+        [
+          "chronos_datasets/electricity_15min",
+          "✓",
+          "—"
+        ],
+        [
+          "chronos_datasets/exchange_rate",
+          "✓",
+          "✓"
+        ],
+        [
+          "chronos_datasets/m4_daily",
+          "✓",
+          "—"
+        ],
+        [
+          "chronos_datasets/m4_hourly",
+          "✓",
+          "—"
+        ],
+        [
+          "chronos_datasets/m4_monthly",
+          "✓",
+          "—"
+        ],
+        [
+          "chronos_datasets/m4_weekly",
+          "✓",
+          "—"
+        ],
+        [
+          "chronos_datasets/mexico_city_bikes",
+          "✓",
+          "✓"
+        ],
+        [
+          "chronos_datasets/monash_australian_electricity",
+          "—",
+          "✓"
+        ],
+        [
+          "chronos_datasets/monash_cif_2016",
+          "—",
+          "✓"
+        ],
+        [
+          "chronos_datasets/monash_electricity_hourly",
+          "✓",
+          "—"
+        ],
+        [
+          "chronos_datasets/monash_electricity_weekly",
+          "✓",
+          "—"
+        ],
+        [
+          "chronos_datasets/monash_fred_md",
+          "—",
+          "✓"
+        ],
+        [
+          "chronos_datasets/monash_kdd_cup_2018",
+          "✓",
+          "—"
+        ],
+        [
+          "chronos_datasets/monash_london_smart_meters",
+          "✓",
+          "✓"
+        ],
+        [
+          "chronos_datasets/monash_m1_monthly",
+          "—",
+          "✓"
+        ],
+        [
+          "chronos_datasets/monash_m1_quarterly",
+          "—",
+          "✓"
+        ],
+        [
+          "chronos_datasets/monash_m1_yearly",
+          "—",
+          "✓"
+        ],
+        [
+          "chronos_datasets/monash_m3_monthly",
+          "—",
+          "✓"
+        ],
+        [
+          "chronos_datasets/monash_m3_quarterly",
+          "—",
+          "✓"
+        ],
+        [
+          "chronos_datasets/monash_m3_yearly",
+          "—",
+          "✓"
+        ],
+        [
+          "chronos_datasets/monash_nn5_weekly",
+          "—",
+          "✓"
+        ],
+        [
+          "chronos_datasets/monash_pedestrian_counts",
+          "✓",
+          "✓"
+        ],
+        [
+          "chronos_datasets/monash_rideshare",
+          "✓",
+          "✓"
+        ],
+        [
+          "chronos_datasets/monash_temperature_rain",
+          "✓",
+          "—"
+        ],
+        [
+          "chronos_datasets/monash_tourism_quarterly",
+          "—",
+          "✓"
+        ],
+        [
+          "chronos_datasets/monash_tourism_yearly",
+          "—",
+          "✓"
+        ],
+        [
+          "chronos_datasets/monash_traffic",
+          "✓",
+          "✓"
+        ],
+        [
+          "chronos_datasets/monash_weather",
+          "—",
+          "✓"
+        ],
+        [
+          "chronos_datasets/nn5",
+          "—",
+          "✓"
+        ],
+        [
+          "chronos_datasets/solar",
+          "✓",
+          "✓"
+        ],
+        [
+          "chronos_datasets/solar_1h",
+          "✓",
+          "✓"
+        ],
+        [
+          "chronos_datasets/taxi_1h",
+          "✓",
+          "✓"
+        ],
+        [
+          "chronos_datasets/taxi_30min",
+          "✓",
+          "✓"
+        ],
+        [
+          "chronos_datasets/uber_tlc_daily",
+          "✓",
+          "✓"
+        ],
+        [
+          "chronos_datasets/uber_tlc_hourly",
+          "✓",
+          "✓"
+        ],
+        [
+          "chronos_datasets/ushcn_daily",
+          "✓",
+          "✓"
+        ],
+        [
+          "chronos_datasets/weatherbench_daily",
+          "✓",
+          "✓"
+        ],
+        [
+          "chronos_datasets/weatherbench_hourly_geopotential",
+          "✓",
+          "✓"
+        ],
+        [
+          "chronos_datasets/weatherbench_hourly_potential_vorticity",
+          "✓",
+          "✓"
+        ],
+        [
+          "chronos_datasets/weatherbench_hourly_relative_humidity",
+          "✓",
+          "✓"
+        ],
+        [
+          "chronos_datasets/weatherbench_hourly_specific_humidity",
+          "✓",
+          "✓"
+        ],
+        [
+          "chronos_datasets/weatherbench_hourly_temperature",
+          "✓",
+          "✓"
+        ],
+        [
+          "chronos_datasets/weatherbench_hourly_toa_incident_solar_radiation",
+          "✓",
+          "✓"
+        ],
+        [
+          "chronos_datasets/weatherbench_hourly_total_cloud_cover",
+          "✓",
+          "✓"
+        ],
+        [
+          "chronos_datasets/weatherbench_hourly_total_precipitation",
+          "✓",
+          "✓"
+        ],
+        [
+          "chronos_datasets/weatherbench_hourly_u_component_of_wind",
+          "✓",
+          "✓"
+        ],
+        [
+          "chronos_datasets/weatherbench_hourly_v_component_of_wind",
+          "✓",
+          "✓"
+        ],
+        [
+          "chronos_datasets/weatherbench_hourly_vorticity",
+          "✓",
+          "✓"
+        ],
+        [
+          "chronos_datasets/weatherbench_weekly",
+          "✓",
+          "✓"
+        ],
+        [
+          "chronos_datasets/wiki_daily_100k",
+          "✓",
+          "✓"
+        ],
+        [
+          "chronos_datasets/wind_farms_daily",
+          "✓",
+          "✓"
+        ],
+        [
+          "chronos_datasets/wind_farms_hourly",
+          "✓",
+          "✓"
+        ],
+        [
+          "chronos_datasets_extra/brazilian_cities_temperature",
+          "✓",
+          "✓"
+        ],
+        [
+          "chronos_datasets_extra/spanish_energy_and_weather",
+          "✓",
+          "✓"
+        ]
+      ]
+    },
+    {
+      "id": "A5.T6",
+      "caption": "Table 6 : Training datasets other sources.",
+      "rows": [
+        [
+          "Dataset",
+          "TiRex-2-fev",
+          "TiRex-2-GIFT-Eval"
+        ],
+        [
+          "boom/boom_full (filtered for leakage)",
+          "✓",
+          "—"
+        ],
+        [
+          "boom/boom_full_mv (filtered for leakage)",
+          "✓",
+          "—"
+        ],
+        [
+          "hydrology",
+          "✓",
+          "—"
+        ]
+      ]
+    },
+    {
+      "id": "A5.T7",
+      "caption": "Table 7 : Training datasets — GIFT-Eval cloud-operations datasets.",
+      "rows": [
+        [
+          "Dataset",
+          "TiRex-2-fev",
+          "TiRex-2-GIFT-Eval"
+        ],
+        [
+          "gift-eval/bitbrains_fast_storage",
+          "✓",
+          "—"
+        ],
+        [
+          "gift-eval/bitbrains_rnd",
+          "✓",
+          "—"
+        ],
+        [
+          "gift-eval/bizitobs_application",
+          "✓",
+          "—"
+        ],
+        [
+          "gift-eval/bizitobs_service",
+          "✓",
+          "—"
+        ]
+      ]
+    }
+  ]
+}

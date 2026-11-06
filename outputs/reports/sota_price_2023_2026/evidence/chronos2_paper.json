@@ -1,0 +1,1885 @@
+{
+  "id": "chronos2_paper",
+  "url": "https://arxiv.org/html/2510.15821v1",
+  "retrieved_at_utc": "2026-11-06T14:55:18.707478+00:00",
+  "status_code": 200,
+  "sha256": "fa1039e62f40c7d2dc2b8c9cc2f86ee7489080af521f262709ac830e9755e15f",
+  "tables": [
+    {
+      "id": "S2.T1",
+      "caption": "Table 1: Comparison of capabilities of pretrained forecasting models. Past-Only Covariates : support for covariates only observed in the past; Known Covariates : support for covariates whose future values are known; Categorical Covariates : support for nominal features in the covariates; Cross Learning : support for in-context learning across related time series; Memory Scaling : inference memory requirements with respect to the total number of variates V V (including both targets and covariates).",
+      "rows": [
+        [
+          "Model",
+          "Univariate Forecasting",
+          "Univariate",
+          "Forecasting",
+          "Multivariate Forecasting",
+          "Multivariate",
+          "Forecasting",
+          "Past-Only Covariates",
+          "Past-Only",
+          "Covariates",
+          "Known Covariates",
+          "Known",
+          "Covariates",
+          "Categorical Covariates",
+          "Categorical",
+          "Covariates",
+          "Cross Learning",
+          "Cross",
+          "Learning",
+          "Memory Scaling",
+          "Memory",
+          "Scaling"
+        ],
+        [
+          "Univariate"
+        ],
+        [
+          "Forecasting"
+        ],
+        [
+          "Multivariate"
+        ],
+        [
+          "Forecasting"
+        ],
+        [
+          "Past-Only"
+        ],
+        [
+          "Covariates"
+        ],
+        [
+          "Known"
+        ],
+        [
+          "Covariates"
+        ],
+        [
+          "Categorical"
+        ],
+        [
+          "Covariates"
+        ],
+        [
+          "Cross"
+        ],
+        [
+          "Learning"
+        ],
+        [
+          "Memory"
+        ],
+        [
+          "Scaling"
+        ],
+        [
+          "Chronos-2",
+          "✓",
+          "✓",
+          "✓",
+          "✓",
+          "✓",
+          "✓",
+          "𝒪 ⁡ ( V ) \\mathcal{O}(V)"
+        ],
+        [
+          "Toto-1.0",
+          "✓",
+          "✓",
+          "✓",
+          "✗",
+          "✗",
+          "✗",
+          "𝒪 ⁡ ( V ) \\mathcal{O}(V)"
+        ],
+        [
+          "TabPFN-TS",
+          "✓",
+          "✗",
+          "✗",
+          "✓",
+          "✓",
+          "✗",
+          "𝒪 ⁡ ( V ) \\mathcal{O}(V)"
+        ],
+        [
+          "COSMIC",
+          "✓",
+          "✗",
+          "✓",
+          "✓",
+          "✗",
+          "✗",
+          "𝒪 ⁡ ( V 2 ) \\mathcal{O}(V^{2})"
+        ],
+        [
+          "Moirai-1.0",
+          "✓",
+          "✓",
+          "✓",
+          "✓",
+          "✗",
+          "✗",
+          "𝒪 ⁡ ( V 2 ) \\mathcal{O}(V^{2})"
+        ],
+        [
+          "Chronos-Bolt",
+          "✓",
+          "✗",
+          "✗",
+          "✗",
+          "✗",
+          "✗",
+          "-"
+        ],
+        [
+          "Moirai-2.0",
+          "✓",
+          "✗",
+          "✗",
+          "✗",
+          "✗",
+          "✗",
+          "-"
+        ],
+        [
+          "Sundial",
+          "✓",
+          "✗",
+          "✗",
+          "✗",
+          "✗",
+          "✗",
+          "-"
+        ],
+        [
+          "TimesFM-2.5",
+          "✓",
+          "✗",
+          "✗",
+          "✗",
+          "✗",
+          "✗",
+          "-"
+        ],
+        [
+          "TiRex",
+          "✓",
+          "✗",
+          "✗",
+          "✗",
+          "✗",
+          "✗",
+          "-"
+        ]
+      ]
+    },
+    {
+      "id": "S3.T2",
+      "caption": "Table 2: Diverse forecasting tasks can be solved by specifying group IDs and future inputs appropriately. Here, 𝒈 {\\bm{g}} and 𝑾 {\\bm{W}} denote the group IDs and future values provided to the model. Future inputs for targets and past-only covariates are masked as missing values, denoted as ∗ \\ast . The examples use fixed numbers of variates for clarity, but Chronos-2 can handle arbitrary dimensions.",
+      "rows": [
+        [
+          "Task Type",
+          "Group IDs 𝒈 {\\bm{g}}",
+          "Future Inputs 𝑾 {\\bm{W}}"
+        ],
+        [
+          "Univariate Forecasting ( 3 independent series )",
+          "𝒈 = ( 1 , 2 , 3 ) {\\bm{g}}=(1,2,3)",
+          "𝑾 = [ ∗ … ∗ ∗ … ∗ ∗ … ∗ ] ∈ ℝ 3 × H {\\bm{W}}=\\begin{bmatrix}\\ast&\\dots&\\ast\\\\\n\\ast&\\dots&\\ast\\\\\n\\ast&\\dots&\\ast\\end{bmatrix}\\in\\mathbb{R}^{3\\times H}"
+        ],
+        [
+          "Multivariate Forecasting ( 3 targets )",
+          "𝒈 = ( 1 , 1 , 1 ) {\\bm{g}}=(1,1,1)",
+          "𝑾 = [ ∗ … ∗ ∗ … ∗ ∗ … ∗ ] ∈ ℝ 3 × H {\\bm{W}}=\\begin{bmatrix}\\ast&\\dots&\\ast\\\\\n\\ast&\\dots&\\ast\\\\\n\\ast&\\dots&\\ast\\end{bmatrix}\\in\\mathbb{R}^{3\\times H}"
+        ],
+        [
+          "Forecasting with Covariates ( 1 target, 1 past-only covariate, 2 known covariates )",
+          "𝒈 = ( 1 , 1 , 1 , 1 ) {\\bm{g}}=(1,1,1,1)",
+          "𝑾 = [ ∗ … ∗ ∗ … ∗ x T + 1 , 3 … x T + H , 3 x T + 1 , 4 … x T + H , 4 ] ∈ ℝ 4 × H {\\bm{W}}=\\begin{bmatrix}\\ast&\\dots&\\ast\\\\\n\\ast&\\dots&\\ast\\\\\nx_{T+1,3}&\\dots&x_{T+H,3}\\\\\nx_{T+1,4}&\\dots&x_{T+H,4}\\end{bmatrix}\\in\\mathbb{R}^{4\\times H}"
+        ]
+      ]
+    },
+    {
+      "id": "S5.T3",
+      "caption": "Table 3: fev-bench results. The average win rate and skill score are computed with respect to the scaled quantile loss (SQL) metric. Higher values are better for both. Chronos-2 outperforms all existing pretrained models by a substantial margin on this benchmark that includes univariate, multivariate, and covariate-informed forecasting tasks. Baseline results and the imputation strategy for handling data leakage in certain tasks are both taken from Shchur et al. (2025) . Results for additional forecasting metrics are provided in Tables 7 , 8 and 9 (Appendix).",
+      "rows": [
+        [
+          "Model",
+          "Avg. Win Rate (%)",
+          "Skill Score (%)",
+          "Median runtime (s)",
+          "Leakage (%)",
+          "#Failures"
+        ],
+        [
+          "Chronos-2",
+          "90.7",
+          "47.3",
+          "3.6",
+          "0",
+          "0"
+        ],
+        [
+          "TiRex",
+          "80.8",
+          "42.6",
+          "1.4",
+          "1",
+          "0"
+        ],
+        [
+          "TimesFM-2.5",
+          "75.9",
+          "42.3",
+          "16.9",
+          "8",
+          "0"
+        ],
+        [
+          "Toto-1.0",
+          "66.6",
+          "40.7",
+          "90.7",
+          "8",
+          "0"
+        ],
+        [
+          "COSMIC",
+          "65.6",
+          "39.0",
+          "34.4",
+          "0",
+          "0"
+        ],
+        [
+          "Moirai-2.0",
+          "61.1",
+          "39.3",
+          "2.5",
+          "28",
+          "0"
+        ],
+        [
+          "Chronos-Bolt",
+          "60.3",
+          "38.9",
+          "1.0",
+          "0",
+          "0"
+        ],
+        [
+          "TabPFN-TS",
+          "59.3",
+          "39.6",
+          "305.5",
+          "0",
+          "2"
+        ],
+        [
+          "Sundial",
+          "41.0",
+          "33.4",
+          "35.6",
+          "1",
+          "0"
+        ],
+        [
+          "Stat. Ensemble",
+          "40.4",
+          "20.2",
+          "690.6",
+          "0",
+          "11"
+        ],
+        [
+          "AutoARIMA",
+          "35.2",
+          "20.6",
+          "186.8",
+          "0",
+          "10"
+        ],
+        [
+          "AutoETS",
+          "29.1",
+          "-26.8",
+          "17.0",
+          "0",
+          "3"
+        ],
+        [
+          "AutoTheta",
+          "21.8",
+          "5.5",
+          "9.3",
+          "0",
+          "0"
+        ],
+        [
+          "SeasonalNaive",
+          "14.5",
+          "0.0",
+          "2.3",
+          "0",
+          "0"
+        ],
+        [
+          "Naive",
+          "7.8",
+          "-45.4",
+          "2.2",
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "id": "S5.T4",
+      "caption": "(a)",
+      "rows": [
+        [
+          "Model",
+          "Avg. Win Rate (%)",
+          "Skill Score (%)"
+        ],
+        [
+          "Chronos-2",
+          "81.9",
+          "51.4"
+        ],
+        [
+          "TimesFM-2.5",
+          "77.5",
+          "51.0"
+        ],
+        [
+          "TiRex",
+          "76.5",
+          "50.2"
+        ],
+        [
+          "Toto-1.0",
+          "67.4",
+          "48.6"
+        ],
+        [
+          "Moirai-2.0",
+          "64.4",
+          "48.4"
+        ],
+        [
+          "COSMIC",
+          "56.4",
+          "44.5"
+        ],
+        [
+          "Chronos-Bolt",
+          "53.8",
+          "42.6"
+        ],
+        [
+          "TabPFN-TS",
+          "53.5",
+          "43.1"
+        ],
+        [
+          "Sundial",
+          "49.1",
+          "44.1"
+        ],
+        [
+          "AutoARIMA",
+          "21.8",
+          "8.8"
+        ],
+        [
+          "Seasonal Naive",
+          "16.6",
+          "0.0"
+        ],
+        [
+          "AutoTheta",
+          "16.0",
+          "-24.4"
+        ],
+        [
+          "AutoETS",
+          "15.2",
+          "-648.9"
+        ],
+        [
+          "Model",
+          "Avg. Win Rate (%)",
+          "Skill Score (%)"
+        ],
+        [
+          "Chronos-2",
+          "83.8",
+          "30.2"
+        ],
+        [
+          "TimesFM-2.5",
+          "77.7",
+          "29.5"
+        ],
+        [
+          "TiRex",
+          "71.9",
+          "27.6"
+        ],
+        [
+          "Moirai-2.0",
+          "64.3",
+          "27.2"
+        ],
+        [
+          "Toto-1.0",
+          "61.3",
+          "25.2"
+        ],
+        [
+          "Chronos-Bolt",
+          "58.4",
+          "19.2"
+        ],
+        [
+          "Sundial",
+          "53.4",
+          "25.0"
+        ],
+        [
+          "COSMIC",
+          "51.9",
+          "20.8"
+        ],
+        [
+          "TabPFN-TS",
+          "45.4",
+          "16.6"
+        ],
+        [
+          "AutoARIMA",
+          "24.4",
+          "-7.4"
+        ],
+        [
+          "AutoETS",
+          "19.5",
+          "-21.2"
+        ],
+        [
+          "Seasonal Naive",
+          "19.4",
+          "0.0"
+        ],
+        [
+          "AutoTheta",
+          "18.5",
+          "-9.0"
+        ]
+      ]
+    },
+    {
+      "id": "S5.T4.sf1",
+      "caption": "(a)",
+      "rows": [
+        [
+          "Model",
+          "Avg. Win Rate (%)",
+          "Skill Score (%)"
+        ],
+        [
+          "Chronos-2",
+          "81.9",
+          "51.4"
+        ],
+        [
+          "TimesFM-2.5",
+          "77.5",
+          "51.0"
+        ],
+        [
+          "TiRex",
+          "76.5",
+          "50.2"
+        ],
+        [
+          "Toto-1.0",
+          "67.4",
+          "48.6"
+        ],
+        [
+          "Moirai-2.0",
+          "64.4",
+          "48.4"
+        ],
+        [
+          "COSMIC",
+          "56.4",
+          "44.5"
+        ],
+        [
+          "Chronos-Bolt",
+          "53.8",
+          "42.6"
+        ],
+        [
+          "TabPFN-TS",
+          "53.5",
+          "43.1"
+        ],
+        [
+          "Sundial",
+          "49.1",
+          "44.1"
+        ],
+        [
+          "AutoARIMA",
+          "21.8",
+          "8.8"
+        ],
+        [
+          "Seasonal Naive",
+          "16.6",
+          "0.0"
+        ],
+        [
+          "AutoTheta",
+          "16.0",
+          "-24.4"
+        ],
+        [
+          "AutoETS",
+          "15.2",
+          "-648.9"
+        ]
+      ]
+    },
+    {
+      "id": "S5.T4.sf2",
+      "caption": "(b)",
+      "rows": [
+        [
+          "Model",
+          "Avg. Win Rate (%)",
+          "Skill Score (%)"
+        ],
+        [
+          "Chronos-2",
+          "83.8",
+          "30.2"
+        ],
+        [
+          "TimesFM-2.5",
+          "77.7",
+          "29.5"
+        ],
+        [
+          "TiRex",
+          "71.9",
+          "27.6"
+        ],
+        [
+          "Moirai-2.0",
+          "64.3",
+          "27.2"
+        ],
+        [
+          "Toto-1.0",
+          "61.3",
+          "25.2"
+        ],
+        [
+          "Chronos-Bolt",
+          "58.4",
+          "19.2"
+        ],
+        [
+          "Sundial",
+          "53.4",
+          "25.0"
+        ],
+        [
+          "COSMIC",
+          "51.9",
+          "20.8"
+        ],
+        [
+          "TabPFN-TS",
+          "45.4",
+          "16.6"
+        ],
+        [
+          "AutoARIMA",
+          "24.4",
+          "-7.4"
+        ],
+        [
+          "AutoETS",
+          "19.5",
+          "-21.2"
+        ],
+        [
+          "Seasonal Naive",
+          "19.4",
+          "0.0"
+        ],
+        [
+          "AutoTheta",
+          "18.5",
+          "-9.0"
+        ]
+      ]
+    },
+    {
+      "id": "S5.T5",
+      "caption": "(a)",
+      "rows": [
+        [
+          "Model",
+          "Avg. Win Rate (%)",
+          "Skill Score (%)"
+        ],
+        [
+          "Chronos-2",
+          "79.8",
+          "46.6"
+        ],
+        [
+          "TiRex",
+          "70.4",
+          "41.7"
+        ],
+        [
+          "TimesFM-2.5",
+          "70.0",
+          "42.4"
+        ],
+        [
+          "Toto-1.0",
+          "60.9",
+          "41.9"
+        ],
+        [
+          "Moirai-2.0",
+          "56.0",
+          "40.9"
+        ],
+        [
+          "Chronos-Bolt",
+          "49.4",
+          "39.3"
+        ],
+        [
+          "TabPFN-TS",
+          "46.3",
+          "32.6"
+        ],
+        [
+          "COSMIC",
+          "42.8",
+          "36.7"
+        ],
+        [
+          "Sundial",
+          "14.4",
+          "24.1"
+        ],
+        [
+          "Seasonal Naive",
+          "10.1",
+          "0.0"
+        ],
+        [
+          "Model",
+          "Avg. Win Rate (%)",
+          "Skill Score (%)"
+        ],
+        [
+          "Chronos-2",
+          "81.5",
+          "26.5"
+        ],
+        [
+          "TimesFM-2.5",
+          "71.6",
+          "23.3"
+        ],
+        [
+          "TiRex",
+          "67.1",
+          "22.2"
+        ],
+        [
+          "Toto-1.0",
+          "58.0",
+          "22.3"
+        ],
+        [
+          "Moirai-2.0",
+          "53.5",
+          "19.8"
+        ],
+        [
+          "Chronos-Bolt",
+          "50.6",
+          "20.4"
+        ],
+        [
+          "COSMIC",
+          "42.0",
+          "18.1"
+        ],
+        [
+          "TabPFN-TS",
+          "40.1",
+          "10.5"
+        ],
+        [
+          "Sundial",
+          "21.8",
+          "9.5"
+        ],
+        [
+          "Seasonal Naive",
+          "13.8",
+          "0.0"
+        ]
+      ]
+    },
+    {
+      "id": "S5.T5.sf1",
+      "caption": "(a)",
+      "rows": [
+        [
+          "Model",
+          "Avg. Win Rate (%)",
+          "Skill Score (%)"
+        ],
+        [
+          "Chronos-2",
+          "79.8",
+          "46.6"
+        ],
+        [
+          "TiRex",
+          "70.4",
+          "41.7"
+        ],
+        [
+          "TimesFM-2.5",
+          "70.0",
+          "42.4"
+        ],
+        [
+          "Toto-1.0",
+          "60.9",
+          "41.9"
+        ],
+        [
+          "Moirai-2.0",
+          "56.0",
+          "40.9"
+        ],
+        [
+          "Chronos-Bolt",
+          "49.4",
+          "39.3"
+        ],
+        [
+          "TabPFN-TS",
+          "46.3",
+          "32.6"
+        ],
+        [
+          "COSMIC",
+          "42.8",
+          "36.7"
+        ],
+        [
+          "Sundial",
+          "14.4",
+          "24.1"
+        ],
+        [
+          "Seasonal Naive",
+          "10.1",
+          "0.0"
+        ]
+      ]
+    },
+    {
+      "id": "S5.T5.sf2",
+      "caption": "(b)",
+      "rows": [
+        [
+          "Model",
+          "Avg. Win Rate (%)",
+          "Skill Score (%)"
+        ],
+        [
+          "Chronos-2",
+          "81.5",
+          "26.5"
+        ],
+        [
+          "TimesFM-2.5",
+          "71.6",
+          "23.3"
+        ],
+        [
+          "TiRex",
+          "67.1",
+          "22.2"
+        ],
+        [
+          "Toto-1.0",
+          "58.0",
+          "22.3"
+        ],
+        [
+          "Moirai-2.0",
+          "53.5",
+          "19.8"
+        ],
+        [
+          "Chronos-Bolt",
+          "50.6",
+          "20.4"
+        ],
+        [
+          "COSMIC",
+          "42.0",
+          "18.1"
+        ],
+        [
+          "TabPFN-TS",
+          "40.1",
+          "10.5"
+        ],
+        [
+          "Sundial",
+          "21.8",
+          "9.5"
+        ],
+        [
+          "Seasonal Naive",
+          "13.8",
+          "0.0"
+        ]
+      ]
+    },
+    {
+      "id": "A1.T6",
+      "caption": "Table 6: Real univariate datasets used for pretraining Chronos-2.",
+      "rows": [
+        [
+          "Dataset Name",
+          "Frequencies",
+          "# Time Series",
+          "Domain",
+          "Source"
+        ],
+        [
+          "Electricity",
+          "15min, 1H, 1W, 1D",
+          "370",
+          "Energy",
+          "Godahewa et al. (2021)"
+        ],
+        [
+          "KDD Cup (2018)",
+          "1H, 1D",
+          "270",
+          "Nature",
+          "Godahewa et al. (2021)"
+        ],
+        [
+          "M4 (Daily)",
+          "1D",
+          "4227",
+          "Various",
+          "Makridakis et al. (2020)"
+        ],
+        [
+          "M4 (Hourly)",
+          "1H",
+          "414",
+          "Various",
+          "Makridakis et al. (2020)"
+        ],
+        [
+          "M4 (Monthly)",
+          "1M",
+          "48000",
+          "Various",
+          "Makridakis et al. (2020)"
+        ],
+        [
+          "M4 (Weekly)",
+          "1W",
+          "359",
+          "Various",
+          "Makridakis et al. (2020)"
+        ],
+        [
+          "Mexico City Bikes",
+          "1H, 1D, 1W",
+          "494",
+          "Transport",
+          "Ansari et al. (2024)"
+        ],
+        [
+          "Pedestrian Counts",
+          "1H, 1D, 1W",
+          "66",
+          "Transport",
+          "Godahewa et al. (2021)"
+        ],
+        [
+          "Solar",
+          "5min, 10min, 1H",
+          "5166",
+          "Energy",
+          "Ansari et al. (2024)"
+        ],
+        [
+          "Taxi",
+          "30min, 1H",
+          "2428",
+          "Transport",
+          "Salinas et al. (2019)"
+        ],
+        [
+          "Uber TLC",
+          "1H, 1D",
+          "262",
+          "Transport",
+          "FiveThirtyEight (2025)"
+        ],
+        [
+          "USHCN",
+          "1D, 1W",
+          "225280",
+          "Nature",
+          "Ansari et al. (2024)"
+        ],
+        [
+          "Weatherbench",
+          "1H, 1D, 1W",
+          "225280",
+          "Nature",
+          "Rasp et al. (2020)"
+        ],
+        [
+          "Wiki",
+          "1H, 1D, 1W",
+          "100000",
+          "Web",
+          "Ansari et al. (2024)"
+        ],
+        [
+          "Wind Farms",
+          "1H, 1D",
+          "337",
+          "Energy",
+          "Godahewa et al. (2021)"
+        ],
+        [
+          "Temperature-Rain",
+          "1D",
+          "32072",
+          "Nature",
+          "Godahewa et al. (2021)"
+        ],
+        [
+          "London Smart Meters",
+          "30min, 1D",
+          "5560",
+          "Energy",
+          "Godahewa et al. (2021)"
+        ],
+        [
+          "Alibaba Cluster Trace (2018)",
+          "5min, 1H",
+          "100000",
+          "Cloud Ops",
+          "Woo et al. (2023)"
+        ],
+        [
+          "Azure VM Traces (2017)",
+          "5min, 1H",
+          "100000",
+          "Cloud Ops",
+          "Woo et al. (2023)"
+        ],
+        [
+          "Borg Cluster Data (2011)",
+          "5min, 1H",
+          "100000",
+          "Cloud Ops",
+          "Woo et al. (2023)"
+        ],
+        [
+          "LargeST (2017)",
+          "1H, 1D",
+          "8196",
+          "Transport",
+          "Liu et al. (2023)"
+        ],
+        [
+          "Q-Traffic",
+          "15min, 1H",
+          "45148",
+          "Transport",
+          "Jiang et al. (2023)"
+        ],
+        [
+          "Buildings 900K",
+          "1H, 1D",
+          "100000",
+          "Energy",
+          "Emami et al. (2023)"
+        ]
+      ]
+    },
+    {
+      "id": "A2.T7",
+      "caption": "Table 7: fev-bench results. The average win rate and skill score are computed with respect to the mean absolute scaled error (MASE) metric on fev-bench . Higher values are better for both.",
+      "rows": [
+        [
+          "Model",
+          "Avg. Win Rate (%)",
+          "Skill Score (%)",
+          "Median runtime (s)",
+          "Leakage (%)",
+          "#Failures"
+        ],
+        [
+          "Chronos-2",
+          "87.9",
+          "35.5",
+          "3.6",
+          "0",
+          "0"
+        ],
+        [
+          "TiRex",
+          "75.1",
+          "30.0",
+          "1.4",
+          "1",
+          "0"
+        ],
+        [
+          "TimesFM-2.5",
+          "74.4",
+          "30.3",
+          "16.9",
+          "8",
+          "0"
+        ],
+        [
+          "Toto-1.0",
+          "64.3",
+          "28.2",
+          "90.7",
+          "8",
+          "0"
+        ],
+        [
+          "Moirai-2.0",
+          "58.7",
+          "27.3",
+          "2.5",
+          "28",
+          "0"
+        ],
+        [
+          "COSMIC",
+          "58.6",
+          "25.7",
+          "34.4",
+          "0",
+          "0"
+        ],
+        [
+          "Chronos-Bolt",
+          "57.9",
+          "26.5",
+          "1.0",
+          "0",
+          "0"
+        ],
+        [
+          "TabPFN-TS",
+          "55.7",
+          "27.6",
+          "305.5",
+          "0",
+          "2"
+        ],
+        [
+          "Sundial",
+          "49.8",
+          "24.7",
+          "35.6",
+          "1",
+          "0"
+        ],
+        [
+          "Stat. Ensemble",
+          "44.2",
+          "15.7",
+          "690.6",
+          "0",
+          "11"
+        ],
+        [
+          "AutoARIMA",
+          "32.1",
+          "11.2",
+          "186.8",
+          "0",
+          "10"
+        ],
+        [
+          "AutoTheta",
+          "30.3",
+          "11.0",
+          "9.3",
+          "0",
+          "0"
+        ],
+        [
+          "AutoETS",
+          "30.2",
+          "2.3",
+          "17.0",
+          "0",
+          "3"
+        ],
+        [
+          "SeasonalNaive",
+          "16.7",
+          "0.0",
+          "2.3",
+          "0",
+          "0"
+        ],
+        [
+          "Naive",
+          "14.0",
+          "-16.7",
+          "2.2",
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "id": "A2.T8",
+      "caption": "Table 8: fev-bench results. The average win rate and skill score are computed with respect to the weighted quantile loss (WQL) metric on fev-bench . Higher values are better for both.",
+      "rows": [
+        [
+          "Model",
+          "Avg. Win Rate (%)",
+          "Skill Score (%)",
+          "Median runtime (s)",
+          "Leakage (%)",
+          "#Failures"
+        ],
+        [
+          "Chronos-2",
+          "88.5",
+          "51.5",
+          "3.6",
+          "0",
+          "0"
+        ],
+        [
+          "TiRex",
+          "79.0",
+          "46.7",
+          "1.4",
+          "1",
+          "0"
+        ],
+        [
+          "TimesFM-2.5",
+          "76.8",
+          "46.8",
+          "16.9",
+          "8",
+          "0"
+        ],
+        [
+          "Toto-1.0",
+          "67.6",
+          "45.0",
+          "90.7",
+          "8",
+          "0"
+        ],
+        [
+          "COSMIC",
+          "65.2",
+          "43.7",
+          "34.4",
+          "0",
+          "0"
+        ],
+        [
+          "TabPFN-TS",
+          "64.8",
+          "45.8",
+          "305.5",
+          "0",
+          "2"
+        ],
+        [
+          "Moirai-2.0",
+          "62.8",
+          "43.9",
+          "2.5",
+          "28",
+          "0"
+        ],
+        [
+          "Chronos-Bolt",
+          "60.5",
+          "43.2",
+          "1.0",
+          "0",
+          "0"
+        ],
+        [
+          "Sundial",
+          "41.9",
+          "37.4",
+          "35.6",
+          "1",
+          "0"
+        ],
+        [
+          "Stat. Ensemble",
+          "38.3",
+          "21.8",
+          "690.6",
+          "0",
+          "11"
+        ],
+        [
+          "AutoARIMA",
+          "34.6",
+          "23.4",
+          "186.8",
+          "0",
+          "10"
+        ],
+        [
+          "AutoETS",
+          "26.8",
+          "-27.0",
+          "17.0",
+          "0",
+          "3"
+        ],
+        [
+          "AutoTheta",
+          "21.3",
+          "7.8",
+          "9.3",
+          "0",
+          "0"
+        ],
+        [
+          "SeasonalNaive",
+          "14.1",
+          "0.0",
+          "2.3",
+          "0",
+          "0"
+        ],
+        [
+          "Naive",
+          "7.8",
+          "-39.1",
+          "2.2",
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "id": "A2.T9",
+      "caption": "Table 9: fev-bench results. The average win rate and skill score are computed with respect to the weighted absolute percentage error (WAPE) metric on fev-bench . Higher values are better for both.",
+      "rows": [
+        [
+          "Model",
+          "Avg. Win Rate (%)",
+          "Skill Score (%)",
+          "Median runtime (s)",
+          "Leakage (%)",
+          "#Failures"
+        ],
+        [
+          "Chronos-2",
+          "85.4",
+          "39.4",
+          "3.6",
+          "0",
+          "0"
+        ],
+        [
+          "TimesFM-2.5",
+          "74.1",
+          "33.8",
+          "16.9",
+          "8",
+          "0"
+        ],
+        [
+          "TiRex",
+          "73.7",
+          "33.6",
+          "1.4",
+          "1",
+          "0"
+        ],
+        [
+          "Toto-1.0",
+          "65.1",
+          "31.5",
+          "90.7",
+          "8",
+          "0"
+        ],
+        [
+          "TabPFN-TS",
+          "61.5",
+          "33.4",
+          "305.5",
+          "0",
+          "2"
+        ],
+        [
+          "COSMIC",
+          "60.5",
+          "30.1",
+          "34.4",
+          "0",
+          "0"
+        ],
+        [
+          "Moirai-2.0",
+          "59.6",
+          "30.7",
+          "2.5",
+          "28",
+          "0"
+        ],
+        [
+          "Chronos-Bolt",
+          "58.0",
+          "29.8",
+          "1.0",
+          "0",
+          "0"
+        ],
+        [
+          "Sundial",
+          "47.7",
+          "27.3",
+          "35.6",
+          "1",
+          "0"
+        ],
+        [
+          "Stat. Ensemble",
+          "43.0",
+          "17.7",
+          "690.6",
+          "0",
+          "11"
+        ],
+        [
+          "AutoETS",
+          "30.8",
+          "4.3",
+          "17.0",
+          "0",
+          "3"
+        ],
+        [
+          "AutoARIMA",
+          "30.8",
+          "13.3",
+          "186.8",
+          "0",
+          "10"
+        ],
+        [
+          "AutoTheta",
+          "27.2",
+          "13.8",
+          "9.3",
+          "0",
+          "0"
+        ],
+        [
+          "Naive",
+          "17.5",
+          "-6.1",
+          "2.2",
+          "0",
+          "0"
+        ],
+        [
+          "SeasonalNaive",
+          "15.2",
+          "0.0",
+          "2.3",
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "id": "A2.T10",
+      "caption": "Table 10: Subset of datasets from fev-bench with dynamic covariates for the energy domain case study.",
+      "rows": [
+        [
+          "Task",
+          "Freq.",
+          "H H",
+          "W W",
+          "Median length",
+          "# series",
+          "# targets",
+          "# past cov.",
+          "# known cov.",
+          "# static cov."
+        ],
+        [
+          "ENTSO-e Load",
+          "15T",
+          "96",
+          "20",
+          "175,292",
+          "6",
+          "1",
+          "0",
+          "3",
+          "0"
+        ],
+        [
+          "ENTSO-e Load",
+          "30T",
+          "96",
+          "20",
+          "87,645",
+          "6",
+          "1",
+          "0",
+          "3",
+          "0"
+        ],
+        [
+          "ENTSO-e Load",
+          "H",
+          "168",
+          "20",
+          "43,822",
+          "6",
+          "1",
+          "0",
+          "3",
+          "0"
+        ],
+        [
+          "EPF-BE",
+          "H",
+          "24",
+          "20",
+          "52,416",
+          "1",
+          "1",
+          "0",
+          "2",
+          "0"
+        ],
+        [
+          "EPF-DE",
+          "H",
+          "24",
+          "20",
+          "52,416",
+          "1",
+          "1",
+          "0",
+          "2",
+          "0"
+        ],
+        [
+          "EPF-FR",
+          "H",
+          "24",
+          "20",
+          "52,416",
+          "1",
+          "1",
+          "0",
+          "2",
+          "0"
+        ],
+        [
+          "EPF-NP",
+          "H",
+          "24",
+          "20",
+          "52,416",
+          "1",
+          "1",
+          "0",
+          "2",
+          "0"
+        ],
+        [
+          "EPF-PJM",
+          "H",
+          "24",
+          "20",
+          "52,416",
+          "1",
+          "1",
+          "0",
+          "2",
+          "0"
+        ],
+        [
+          "GFC12",
+          "H",
+          "168",
+          "10",
+          "39,414",
+          "11",
+          "1",
+          "0",
+          "1",
+          "0"
+        ],
+        [
+          "GFC14",
+          "H",
+          "168",
+          "20",
+          "17,520",
+          "1",
+          "1",
+          "0",
+          "1",
+          "0"
+        ],
+        [
+          "GFC17",
+          "H",
+          "168",
+          "20",
+          "17,544",
+          "8",
+          "1",
+          "0",
+          "1",
+          "0"
+        ],
+        [
+          "Solar with Weather",
+          "15T",
+          "96",
+          "20",
+          "198,600",
+          "1",
+          "1",
+          "2",
+          "7",
+          "0"
+        ],
+        [
+          "Solar with Weather",
+          "H",
+          "24",
+          "20",
+          "49,648",
+          "1",
+          "1",
+          "2",
+          "7",
+          "0"
+        ],
+        [
+          "KDD Cup 2022",
+          "D",
+          "14",
+          "10",
+          "243",
+          "134",
+          "1",
+          "9",
+          "0",
+          "0"
+        ],
+        [
+          "KDD Cup 2022",
+          "10T",
+          "288",
+          "10",
+          "35,279",
+          "134",
+          "1",
+          "9",
+          "0",
+          "0"
+        ],
+        [
+          "KDD Cup 2022",
+          "30T",
+          "96",
+          "10",
+          "11,758",
+          "134",
+          "1",
+          "9",
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "id": "A2.T11",
+      "caption": "Table 11: Subset of datasets from fev-bench with dynamic covariates for the retail domain case study.",
+      "rows": [
+        [
+          "Task",
+          "Freq.",
+          "H H",
+          "W W",
+          "Median length",
+          "# series",
+          "# targets",
+          "# past cov.",
+          "# known cov.",
+          "# static cov."
+        ],
+        [
+          "Favorita Store Sales",
+          "M",
+          "12",
+          "2",
+          "54",
+          "1,579",
+          "1",
+          "1",
+          "1",
+          "6"
+        ],
+        [
+          "Favorita Store Sales",
+          "W",
+          "13",
+          "10",
+          "240",
+          "1,579",
+          "1",
+          "1",
+          "1",
+          "6"
+        ],
+        [
+          "Favorita Store Sales",
+          "D",
+          "28",
+          "10",
+          "1,688",
+          "1,579",
+          "1",
+          "1",
+          "2",
+          "6"
+        ],
+        [
+          "Favorita Transactions",
+          "M",
+          "12",
+          "2",
+          "54",
+          "51",
+          "1",
+          "1",
+          "0",
+          "5"
+        ],
+        [
+          "Favorita Transactions",
+          "W",
+          "13",
+          "10",
+          "240",
+          "51",
+          "1",
+          "1",
+          "0",
+          "5"
+        ],
+        [
+          "Favorita Transactions",
+          "D",
+          "28",
+          "10",
+          "1,688",
+          "51",
+          "1",
+          "1",
+          "1",
+          "5"
+        ],
+        [
+          "M5",
+          "M",
+          "12",
+          "1",
+          "58",
+          "30,490",
+          "1",
+          "0",
+          "8",
+          "5"
+        ],
+        [
+          "M5",
+          "W",
+          "13",
+          "1",
+          "257",
+          "30,490",
+          "1",
+          "0",
+          "8",
+          "5"
+        ],
+        [
+          "M5",
+          "D",
+          "28",
+          "1",
+          "1,810",
+          "30,490",
+          "1",
+          "0",
+          "8",
+          "5"
+        ],
+        [
+          "Rohlik Orders",
+          "W",
+          "8",
+          "5",
+          "170",
+          "7",
+          "1",
+          "9",
+          "4",
+          "0"
+        ],
+        [
+          "Rohlik Orders",
+          "D",
+          "61",
+          "5",
+          "1,197",
+          "7",
+          "1",
+          "9",
+          "4",
+          "0"
+        ],
+        [
+          "Rohlik Sales",
+          "W",
+          "8",
+          "1",
+          "150",
+          "5,243",
+          "1",
+          "1",
+          "13",
+          "7"
+        ],
+        [
+          "Rohlik Sales",
+          "D",
+          "14",
+          "1",
+          "1,046",
+          "5,390",
+          "1",
+          "1",
+          "13",
+          "7"
+        ],
+        [
+          "Rossmann",
+          "W",
+          "13",
+          "8",
+          "133",
+          "1,115",
+          "1",
+          "1",
+          "4",
+          "10"
+        ],
+        [
+          "Rossmann",
+          "D",
+          "48",
+          "10",
+          "942",
+          "1,115",
+          "1",
+          "1",
+          "5",
+          "10"
+        ],
+        [
+          "Walmart",
+          "W",
+          "39",
+          "1",
+          "143",
+          "2,936",
+          "1",
+          "0",
+          "10",
+          "4"
+        ],
+        [
+          "Hermes",
+          "W",
+          "52",
+          "1",
+          "261",
+          "10,000",
+          "1",
+          "0",
+          "1",
+          "2"
+        ]
+      ]
+    }
+  ]
+}

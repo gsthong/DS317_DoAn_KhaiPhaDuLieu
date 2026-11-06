@@ -1,0 +1,7658 @@
+TiRex-2: Generalizing TiRex to Multivariate Data and Streaming
+Report GitHub Issue
+×
+Title:
+Content selection saved. Describe the issue below:
+Description:
+Submit without GitHub
+Submit in GitHub
+arXiv is now an independent nonprofit!
+Learn more
+×
+Back to arXiv
+Why HTML?
+Report Issue
+Back to Abstract
+Download PDF
+1
+Introduction
+2
+Related work
+Univariate TSFMs.
+Multivariate TSFMs.
+Synthetic data generation.
+3
+A TiRex architecture for multivariate forecasting with covariates
+3.1
+Problem setup
+3.2
+Architecture
+Block signature.
+Input layer.
+Time mixer.
+Variate mixer.
+Output layer and loss.
+3.3
+Long-context efficiency and streaming forecasts
+Long-context efficiency.
+Streaming forecasts.
+3.4
+Synthetic multivariate coupling
+4
+Experiments
+Training setup.
+Evaluation models.
+4.1
+Zero Shot
+4.2
+Sensitivity to streaming, covariates and forecast horizon
+Streaming.
+Long-horizon forecasting.
+Covariate shift sensitivity.
+4.3
+Ablations
+5
+Conclusion
+Limitations.
+6
+Acknowledgments and Disclosure of Funding
+References
+A
+Extended results
+B
+Asymmetric group attention: leakage derivation and details
+B.1
+Notation and group structure
+B.2
+Proof of
+(sufficiency)
+B.3
+Necessity of the asymmetric mask: two-block leakage counterexample
+Step 1 (symmetric variate mixer, block
+n
+n
+).
+Step 2 (bidirectional time mixer, block
+n
++
+1
+n{+}1
+).
+Step 3 (variate mixer, block
+n
++
+1
+n{+}1
+).
+How the asymmetric mask breaks the chain.
+B.4
+Comparison to prior cross-variate asymmetric attention designs
+B.5
+Comparison to multivariate and covariate-aware TSFMs
+C
+Binary-aware tail-compressing scaler
+Why binary signals need a bypass.
+Forward and inverse transforms.
+D
+Training Setup
+Learning-rate schedule.
+Model configuration.
+Training objective.
+D.1
+Long-context posttraining
+E
+Pre-Training Corpus
+Sampling protocol.
+Per-benchmark zero-leakage corpora.
+F
+Synthetic Multivariate Coupling: Background and Design
+Motivation.
+Design principles.
+Pipeline overview.
+Coverage of dependency phenomena.
+Observational layer.
+G
+Evaluation Metrics
+Mean Absolute Scaled Error (MASE).
+Continuous Ranked Probability Score (CRPS).
+Scaled Quantile Loss (SQL).
+Aggregation across tasks.
+License: CC BY 4.0
+arXiv:2607.01204v1 [cs.LG] 01 Jul 2026
+TiRex-2: Generalizing TiRex to Multivariate Data and Streaming
+Patrick Podest
+1,2,3,*
+Marco Pichler
+1,2,3*
+Elias Bürger
+1,2
+Levente Zólyomi
+1,3
+Bernhard Voggenberger
+3
+Wilhelm Berghammer
+1,2
+Daniel Klotz
+4
+Sebastian Böck
+3
+Günter Klambauer
+1,2,3
+Sepp Hochreiter
+1,2,3
+1  Introduction
+Time series arise across diverse domains, including cloud
+operations
+(
+Joosen et al., 2023
+)
+, macroeconomics
+(
+Sims, 1980
+)
+, earth
+sciences
+(
+Kratzert et al., 2018
+)
+, healthcare
+(
+Johnson et al., 2023
+)
+, and industrial
+monitoring
+(
+Sathishkumar V E, 2021
+)
+, where the goal is to extrapolate observed dynamics into the future. Reliable forecasts underpin high-stakes decisions such as flood mitigation
+(
+Nearing et al., 2024
+)
+and predictive maintenance
+(
+Yan et al., 2024
+)
+.
+Figure 1
+:
+Comparison of TiRex, Chronos-2, and TiRex-2.
+Chronos-2 supports multivariate forecasting with covariates, but is neither target-causal nor constant-memory. TiRex-2 adds these properties while preserving native multivariate covariate support (for more details see
+Table
+2
+).
+In practice, systems are rarely described by a single signal; rather, multiple interacting variates jointly determine the system state. Effective forecasting therefore requires models that capture both temporal structure within each variate and dependencies across variates.
+Classical approaches, including autoregressive
+models
+(
+Hyndman and Khandakar, 2008
+)
+and exponential
+smoothing
+(
+Gardner, 1985
+)
+, are typically fit to a single
+time series and applied to that same series. Vector autoregressive
+models
+(
+Sims, 1980
+)
+extend this paradigm to multiple
+variates but remain instance-specific, requiring re-estimation for each
+multivariate system. Neural approaches shifted the paradigm toward learning
+across collections of related time series, with
+LSTMs
+(
+Hochreiter, 1991
+;
+Hochreiter and Schmidhuber, 1997
+)
+enabling explicit state tracking and
+the integration of multiple input variates
+(
+Nearing et al., 2024
+)
+. More
+recently, time series foundation models (TSFMs) aim to generalize across datasets and domains, with Chronos-2
+(
+Ansari et al., 2025
+)
+, TimesFM
+(
+Das et al., 2024
+)
+,
+Moirai
+(
+Woo et al., 2024
+)
+, and TiRex
+(
+Auer et al., 2025b
+)
+as representative examples.
+Despite this progress, a gap remains between univariate scalability and multivariate modelling. Strong univariate foundation models, such as TiRex, Reverso
+(
+Fu et al., 2026
+)
+, and FlowState
+(
+Graf et al., 2025
+)
+, often rely on a channel-independence assumption when applied to multivariate data, thereby neglecting cross-variate dependencies. Multivariate foundation models, including Chronos-2,
+Moirai
+, and GTT
+(
+Feng et al., 2024
+)
+, address this limitation but are predominantly based on Transformer architectures. While effective at modeling joint dependencies, these models incur inference costs that grow with context length and require repeated processing of the full history as new observations arrive. This scaling behavior is fundamentally misaligned with streaming forecasting, where predictions must be updated continuously and efficiently.
+In this work, we introduce TiRex-2, a recurrent time series foundation model that extends TiRex to multivariate forecasting with both past and future covariates while enabling true streaming inference. The model adopts a memory-centric design based on xLSTM, allowing constant-cost state updates as new data arrives. Architecturally, TiRex-2 combines a bidirectional time mixer with an asymmetric grouped-attention variate mixer, enabling the integration of future-known covariates without violating causality over target variables.
+Our contributions are as follows (see also
+Figure
+1
+):
+•
+Recurrent multivariate foundation model with covariates.
+We extend TiRex to jointly model multiple target variates with observed (past) and future covariates. The model preserves efficiency, activating 38.4M parameters in univariate mode and an additional 44.1M parameters for multivariate forecasting. Future covariates are incorporated via parallel bidirectional xLSTM modules and asymmetric grouped attention, ensuring strict target causality.
+•
+Streaming inference at constant cost.
+The recurrent state enables incremental updates, allowing forecasts to be refreshed with constant-time computation per time step, in contrast to full-context re-computation in attention-based models.
+•
+Synthetic multivariate coupling for pretraining.
+We introduce a data generation pipeline that constructs diverse multivariate training instances on the fly from univariate corpora, including indirect, causal, and direct cross-variate dependencies, thereby expanding the effective training distribution.
+The remainder of the paper is organized as follows. We review related work in
+Section
+2
+, present the forecasting setting, model architecture,
+and coupling pipeline in
+Section
+3
+, and evaluate
+TiRex-2 on zero-shot, streaming, and long-horizon forecasting tasks in
+Section
+4
+.
+Section
+5
+concludes our work.
+2  Related work
+Univariate TSFMs.
+Early transformer-based TSFMs are either
+pretrained LLMs
+(
+Xue and Salim, 2023
+;
+Gruver et al., 2023
+)
+or trained on time-series data directly
+(
+Ansari et al., 2024
+)
+.
+These approaches commonly pass each time step individually to the model.
+However, splitting time series into non-overlapping patches
+(
+Nie et al., 2022
+)
+has become the dominant architectural choice for TSFMs
+(
+Liu et al., 2025b
+;
+Das et al., 2024
+;
+Wang et al., 2025
+;
+Liu et al., 2026a
+)
+.
+Recent work has explored large mixture of experts models
+(
+Liu et al., 2026b
+;
+Wu et al., 2026
+)
+with billions of parameters.
+Liu et al. (2025a)
+suggest that the different experts specialize based on the shape of patches.
+In contrast, smaller recurrent neural network (RNN) approaches remain
+competitive, both without
+(
+Fu et al., 2026
+;
+Graf et al., 2025
+)
+and with
+(
+Auer et al., 2025b
+)
+patching.
+In this work, we adapt the recurrent TiRex architecture proposed by
+Auer et al. (2025b)
+and extend it via the
+variate-mixing attention layers to learn cross-correlation patterns.
+Multivariate TSFMs.
+Two architectural strands dominate joint
+multivariate forecasting. The first flattens all variates into one sequence with
+any-variate attention:
+Moirai
+(
+Woo et al., 2024
+)
+and
+Moirai-MoE
+(
+Liu et al., 2025a
+)
+concatenate all
+variates into a single sequence, while MORPHEUS
+(
+Patil et al., 2025
+)
+interleaves individual timesteps with separation tokens in between, with
+COSMIC
+(
+Auer et al., 2025a
+)
+and TimesFM-ICF
+(
+Faw et al., 2025
+)
+as
+single-target variants that use the other variates to enhance the prediction
+(the
+covariate setting
+). Flattening, however, inflates sequence length
+and limits per-variate context. The second factorizes time and variate attention
+into separate layers, introduced by Crossformer
+(
+Zhang and Yan, 2022
+)
+and adopted for TSFMs by
+Feng et al. (2024)
+and Chronos-2
+(
+Ansari et al., 2025
+)
+to scale to
+8
+​
+k
+8k
+time steps and many variates.
+Liu et al. (2023)
+push this further by embedding entire
+time series into single tokens.
+These models also differ in covariate support, distinguishing
+past-only
+from
+future-known
+covariates (whose future values are available at inference).
+Toto
+(
+Cohen et al., 2025
+)
+supports past-only, while
+TabPFN-TS
+(
+Hoo et al., 2024
+)
+handles future-known but not past-only covariates.
+Models supporting both remain rare:
+Moirai
+does, but memory scales quadratically in context lengths (Moirai 2.0
+(
+Liu et al., 2026a
+)
+dropped covariate support), COSMIC is restricted to univariate targets, Chronos-2 supports multivariate targets but scales quadratically in time.
+A complementary line adapts univariate TSFMs via covariate-aware projections
+(
+Benechehab et al., 2025
+;
+Arango et al., 2025
+)
+, decomposition
+(
+Cheng et al., 2026
+)
+, an additional trainable variate-mixing layer requiring per-dataset retraining
+(
+Ekambaram et al., 2024
+;
+Chen et al., 2023
+)
+, or in-context linear regression on covariates with residual forecasting
+(
+Auer et al., 2025a
+)
+.
+We adopt factorized time/variate attention
+(
+Gao et al., 2024
+;
+Cohen et al., 2025
+;
+Zhang and Yan, 2022
+)
+on top of the recurrent TiRex backbone, yielding memory
+linear
+in sequence length while supporting both covariate types with multivariate targets, allowing the model to leverage, e.g., historical sensor readings alongside future-known calendar or promotion features, and adaptively disable variate-mixing for univariate inputs to preserve the efficiency of TiRex.
+Synthetic data generation.
+In data-scarce settings, synthetic data is a viable option for training
+TSFMs
+(
+Ansari et al., 2025
+;
+Oreshkin et al., 2026
+;
+Moroshan et al., 2026
+)
+.
+Existing generators mostly target univariate time series, using adapted
+seasonal ARIMA processes
+(
+Oreshkin et al., 2026
+)
+, Gaussian
+processes
+(
+Ansari et al., 2024
+)
+, or temporal causal models
+(TCMs)
+(
+Xie et al., 2025
+;
+Runge et al., 2023
+)
+. For multivariate
+time series,
+Ansari et al. (2025)
+mention unspecified
+“multivariatizers” that couple independently sampled univariate series. We
+make this step explicit with a concrete, largely TCM-based framework of coupling
+mechanisms for generating diverse synthetic multivariate dependencies.
+3  A TiRex architecture for multivariate forecasting with covariates
+3.1  Problem setup
+In multivariate time series forecasting, we want to forecast
+V
+tgt
+V_{\text{tgt}}
+target series
+𝐗
+tgt
+1
+:
+T
+∈
+ℝ
+V
+tgt
+×
+T
+\mathbf{X}_{\text{tgt}}^{1:T}\in\mathbb{R}^{V_{\text{tgt}}\times T}
+over a prediction horizon
+F
+F
+given a historical context of length
+T
+T
+. If
+available, the model is additionally conditioned on
+V
+pcov
+V_{\text{pcov}}
+past
+covariates
+𝐗
+pcov
+1
+:
+T
+∈
+ℝ
+V
+pcov
+×
+T
+\mathbf{X}_{\text{pcov}}^{1:T}\in\mathbb{R}^{V_{\text{pcov}}\times T}
+,
+observed only up to time
+T
+T
+, and
+V
+fcov
+V_{\text{fcov}}
+future-known covariates
+𝐗
+fcov
+1
+:
+T
++
+F
+∈
+ℝ
+V
+fcov
+×
+(
+T
++
+F
+)
+\mathbf{X}_{\text{fcov}}^{1:T+F}\in\mathbb{R}^{V_{\text{fcov}}\times(T+F)}
+, known across the entire prediction horizon (e.g., calendar features or scheduled interventions). The goal is to model the conditional distribution
+𝒫
+(
+𝐗
+tgt
+T
++
+1
+:
+T
++
+F
+|
+𝐗
+tgt
+1
+:
+T
+,
+𝐗
+pcov
+1
+:
+T
+,
+𝐗
+fcov
+1
+:
+T
++
+F
+)
+\mathcal{P}\bigl(\mathbf{X}_{\text{tgt}}^{T+1:T+F}\bigm|\mathbf{X}_{\text{tgt}}^{1:T},\mathbf{X}_{\text{pcov}}^{1:T},\,\mathbf{X}_{\text{fcov}}^{1:T+F}\bigr)
+We approximate this distribution using
+K
+K
+quantiles
+𝒬
+=
+{
+τ
+1
+,
+…
+,
+τ
+K
+}
+⊂
+(
+0
+,
+1
+)
+\mathcal{Q}=\{\tau_{1},\ldots,\tau_{K}\}\subset(0,1)
+. Formally, we learn a parametrised function
+g
+𝜽
+g_{\boldsymbol{\theta}}
+such that
+{
+Q
+τ
+(
+𝐗
+tgt
+T
++
+1
+:
+T
++
+F
+|
+𝐗
+tgt
+1
+:
+T
+,
+𝐗
+pcov
+1
+:
+T
+,
+𝐗
+fcov
+1
+:
+T
++
+F
+)
+}
+τ
+∈
+𝒬
+≈
+g
+𝜽
+(
+𝐗
+tgt
+1
+:
+T
+,
+𝐗
+pcov
+1
+:
+T
+,
+𝐗
+fcov
+1
+:
+T
++
+F
+)
+,
+{{\left\{Q_{\tau}\!{{\left(\mathbf{X}_{\text{tgt}}^{T+1:T+F}\,\big|\,\mathbf{X}_{\text{tgt}}^{1:T},\mathbf{X}_{\text{pcov}}^{1:T},\mathbf{X}_{\text{fcov}}^{1:T+F}\right)}}\right\}}}_{\tau\in\mathcal{Q}}\approx g_{\boldsymbol{\theta}}\!{{\left(\mathbf{X}_{\text{tgt}}^{1:T},\mathbf{X}_{\text{pcov}}^{1:T},\mathbf{X}_{\text{fcov}}^{1:T+F}\right)}},
+where
+Q
+τ
+(
+⋅
+∣
+⋅
+)
+Q_{\tau}(\cdot\mid\cdot)
+denotes the conditional
+τ
+\tau
+-quantile.
+With a sufficiently dense quantile set, this characterises the marginal predictive distribution of each target variable.
+3.2  Architecture
+(a)
+Time Mixer
+(b)
+Overall
+architecture
+(c)
+Variate
+Mixer
+Figure 2
+:
+TiRex-2 alternates time- and variate-mixing blocks. The variate mixer’s
+asymmetric group attention is what allows future-known covariates to be
+exploited bidirectionally without leaking future-known targets into earlier
+positions. (
+2(b)
+) Each multivariate time series is
+split into non-overlapping patches before being embedded into tokens. The
+stack mixes information across time (Time Mixer), across variates (Variate
+Mixer) and inside each token. The output-projection produces
+K
+K
+quantile
+forecasts per time step in each output patch. (
+2(a)
+)
+The Time Mixer applies a forward xLSTM to all variates, plus a weight-tied
+reverse pass for future-known covariates, fused linearly.
+(
+2(c)
+) The Variate Mixer applies grouped attention
+along the variate axis with an asymmetric mask preventing target-to-covariate flow.
+Note: we omitted the layer super-scripts of the token
+representations
+𝐇
+\mathbf{H}
+inside the blocks
+for clarity.
+Block signature.
+After patching and embedding, the time series is represented as a token tensor
+𝐇
+[
+n
+]
+∈
+ℝ
+V
+×
+L
+×
+D
+\mathbf{H}^{[n]}\in\mathbb{R}^{V\times L\times D}
+, with
+V
+=
+V
+tgt
++
+V
+pcov
++
+V
+fcov
+V=V_{\text{tgt}}+V_{\text{pcov}}+V_{\text{fcov}}
+,
+L
+=
+⌈
+(
+T
++
+F
+)
+/
+P
+⌉
+L=\lceil(T+F)/P\rceil
+patches per variate, and token dimension
+D
+D
+.
+The superscript
+n
+∈
+{
+0
+,
+…
+,
+2
+​
+N
+}
+n\in{{\left\{0,\ldots,2N\right\}}}
+indexes inter-mixer states: even
+n
+n
+enter a time and odd
+n
+n
+a variate mixer.
+A TiRex-2 block is then a map
+𝐇
+[
+2
+​
+n
+]
+→
+TimeMixer
+𝐇
+[
+2
+​
+n
++
+1
+]
+→
+VariateMixer
+𝐇
+[
+2
+​
+(
+n
++
+1
+)
+]
+,
+\mathbf{H}^{[2n]}\;\xrightarrow{\;\text{TimeMixer}\;}\;\mathbf{H}^{[2n+1]}\;\xrightarrow{\;\text{VariateMixer}\;}\;\mathbf{H}^{[2(n+1)]},
+for even
+n
+n
+, with both mixers preserving the shape
+V
+×
+L
+×
+D
+V\times L\times D
+:
+the time mixer acts along the
+L
+L
+axis independently per variate, processing
+only future-known covariates additionally in reverse, and the variate mixer acts along
+the
+V
+V
+axis independently per patch, with an asymmetric group mask.
+Input layer.
+The input layer maps each raw variate
+𝐱
+∈
+ℝ
+T
++
+F
+\mathbf{x}\in\mathbb{R}^{T+F}
+to a sequence of
+L
+L
+tokens in three
+steps: scaling, patching, and embedding.
+Scaling builds on reversible instance normalization
+(
+Kim et al., 2021
+)
+to mitigate distribution
+shift across variates, and adds the inverse hyperbolic sine transform
+from econometrics
+(
+Burbidge et al., 1988
+)
+and energy price forecasting
+(
+Uniejewski and Weron, 2018
+)
+. This prevents
+that heavy-tailed variates dominate the loss.
+Concretely, we standardize
+𝐱
+\mathbf{x}
+with its empirical mean
+μ
+^
+\hat{\mu}
+and standard deviation
+σ
+^
+\hat{\sigma}
+computed over the observed context (
+t
+<
+T
+t<T
+, ignoring missing entries) and apply
+x
+~
+t
+=
+(
+1
+−
+b
+)
+​
+arcsinh
+⁡
+(
+x
+t
+−
+μ
+^
+σ
+^
+)
++
+b
+​
+x
+t
+,
+\tilde{x}_{t}\;=\;(1-b)\operatorname{arcsinh}\!\left(\frac{x_{t}-\hat{\mu}}{\hat{\sigma}}\right)+b\,x_{t},
+which behaves linearly near the origin and logarithmically in the tails. The binary gate
+b
+b
+handles a separate pathology: sparse binary covariates are degenerate under naive standardization,
+since the gap between the two standardized levels is
+1
+/
+p
+¯
+​
+(
+1
+−
+p
+¯
+)
+1/\sqrt{\bar{p}(1-\bar{p})}
+, which
+scales as
+1
+/
+p
+¯
+1/\sqrt{\bar{p}}
+for rare positive classes (
+p
+¯
+→
+0
+\bar{p}\to 0
+) and
+diverges symmetrically as
+p
+¯
+→
+1
+\bar{p}\to 1
+. We therefore detect binary variates
+with the indicator
+b
+=
+𝟏
+[
+∀
+≤
+t
+<
+T
+:
+x
+t
+∈
+{
+0
+,
+1
+}
+]
+b=\mathbf{1}[\forall\,0\!\leq\!t\!<\!T:x_{t}\in\{0,1\}]
+and
+bypass the affine transform when
+b
+=
+1
+b=1
+, preserving the canonical
+{
+0
+,
+1
+}
+\{0,1\}
+encoding regardless of context-window sparsity. We defer the full specification to
+Appendix
+C
+.
+After scaling, each variate is split into
+L
+=
+⌈
+(
+T
++
+F
+)
+/
+P
+⌉
+L=\lceil(T+F)/P\rceil
+non-overlapping patches of length
+P
+P
+,
+unobserved positions (future targets, future past-covariate values, and missing entries) are padded.
+A two-layer residual MLP shared across variates and patches
+ℝ
+P
+→
+ℝ
+D
+\mathbb{R}^{P}\!\to\!\mathbb{R}^{D}
+then embeds each patch into a token, yielding the
+input tensor
+𝐇
+[
+0
+]
+∈
+ℝ
+V
+×
+L
+×
+D
+\mathbf{H}^{[0]}\in\mathbb{R}^{V\times L\times D}
+consumed by the first block.
+Time mixer.
+The time mixer acts along the patch axis
+L
+L
+independently for every variate, with directionality determined by
+the variate’s type. Target and past-covariate tokens are processed by a strictly forward
+xLSTM
+(
+Beck et al., 2024
+)
+. Future-known covariate tokens are additionally processed in reverse by the
+same
+weight-tied xLSTM
+(
+Schmidinger et al., 2025
+)
+, and the two directions are combined by a linear fusion layer, so that each
+future-known covariate token encodes information from both before and after its position. Concretely, writing
+𝐙
+=
+RMSNorm
+⁡
+(
+𝐇
+[
+2
+​
+n
+]
+)
+\mathbf{Z}=\mathrm{RMSNorm}(\mathbf{H}^{[2n]})
+and indexing variate types by
+s
+∈
+{
+tgt
+,
+pcov
+,
+fcov
+}
+s\in\{\text{tgt},\text{pcov},\text{fcov}\}
+,
+𝐮
+s
+l
+→
+\displaystyle\mathbf{u}_{s}^{\,l\rightarrow}
+=
+xLSTM
+θ
+(
+𝐳
+s
+1
+:
+l
+)
+,
+\displaystyle=\text{xLSTM{}}_{\theta}\!\left(\mathbf{z}_{s}^{\,1:l}\right),
+s
+∈
+{
+tgt
+,
+pcov
+,
+fcov
+}
+,
+\displaystyle s\in\{\text{tgt},\text{pcov},\text{fcov}\},
+𝐮
+fcov
+l
+←
+\displaystyle\mathbf{u}_{\text{fcov}}^{\,l\leftarrow}
+=
+xLSTM
+θ
+(
+𝐳
+fcov
+L
+:
+l
+)
+\displaystyle=\text{xLSTM{}}_{\theta}\!\left(\mathbf{z}_{\text{fcov}}^{\,L:l}\right)
+(reverse, weight-tied)
+,
+\displaystyle\text{(reverse, weight-tied)},
+𝐮
+~
+fcov
+l
+\displaystyle\tilde{\mathbf{u}}_{\text{fcov}}^{\,l}
+=
+W
+⁡
+[
+𝐮
+fcov
+l
+→
+,
+𝐮
+fcov
+l
+←
+]
+,
+\displaystyle=W\,[\mathbf{u}_{\text{fcov}}^{\,l\rightarrow},\;\mathbf{u}_{\text{fcov}}^{\,l\leftarrow}],
+𝐇
+~
+[
+2
+​
+n
+]
+=
+𝐇
+[
+2
+​
+n
+]
++
+𝐔
+~
+,
+𝐇
+[
+2
+​
+n
++
+1
+]
+=
+𝐇
+~
+[
+2
+​
+n
+]
++
+MLP
+⁡
+(
+RMSNorm
+⁡
+(
+𝐇
+~
+[
+2
+​
+n
+]
+)
+)
+.
+\tilde{\mathbf{H}}^{[2n]}=\mathbf{H}^{[2n]}+\tilde{\mathbf{U}},\hskip 20.00003pt\mathbf{H}^{[2n+1]}=\tilde{\mathbf{H}}^{[2n]}+\mathrm{MLP}\!\left(\mathrm{RMSNorm}(\tilde{\mathbf{H}}^{[2n]})\right).
+Only the future-known covariate subset pays the reverse pass while targets and past covariates remain strictly forward, which makes streaming forecasts well-defined (Sec.
+3.3
+).
+Following
+Beck et al. (2024)
+, who report benefits from mLSTM blocks on
+long-context tasks, we instantiate the time mixer as an xLSTM stack that
+alternates mLSTM and sLSTM blocks, rather than using the sLSTM-only backbone of
+the original TiRex
+(
+Auer et al., 2025b
+)
+.
+Variate mixer.
+The number of variates
+V
+V
+varies from series to series and there is no
+canonical ordering. We therefore implement the variate mixer as multi-head
+self-attention, which natively handles arbitrary
+V
+V
+and is
+permutation-equivariant within each variate type.
+We use block-diagonal
+grouped
+attention
+(
+Feng et al., 2024
+;
+Cohen et al., 2025
+;
+Ansari et al., 2025
+)
+, which
+prevents interactions across concatenated series and avoids padding to the
+largest
+V
+V
+in a batch.
+Within each group we further apply an
+asymmetric mask
+: target queries may read covariate keys, but covariate queries cannot read target keys,
+M
+i
+​
+j
+=
+{
+0
+if
+i
+and
+j
+share a group and not
+(
+i
+∈
+cov
+∧
+j
+∈
+tgt
+)
+,
+−
+∞
+otherwise,
+M_{ij}=\begin{cases}0&\text{if $i$ and $j$ share a group and not $(i\!\in\!\mathrm{cov}\wedge j\!\in\!\mathrm{tgt})$,}\\
+-\infty&\text{otherwise,}\end{cases}
+(1)
+where
+cov
+=
+pcov
+∪
+fcov
+\mathrm{cov}=\mathrm{pcov}\cup\mathrm{fcov}
+and
+(
+i
+,
+j
+)
+(i,j)
+index (query, key) within the group.
+Lemma 1
+(One-block target dependence)
+Under the time- and variate-mixer definitions above, the target token at patch
+l
+l
+after one block,
+𝐇
+tgt
+,
+l
+[
+2
+]
+\mathbf{H}^{[2]}_{\text{tgt},l}
+is a function only of
+𝐇
+tgt
+,
+≤
+l
+[
+0
+]
+\mathbf{H}^{[0]}_{\text{tgt},\leq l}
+,
+𝐇
+pcov
+,
+≤
+l
+[
+0
+]
+\mathbf{H}^{[0]}_{\text{pcov},\leq l}
+, and
+𝐇
+[
+0
+]
+fcov
+,
+:
+\mathbf{H}^{[0]}_{\text{fcov},:}
+.
+The forward-only xLSTM restricts target and past-covariate tokens at patch
+l
+l
+to indices
+≤
+l
+\leq l
+, while the asymmetric mask in
+Equation
+1
+blocks every covariate query from reading a target key, so the variate mixer
+cannot reintroduce a future-known target dependency through the covariate channel.
+Proposition 1
+(Target-causality)
+By induction on the block depth using
+Lemma
+1
+, for every
+n
+≤
+N
+n\leq N
+and patch index
+l
+l
+the target token
+𝐇
+tgt
+,
+l
+[
+n
+]
+\mathbf{H}^{[n]}_{\text{tgt},l}
+does
+not depend on
+𝐇
+tgt
+,
+l
+′
+[
+0
+]
+\mathbf{H}^{[0]}_{\text{tgt},l^{\prime}}
+for any
+l
+′
+>
+l
+l^{\prime}>l
+.
+Intuitively, future-known covariates may carry information backward along the patch
+axis, but the mask prevents those tokens from ever reading target tokens.
+Combined with the output head, the next-patch prediction emitted from
+position
+l
+l
+therefore cannot read the target patch it is trained to predict.
+A full proof is given in
+Section
+B.2
+.
+To our knowledge, this makes TiRex-2 the first TSFM that exploits
+future-known
+covariates bidirectionally while keeping target streams strictly causal in a
+single forward pass. The closest prior designs are TimeXer
+(
+Wang et al., 2024
+)
+,
+Timer XL
+(
+Liu et al., 2024
+)
+and CITRAS
+(
+Yamaguchi et al., 2025
+)
+. All of them
+impose related but weaker asymmetries and are task-specific or fully causal
+along time. We provide a detailed comparison in
+Section
+B.4
+.
+Output layer and loss.
+A residual, two-layer MLP projects the final
+block target tokens
+𝐇
+tgt
+[
+2
+​
+N
+]
+∈
+ℝ
+V
+tgt
+×
+L
+×
+D
+\mathbf{H}^{[2N]}_{\text{tgt}}\in\mathbb{R}^{V_{\text{tgt}}\times L\times D}
+into
+patch-wise next-patch quantile forecasts
+(
+Auer et al., 2025b
+, following)
+,
+𝐗
+^
+tgt
+∈
+ℝ
+V
+tgt
+×
+K
+×
+(
+L
+−
+1
+)
+×
+P
+\hat{\mathbf{X}}_{\text{tgt}}\in\mathbb{R}^{V_{\text{tgt}}\times K\times(L-1)\times P}
+, i.e.,
+K
+K
+quantiles for each of the
+P
+P
+time steps of every output patch.
+Predictions are returned to the original data domain by applying the inverse of the input scaler, which clips its argument to a conservative bound before applying
+sinh
+\sinh
+to suppress implausibly large outlier predictions and prevent overflow in the output datatype (see
+Appendix
+C
+).
+The model is trained with the pinball loss
+(
+Koenker and Bassett, 1978
+)
+applied at every output time step (not only on the horizon), giving up to an
+(
+L
+−
+1
+)
+(L{-}1)
+-fold denser gradient signal than supervising on the horizon alone:
+ℒ
+=
+1
+|
+𝒬
+|
+​
+|
+𝒯
+obs
+|
+​
+∑
+t
+∈
+𝒯
+obs
+∑
+q
+∈
+𝒬
+[
+q
+​
+(
+x
+t
+−
+x
+^
+t
+q
+)
++
++
+(
+1
+−
+q
+)
+​
+(
+x
+^
+t
+q
+−
+x
+t
+)
++
+]
+,
+\mathcal{L}=\frac{1}{|\mathcal{Q}|\,|\mathcal{T}_{\text{obs}}|}\sum_{t\in\mathcal{T}_{\text{obs}}}\sum_{q\in\mathcal{Q}}\big[\,q\,(x_{t}-\hat{x}^{q}_{t})_{+}+(1-q)\,(\hat{x}^{q}_{t}-x_{t})_{+}\,\big],
+where
+𝒯
+obs
+\mathcal{T}_{\text{obs}}
+is the set of observed (non-missing) target time steps; missing values are excluded from both sum and normalisation.
+3.3  Long-context efficiency and streaming forecasts
+The recurrent xLSTM time mixer has two deployment consequences: linear-in-
+L
+L
+cost during a forward pass (vs. quadratic for attention), and constant-cost state updates during streaming (vs. linear-in-
+L
+L
+for KV-cached attention).
+Long-context efficiency.
+Because xLSTM is fundamentally recurrent, for constant token dimension
+D
+D
+, the time mixer’s per-block cost scales as
+𝒪
+⁡
+(
+V
+​
+L
+)
+\mathcal{O}(V\,L)
+, linear in the number of tokens
+L
+L
+along the patch axis. An attention-based time mixer would instead incur
+𝒪
+⁡
+(
+V
+​
+L
+2
+)
+\mathcal{O}(V\,L^{2})
+per block, so latency grows quadratically with the context length making a recurrent architecture like the xLSTM a preferable choice for long-context predictions.
+Streaming forecasts.
+The maintained hidden state of the xLSTM offers an additional advantage: constant-time updates. Streaming workloads predominantly involve target and past-covariate streams observed up to the current time step, both are routed through the forward-only xLSTM. In an online forecasting setting, which we refer to as streaming, each newly arrived patch can be ingested and a forecast emitted in constant time. In contrast, a transformer-based time mixer, using KV-caching, would instead pay
+𝒪
+⁡
+(
+L
+)
+\mathcal{O}(L)
+per new patch, its latency growing linearly with the number of patches
+L
+L
+. TiRex-2 can therefore be fed continuously and emit forecasts in time proportional to the length of the increment, not to the full lookback horizon.
+3.4  Synthetic multivariate coupling
+A model that natively consumes multivariate inputs with covariates only learns to use them if the training distribution actually contains diverse cross-variate dependencies. Existing curated multivariate corpora are too narrow to enforce this learning process, while large univariate corpora are abundant. We bridge this gap with a synthetic coupling pipeline that, at training time, draws a batch of univariate series from a shared pool and
+couples
+them on the fly into multivariate samples with controllable cross-variate dependencies (Fig.
+3
+):
+Figure 3
+:
+Synthetic multivariate coupling pipeline. A batch of univariate series is first independently augmented (amplitude trends, censoring, spike injection). A coupling mechanism
+m
+i
+∼
+Uniform
+⁡
+(
+M
+)
+m_{i}\sim\mathrm{Uniform}(M)
+is then sampled from
+M
+=
+{
+M=\{
+identity, univariate, linear mixing, linear structural causal model (SCM), nonlinear structural causal model (SCM), cointegration, functional
+}
+\}
+and, except for the identity and univariate pass-through cases, transforms the augmented series into jointly dependent variates. Post-processing adds realistic structure via covariate enrichment and applies smooth time warping, discretization, and future masking, producing the final multivariate training sample.
+Each series is first independently perturbed with piecewise-linear amplitude trends, quantile censoring, and synthetic spikes (Gaussian, triangular, or rectangular kernels), then cropped or NaN-padded to
+length
+T
+T
+. Given
+Q
+Q
+such augmented series
+𝐳
+1
+,
+…
+,
+𝐳
+Q
+∈
+ℝ
+T
+\mathbf{z}_{1},\dots,\mathbf{z}_{Q}\!\in\!\mathbb{R}^{T}
+, one of the following mechanisms is sampled to produce
+Q
+Q
+output variates
+𝐱
+1
+,
+…
+,
+𝐱
+Q
+∈
+ℝ
+T
+\mathbf{x}_{1},\dots,\mathbf{x}_{Q}\!\in\!\mathbb{R}^{T}
+, written entrywise as
+x
+j
+,
+t
+x_{j,t}
+, with a known dependency structure:
+1.
+Identity / pass-through:
+x
+j
+,
+t
+=
+z
+j
+,
+t
+x_{j,t}=z_{j,t}
+or a single univariate output, preserving univariate forecasting ability as a no-coupling control.
+2.
+Functional coupling:
+x
+j
+,
+t
+=
+f
+j
+​
+(
+z
+0
+,
+t
+)
++
+ε
+j
+,
+t
+x_{j,t}=f_{j}(z_{0,t})+\varepsilon_{j,t}
+with monotone, compressive, discretizing, or piecewise-linear
+f
+j
+f_{j}
+, yielding direct pointwise dependence as in sensor redundancies.
+3.
+Linear mixing:
+x
+j
+,
+t
+=
+∑
+i
+=
+1
+Q
+A
+j
+​
+i
+​
+z
+i
+,
+t
+x_{j,t}=\sum_{i=1}^{Q}A_{ji}\,z_{i,t}
+, with the singular-value spectrum of the mixing matrix
+𝐀
+=
+(
+A
+j
+​
+i
+)
+\mathbf{A}=(A_{ji})
+sampled from dominant, uniform, or power-law regimes, mimicking shared latent drivers as in factor models.
+4.
+Cointegration:
+x
+j
+,
+t
+=
+∑
+k
+Λ
+j
+​
+k
+​
+τ
+k
+,
+t
++
+ξ
+j
+,
+t
+x_{j,t}=\sum_{k}\Lambda_{jk}\,\tau_{k,t}+\xi_{j,t}
+with shared random-walk trends
+τ
+k
+,
+t
+\tau_{k,t}
+and stationary AR(1) residuals
+ξ
+j
+,
+t
+\xi_{j,t}
+, reproducing long-run equilibria between nonstationary variates.
+5.
+Linear structural causal model:
+a random directed acyclic graph with lagged edges,
+x
+j
+,
+t
+=
+∑
+i
+∈
+pa
+⁡
+(
+j
+)
+α
+i
+​
+j
+​
+z
+i
+,
+t
+−
+τ
+i
+​
+j
++
+ε
+j
+,
+t
+x_{j,t}=\sum_{i\in\mathrm{pa}(j)}\alpha_{ij}\,z_{i,\,t-\tau_{ij}}+\varepsilon_{j,t}
+, introducing directed lead–lag structure.
+6.
+Nonlinear structural causal model:
+use nonlinearities
+g
+i
+​
+j
+g_{ij}
+and an optional multiplicative gate
+h
+h
+,
+x
+j
+,
+t
+=
+h
+⁡
+(
+z
+k
+,
+t
+−
+τ
+k
+)
+​
+∑
+i
+∈
+pa
+⁡
+(
+j
+)
+g
+i
+​
+j
+​
+(
+z
+i
+,
+t
+−
+τ
+i
+​
+j
+)
+x_{j,t}=h(z_{k,\,t-\tau_{k}})\sum_{i\in\mathrm{pa}(j)}g_{ij}(z_{i,\,t-\tau_{ij}})
+, adding state-dependent coupling.
+The resulting samples are finally enriched with realistic covariate structure: variate permutation, smooth
+per-variate time warping via Brownian-bridge lags, patch masking with contiguous NaN blocks
+(
+Auer et al., 2025b
+)
+per-variate, partial future observability by
+truncating future portions of random covariates, and discretization in
+value (uniform, quantile, power-law) and time (freezes, staircases,
+duty cycles). See
+Appendix
+F
+for details.
+4  Experiments
+We evaluate TiRex-2 along two axes. First, we compare against other zero-shot time series foundation models on two separate benchmarks, fev-bench
+(
+Shchur et al., 2025
+)
+and GIFT-Eval
+(
+Aksu et al., 2024
+)
+. Second, we use synthetic data to isolate streaming behavior, long-horizon forecasting, and covariate-shift sensitivity. We conclude with architectural ablations that quantify the contribution of the main components of TiRex-2.
+Training setup.
+We pretrain TiRex-2 for
+700,000
+700{,}000
+steps on
+2
+2
+NVIDIA H100 GPUs, followed by a short long-context posttraining phase at context length
+L
+ctx
+=
+8,192
+L_{\text{ctx}}=8{,}192
+and prediction horizon
+L
+pred
+=
+512
+L_{\text{pred}}=512
+to adapt the model to longer sequences. The backbone consists of
+N
+=
+12
+N=12
+alternating mLSTM/sLSTM xLSTM blocks. Full hyperparameters and training details for both phases are given in
+Appendix
+D
+.
+Evaluation models.
+In the following experiments, we compare TiRex-2 to publicly available
+time series foundation models on fev-bench
+(
+Shchur et al., 2025
+)
+and
+GIFT-Eval
+(
+Aksu et al., 2024
+)
+, restricting to models for which
+zero-shot evaluations and inference code were published on the respective
+leaderboard. This yields two benchmark-specific comparison sets: on fev-bench,
+Chronos-Bolt,
+Moirai
+-2, Toto-1.0
+(
+Cohen et al., 2024
+)
+,
+TiRex
+(
+Auer et al., 2025b
+)
+, TimesFM-2.5
+(
+Das et al., 2024
+)
+, and
+Chronos-2
+(
+Ansari et al., 2025
+)
+. On GIFT-Eval,
+Chronos-2-Synth, PatchTST-FM-r1 (Granite and
+base)
+(
+Wen et al., 2026
+)
+,
+TiRex, TimesFM-2.5, and
+FlowState-r1.1
+(
+Graf et al., 2025
+)
+.
+On the other experiments we compare TiRex-2 against purely multivariate TSFMs
+on synthetic data, and therefore relax the zero-shot constraint. We include
+Moirai (1.0 and MoE)
+(
+Woo et al., 2024
+;
+Liu et al., 2025a
+)
+,
+GTT
+(
+Feng et al., 2024
+)
+, Toto, and Chronos-2.
+4.1  Zero Shot
+We evaluate zero-shot forecasting on two complementary benchmarks. fev-bench
+(
+Shchur et al., 2025
+)
+probes the ability to exploit past and future-known covariates, whereas GIFT-Eval
+(
+Aksu et al., 2024
+)
+probes generalization across diverse domains, frequencies, and horizons.
+To rule out training-test leakage, we pretrain a
+separate checkpoint per benchmark, with overlapping datasets removed from the respective
+training corpus (see
+Appendix
+E
+). TiRex-2 achieves state-of-the-art zero-shot
+performance on both benchmarks, leading on fev-bench and on GIFT-Eval (
+Figure
+4
+). For fev-bench we additionally report pairwise Win Rate as well as Skill Score derived using the SQL of each model (
+Figure
+5
+).
+Figure 4
+:
+Zero-shot performance of TiRex-2 against representative
+time series foundation model baselines on fev-bench (MASE and SQL) and GIFT-Eval
+(MASE and CRPS), sorted per panel by metric value (lower is better). For fev-bench, we also evaluate a variant of Chronos-2 with cross learning disabled, which we call Chronos-2 (no CL). Cross learning lets Chronos-2 borrow information from other series in the same batch. This signal depends on the evaluation batch composition rather than on the inputs defined by the task, is unavailable to the other baselines, and prevents a clean assessment of purely univariate prediction, since even single target tasks are no longer forecast in isolation.
+Figure 5
+:
+Zero-shot performance of TiRex-2 against time series models on fev-bench (SQL) using both Pairwise Win Rate and Pairwise Skill Score with 95% confidence intervals.
+4.2  Sensitivity to streaming, covariates and forecast horizon
+Streaming.
+The causal, recurrent design of TiRex-2
+(Sec.
+3.3
+) lets us ingest arbitrarily long contexts
+patch by patch at constant per-patch cost and emit a forecast after every
+update. We stream up to
+32
+32
+M steps of a first-order autoregressive target process with a lagged, noisy past covariate and report MASE per emitted patch (Fig.
+6
+, left). Forecast quality remains
+stable across the full range, including far past the
+8
+​
+k
+8{\rm k}
+post-training context boundary: the
+recurrent state extrapolates cleanly to context lengths
+4000
+×
+4000\times
+beyond
+anything seen in training, without any sign of saturation or drift.
+Long-horizon forecasting.
+Long-horizon forecasting on chaotic systems is effectively a
+covariate-utilisation stress test: models must extract signal from the remaining state variables to maintain accuracy at long horizons. The
+dysts
+benchmark
+(
+Gilpin, 2023
+)
+provides 135
+chaotic trajectories at three temporal granularities. We forecast one
+channel as target with the rest as future-known covariates, evaluating TiRex-2
+and Chronos-2 at
+h
+∈
+{
+32
+,
+64
+,
+…
+,
+1056
+}
+h\!\in\!\{32,64,\ldots,1056\}
+.
+Covariate shift sensitivity.
+Since real-world covariates are rarely perfectly aligned with the target
+(
+Podobnik et al., 2010
+;
+Zhao et al., 2023
+, e.g.)
+, we probe
+shift tolerance by pairing synthetic random-walk targets with a
+Δ
+\Delta
+-shifted, noisy covariate,
+c
+(
+Δ
+)
+​
+(
+t
+)
+=
+z
+⁡
+(
+t
+−
+Δ
+)
++
+ε
+⁡
+(
+t
+)
+c^{(\Delta)}(t)=z(t-\Delta)+\varepsilon(t)
+,
+ε
+∼
+𝒩
+⁡
+(
+0
+,
+0.1
+2
+)
+\varepsilon\!\sim\!\mathcal{N}(0,\,0.1^{2})
+, and tracking
+the median quantile loss against
+Δ
+\Delta
+(Fig.
+6
+). TiRex-2 remains informative
+well beyond the range where Chronos-2 has fallen back to its no-covariate
+baseline.
+For Toto-1.0, GTT and Moirai-MOE the covariate was provided as a past covariate
+since this is the setting which the models support, one can therefore see, that
+the models only gain for negative shifts, i.e., the future is shifted into the past.
+Figure 6
+:
+Left: streaming. MASE is stable far beyond the
+2
+​
+k
+2{\rm k}
+pretraining and
+8
+​
+k
+8{\rm k}
+post-training context boundaries (dashed).
+Middle: long-horizon forecasting on
+dysts
+(log
+y
+y
+-axis); line style
+encodes temporal granularity. TiRex-2 leads at short-to-moderate horizons.
+Right: covariate shift sensitivity. TiRex-2 retains useful covariate signal
+over a wider lag range than Chronos2. Setup in
+Section
+4.2
+.
+4.3  Ablations
+We ablate the core design choices of TiRex-2 on fev-bench,
+which contains enough genuinely multivariate tasks to produce
+meaningful signal. Each configuration is trained with up to six seeds.
+We report mean
+±
+\pm
+std. Relative to the full model we remove or
+replace group attention, binary-aware scaling, bidirectional context
+mixing, and the mixed sLSTM/mLSTM backbone. We further test the
+pre-processor and future-known covariates. Providing future-known covariates
+yields a consistent gain, indicating that forecast-window signal outweighs extended autoregressive history (
+Table
+1
+).
+Table 1
+:
+Ablation study on fev-bench and the subset with future-known covariates.
+The baseline row reports mean MASE
+±
+\pm
+std., other rows report mean deltas
+with original std. over six seeds. Rows below the baseline remove or replace a
+single component of TiRex-2 (lower is better).
+Configuration
+All fev-bench MASE /
+Δ
+\Delta
+Future-known cov. subset MASE /
+Δ
+\Delta
+TiRex-2 (full)
+1.527
+±
+\pm
+0.006
+0.990
+±
+\pm
+0.007
+No group attention
++0.220
+±
+\pm
+0.056
++0.278
+±
+\pm
+0.048
+No binary-aware scaler
++0.014
+±
+\pm
+0.007
++0.001
+±
+\pm
+0.004
+Forward only
++0.022
+±
+\pm
+0.006
++0.077
+±
+\pm
+0.007
+sLSTM only
++0.008
+±
+\pm
+0.008
++0.002
+±
+\pm
+0.004
+8k
+→
+\to
+2k context
++0.002
+±
+\pm
+0.004
++0.003
+±
+\pm
+0.005
+No future-known covariates
++0.033
+±
+\pm
+0.006
++0.114
+±
+\pm
+0.009
+5  Conclusion
+We presented TiRex-2, a recurrent xLSTM-based foundation model for multivariate time series forecasting with past and future- known covariates. By pairing a bidirectional time mixer with an asymmetric grouped-attention variate mixer, TiRex-2 exploits future-known covariates while keeping target and past-covariate states strictly causal, which in turn enables constant-cost streaming inference at arbitrary context lengths. Together with a synthetic coupling pipeline that supplies the cross-variate diversity missing from curated multivariate corpora, this yields state-of-the-art zero-shot performance on GIFT-Eval and fev-bench at a modest parameter budget. A natural direction for future work is dynamic covariate selection.
+Just as TiRex-2 bypasses the variate mixer entirely in univariate
+mode, an in-context estimate of covariate-target correlation could
+prune individual covariates from the grouped attention whenever
+their contribution is negligible, saving FLOPs at inference.
+Limitations.
+Because TiRex-2 processes future-known covariates bidirectionally,
+streaming inference extends naturally to targets and past covariates,
+while updating future-known covariates requires recomputing their
+representations. This is rarely a binding constraint, since
+future-known covariates (calendars, scheduled events, planned
+interventions) are typically static within a forecast window. When they do change online, one can shift them backwards in time
+until they fall within the causal (past) region, recovering full
+streaming behaviour,
+Figure
+6
+shows
+that TiRex-2 handles shifts effectively.
+Streaming also operates at patch granularity (32 steps), consistent
+with the tokenization.
+6  Acknowledgments and Disclosure of Funding
+We thank Sebastian Lehner for extensive discussions throughout the development of the model, and Michael List and Andreas Mayr for their valuable feedback.
+The LIT AI Lab, and the Institute for Machine Learning are supported by the Federal State Upper Austria.
+We acknowledge the EuroHPC Joint Undertaking for awarding us access to Leonardo at CINECA (Italy) and MareNostrum 5 at BSC (Spain).
+References
+Aksu
+et al.
+(2024)
+T. Aksu, G. Woo, J. Liu, X. Liu, C. Liu, S. Savarese, C. Xiong, and D. Sahoo
+GIFT-Eval: A Benchmark for General Time Series Forecasting Model Evaluation
+.
+(
+en
+).
+External Links:
+Link
+Cited by:
+item 3
+,
+Appendix E
+,
+Appendix G
+,
+Appendix G
+,
+§4
+,
+§4.1
+,
+§4
+.
+Ansari
+et al.
+(2025)
+A. F. Ansari, O. Shchur, J. Küken, A. Auer, B. Han, P. Mercado, S. S. Rangapuram, H. Shen, L. Stella, X. Zhang, M. Goswami, S. Kapoor, D. C. Maddix, P. Guerron, T. Hu, J. Yin, N. Erickson, P. M. Desai, H. Wang, H. Rangwala, G. Karypis, Y. Wang, and M. Bohlke-Schneider
+Chronos-2: From Univariate to Universal Forecasting
+.
+arXiv
+.
+Note:
+arXiv:2510.15821
+External Links:
+Link
+,
+Document
+Cited by:
+Table 2
+,
+§1
+,
+§2
+,
+§2
+,
+§3.2
+,
+§4
+.
+Ansari
+et al.
+(2024)
+A. F. Ansari, L. Stella, A. C. Turkmen, X. Zhang, P. Mercado, H. Shen, O. Shchur, S. S. Rangapuram, S. P. Arango, S. Kapoor, J. Zschiegner, D. C. Maddix, H. Wang, M. W. Mahoney, K. Torkkola, A. G. Wilson, M. Bohlke-Schneider, and B. Wang
+Chronos: Learning the Language of Time Series
+.
+Transactions on Machine Learning Research
+(
+en
+).
+External Links:
+ISSN 2835-8856
+,
+Link
+Cited by:
+item 1
+,
+item 2
+,
+Appendix E
+,
+§2
+,
+§2
+.
+Arango
+et al.
+(2025)
+S. P. Arango, P. Mercado, S. Kapoor, A. F. Ansari, L. Stella, H. Shen, H. H. J. Senetaire, A. C. Turkmen, O. Shchur, D. C. Maddix, M. Bohlke-Schneider, B. Wang, and S. S. Rangapuram
+ChronosX: Adapting Pretrained Time Series Models with Exogenous Variables
+.
+In
+Proceedings of The 28th International Conference on Artificial Intelligence and Statistics
+,
+pp.
+2242–2250
+(
+en
+).
+External Links:
+ISSN 2640-3498
+,
+Link
+Cited by:
+§2
+.
+Auer
+et al.
+(2025a)
+A. Auer, R. Parthipan, P. Mercado, A. F. Ansari, L. Stella, B. Wang, M. Bohlke-Schneider, and S. S. Rangapuram
+Zero-Shot Time Series Forecasting with Covariates via In-Context Learning
+.
+arXiv
+.
+Note:
+arXiv:2506.03128 [cs]
+Comment: The paper was written at the end of 2024
+External Links:
+Link
+,
+Document
+Cited by:
+Table 2
+,
+§2
+,
+§2
+.
+Auer
+et al.
+(2025b)
+A. Auer, P. Podest, D. Klotz, S. Böck, G. Klambauer, and S. Hochreiter
+TiRex: Zero-Shot Forecasting Across Long and Short Horizons with Enhanced In-Context Learning
+.
+(
+en
+).
+External Links:
+Link
+Cited by:
+item 2
+,
+Appendix E
+,
+Appendix F
+,
+§1
+,
+§2
+,
+§3.2
+,
+§3.2
+,
+§3.4
+,
+§4
+.
+Beck
+et al.
+(2024)
+M. Beck, K. Pöppel, M. Spanring, A. Auer, O. Prudnikova, M. K. Kopp, G. Klambauer, J. Brandstetter, and S. Hochreiter
+xLSTM: Extended Long Short-Term Memory
+.
+(
+en
+).
+External Links:
+Link
+Cited by:
+§3.2
+,
+§3.2
+.
+Benechehab
+et al.
+(2025)
+A. Benechehab, V. Feofanov, G. Paolo, A. Thomas, M. Filippone, and B. Kégl
+AdaPTS: Adapting Univariate Foundation Models to Probabilistic Multivariate Time Series Forecasting
+.
+(
+en
+).
+External Links:
+Link
+Cited by:
+§2
+.
+Burbidge
+et al.
+(1988)
+J. B. Burbidge, L. Magee, and A. L. Robb
+Alternative Transformations to Handle Extreme Values of the Dependent Varia ble
+.
+Journal of the American Statistical Association
+83
+(
+401
+),
+pp.
+123–127
+.
+Note:
+_eprint: https://www.tandfonline.com/doi/pdf/10.1080/01621459.1988.10478575
+External Links:
+Link
+,
+Document
+Cited by:
+§3.2
+.
+Chen
+et al.
+(2023)
+S. Chen, C. Li, S. O. Arik, N. C. Yoder, and T. Pfister
+TSMixer: An All-MLP Architecture for Time Series Forecast-ing
+.
+Transactions on Machine Learning Research
+(
+en
+).
+External Links:
+ISSN 2835-8856
+,
+Link
+Cited by:
+§2
+.
+Cheng
+et al.
+(2026)
+H. Cheng, X. Wu, Y. Shu, Z. Rao, L. Pan, B. Yang, and C. Guo
+CORA: BOOSTING TIME SERIES FOUNDATION MOD- ELS FOR MULTIVARIATE FORECASTING THROUGH CORRELATION-AWARE ADAPTER
+.
+(
+en
+).
+Cited by:
+§2
+.
+Cohen
+et al.
+(2025)
+B. Cohen, E. Khwaja, Y. Doubli, S. Lemaachi, C. Lettieri, C. Masson, H. Miccinilli, E. Ramé, Q. Ren, A. Rostamizadeh, J. O. d. Terrail, A. Toon, K. Wang, S. Xie, Z. Xu, V. Zhukova, D. Asker, A. Talwalkar, and O. Abou-Amal
+This Time is Different: An Observability Perspective on Time Series Foundation Models
+.
+arXiv
+.
+Note:
+arXiv:2505.14766 [cs]
+External Links:
+Link
+,
+Document
+Cited by:
+Table 2
+,
+§2
+,
+§2
+,
+§3.2
+.
+Cohen
+et al.
+(2024)
+B. Cohen, E. Khwaja, K. Wang, C. Masson, E. Ramé, Y. Doubli, and O. Abou-Amal
+Toto: Time Series Optimized Transformer for Observability
+.
+arXiv
+.
+Note:
+arXiv:2407.07874 [cs]
+External Links:
+Link
+,
+Document
+Cited by:
+§4
+.
+Das
+et al.
+(2024)
+A. Das, W. Kong, R. Sen, and Y. Zhou
+A decoder-only foundation model for time-series forecasting
+.
+(
+en
+).
+External Links:
+Link
+Cited by:
+§1
+,
+§2
+,
+§4
+.
+Ekambaram
+et al.
+(2024)
+V. Ekambaram, A. Jati, P. Dayama, S. Mukherjee, N. H. Nguyen, W. M. Gifford, C. Reddy, and J. Kalagnanam
+Tiny Time Mixers (TTMs): Fast Pre-trained Models for Enhanced Zero/Few-Shot Forecasting of Multivariate Time Series
+.
+(
+en
+).
+External Links:
+Link
+Cited by:
+§2
+.
+Faw
+et al.
+(2025)
+M. Faw, R. Sen, Y. Zhou, and A. Das
+In-Context Fine-Tuning for Time-Series Foundation Models
+.
+(
+en
+).
+External Links:
+Link
+Cited by:
+Table 2
+,
+§2
+.
+Feng
+et al.
+(2024)
+C. Feng, L. Huang, and D. Krompass
+General Time Transformer: an Encoder-only Foundation Model for Zero-Shot Multivariate Time Series Forecasting
+.
+In
+Proceedings of the 33rd ACM International Conference on Information and Knowledge Management
+,
+CIKM ’24
+,
+New York, NY, USA
+,
+pp.
+3757–3761
+.
+External Links:
+ISBN 979-8-4007-0436-9
+,
+Link
+,
+Document
+Cited by:
+Table 2
+,
+§1
+,
+§2
+,
+§3.2
+,
+§4
+.
+Fu
+et al.
+(2026)
+X. Fu, Y. Li, G. Papaioannou, and Y. Kim
+Reverso: Efficient Time Series Foundation Models for Zero-shot Forecasting
+.
+arXiv
+.
+Note:
+arXiv:2602.17634 [cs]
+version: 1
+External Links:
+Link
+,
+Document
+Cited by:
+§1
+,
+§2
+.
+Gao
+et al.
+(2024)
+S. Gao, T. Koker, O. Queen, T. Hartvigsen, T. Tsiligkaridis, and M. Zitnik
+UniTS: a unified multi-task time series model
+.
+In
+The Thirty-eighth Annual Conference on Neural Information Processing Systems
+,
+External Links:
+Link
+Cited by:
+§2
+.
+Gardner (1985)
+E. S. Gardner
+Exponential smoothing: The state of the art
+.
+Journal of Forecasting
+4
+(
+1
+),
+pp.
+1–28
+(
+en
+).
+External Links:
+ISSN 0277-6693, 1099-131X
+,
+Link
+,
+Document
+Cited by:
+§1
+.
+Gilpin (2023)
+W. Gilpin
+Chaos as an interpretable benchmark for forecasting and data-driven modelling
+.
+Note:
+_eprint: 2110.05266
+External Links:
+Link
+Cited by:
+Appendix E
+,
+§4.2
+.
+Graf
+et al.
+(2025)
+L. Graf, T. Ortner, S. Woźniak, and A. Pantazi
+FlowState: Sampling-Rate Invariant Time Series Foundation Model with Dynamic Forecasting Horizons
+.
+(
+en
+).
+External Links:
+Link
+Cited by:
+§1
+,
+§2
+,
+§4
+.
+Gruver
+et al.
+(2023)
+N. Gruver, M. A. Finzi, S. Qiu, and A. G. Wilson
+Large Language Models Are Zero-Shot Time Series Forecasters
+.
+(
+en
+).
+External Links:
+Link
+Cited by:
+§2
+.
+Hochreiter and Schmidhuber (1997)
+S. Hochreiter and J. Schmidhuber
+Long short-term memory
+.
+Neural Comput.
+9
+(
+8
+),
+pp.
+1735–1780
+.
+Cited by:
+§1
+.
+Hochreiter (1991)
+S. Hochreiter
+Untersuchungen zu dynamischen neuronalen Netzen. Diploma thesis, Institut für Informatik, Lehrstuhl Prof. Brauer, Technische Universität München
+.
+Cited by:
+§1
+.
+Hoo
+et al.
+(2024)
+S. B. Hoo, S. Müller, D. Salinas, and F. Hutter
+The tabular foundation model tabPFN outperforms specialized time series forecasting models based on simple features
+.
+In
+NeurIPS Workshop on Time Series in the Age of Large Models
+,
+External Links:
+Link
+Cited by:
+Table 2
+,
+§2
+.
+Hyndman and Khandakar (2008)
+R. J. Hyndman and Y. Khandakar
+Automatic Time Series Forecasting: The
+forecast
+Package for
+R
+.
+Journal of Statistical Software
+27
+(
+3
+) (
+en
+).
+External Links:
+ISSN 1548-7660
+,
+Link
+,
+Document
+Cited by:
+§1
+.
+Johnson
+et al.
+(2023)
+A. E. W. Johnson, L. Bulgarelli, L. Shen, A. Gayles, A. Shammout, S. Horng, T. J. Pollard, S. Hao, B. Moody, B. Gow, L. H. Lehman, L. A. Celi, and R. G. Mark
+MIMIC-IV, a freely accessible electronic health record dataset
+.
+Scientific Data
+10
+(
+1
+),
+pp.
+1
+(
+en
+).
+External Links:
+ISSN 2052-4463
+,
+Link
+,
+Document
+Cited by:
+§1
+.
+Joosen
+et al.
+(2023)
+A. Joosen, A. Hassan, M. Asenov, R. Singh, L. Darlow, J. Wang, and A. Barker
+How Does It Function? Characterizing Long-term Trends in Production Serverless Workloads
+.
+In
+Proceedings of the 2023 ACM Symposium on Cloud Computing
+,
+SoCC ’23
+,
+New York, NY, USA
+,
+pp.
+443–458
+.
+External Links:
+ISBN 979-8-4007-0387-4
+,
+Link
+,
+Document
+Cited by:
+§1
+.
+Kim
+et al.
+(2021)
+T. Kim, J. Kim, Y. Tae, C. Park, J. Choi, and J. Choo
+Reversible Instance Normalization for Accurate Time-Series Forecasting against Distribution Shift
+.
+(
+en
+).
+External Links:
+Link
+Cited by:
+§3.2
+.
+Koenker and Bassett (1978)
+R. Koenker and G. Bassett
+Regression Quantiles
+.
+Econometrica
+46
+(
+1
+),
+pp.
+33–50
+.
+External Links:
+ISSN 0012-9682
+,
+Link
+,
+Document
+Cited by:
+§3.2
+.
+Kratzert
+et al.
+(2018)
+F. Kratzert, D. Klotz, C. Brenner, K. Schulz, and M. Herrnegger
+Rainfall–runoff modelling using Long Short-Term Memory (LSTM) networks
+.
+Hydrology and Earth System Sciences
+22
+(
+11
+),
+pp.
+6005–6022
+(
+English
+).
+External Links:
+ISSN 1027-5606
+,
+Link
+,
+Document
+Cited by:
+§1
+.
+Liu
+et al.
+(2026a)
+C. Liu, T. Aksu, J. Liu, X. Liu, H. Yan, Q. Pham, S. Savarese, D. Sahoo, C. Xiong, and J. Li
+Moirai 2.0: When Less Is More for Time Series Forecasting
+.
+arXiv
+.
+Note:
+arXiv:2511.11698 [cs]
+Comment: 16 pages, 13 figures, and 1 table
+External Links:
+Link
+,
+Document
+Cited by:
+§2
+,
+§2
+.
+Liu
+et al.
+(2025a)
+X. Liu, J. Liu, G. Woo, T. Aksu, Y. Liang, R. Zimmermann, C. Liu, J. Li, S. Savarese, C. Xiong, and D. Sahoo
+Moirai-MoE: Empowering Time Series Foundation Models with Sparse Mixture of Experts
+.
+(
+en
+).
+External Links:
+Link
+Cited by:
+Table 2
+,
+§2
+,
+§2
+,
+§4
+.
+Liu
+et al.
+(2023)
+Y. Liu, T. Hu, H. Zhang, H. Wu, S. Wang, L. Ma, and M. Long
+iTransformer: Inverted Transformers Are Effective for Time Series Forecasting
+.
+(
+en
+).
+External Links:
+Link
+Cited by:
+§2
+.
+Liu
+et al.
+(2024)
+Y. Liu, G. Qin, X. Huang, J. Wang, and M. Long
+Timer-XL: Long-Context Transformers for Unified Time Series Forecasting
+.
+(
+en
+).
+External Links:
+Link
+Cited by:
+§B.4
+,
+§3.2
+.
+Liu
+et al.
+(2025b)
+Y. Liu, G. Qin, Z. Shi, Z. Chen, C. Yang, X. Huang, J. Wang, and M. Long
+Sundial: A Family of Highly Capable Time Series Foundation Models
+.
+arXiv
+.
+Note:
+arXiv:2502.00816 [cs]
+External Links:
+Link
+,
+Document
+Cited by:
+§2
+.
+Liu
+et al.
+(2026b)
+Y. Liu, X. Su, S. Wang, H. Zhang, H. Liu, Y. Wang, Z. Ye, Y. Xiang, J. Wang, and M. Long
+Timer-S1: A Billion-Scale Time Series Foundation Model with Serial Scaling
+.
+arXiv
+.
+Note:
+arXiv:2603.04791 [cs]
+version: 3
+External Links:
+Link
+,
+Document
+Cited by:
+§2
+.
+Loshchilov and Hutter (2019)
+I. Loshchilov and F. Hutter
+Decoupled Weight Decay Regularization
+.
+In
+International Conference on Learning Representations
+,
+External Links:
+Link
+Cited by:
+Table 3
+,
+Appendix D
+.
+Moroshan
+et al.
+(2026)
+V. Moroshan, J. Siems, A. Zela, T. Carstensen, and F. Hutter
+TempoPFN: synthetic pre-training of linear RNNs for zero-shot time series forecasting
+.
+External Links:
+Link
+Cited by:
+§2
+.
+Nearing
+et al.
+(2024)
+G. Nearing, D. Cohen, V. Dube, M. Gauch, O. Gilon, S. Harrigan, A. Hassidim, D. Klotz, F. Kratzert, A. Metzger, S. Nevo, F. Pappenberger, C. Prudhomme, G. Shalev, S. Shenzis, T. Y. Tekalign, D. Weitzner, and Y. Matias
+Global prediction of extreme floods in ungauged watersheds
+.
+Nature
+627
+(
+8004
+),
+pp.
+559–563
+(
+en
+).
+External Links:
+ISSN 0028-0836, 1476-4687
+,
+Link
+,
+Document
+Cited by:
+§1
+,
+§1
+.
+Nie
+et al.
+(2022)
+Y. Nie, N. H. Nguyen, P. Sinthong, and J. Kalagnanam
+A Time Series is Worth 64 Words: Long-term Forecasting with Transformers
+.
+(
+en
+).
+External Links:
+Link
+Cited by:
+§2
+.
+Oreshkin
+et al.
+(2026)
+B. N. Oreshkin, M. Jauhari, R. K. Selvam, M. Wolff, W. Pan, S. Ramasubramanian, K. G. Olivares, T. Konstantinova, A. Potapczynski, M. Cao, D. Efimov, M. W. Mahoney, and A. G. Wilson
+Zero-shot Forecasting by Simulation Alone
+.
+arXiv
+.
+Note:
+arXiv:2601.00970 [cs]
+External Links:
+Link
+,
+Document
+Cited by:
+§2
+.
+Patil
+et al.
+(2025)
+P. Patil, A. Varshney, M. Cherukumalli, H. Deshpande, L. Eun, D. Sahoo, and N. Chittar
+MORPHEUS : A Foundation Model for Multivariate Time Series Forecasting
+.
+(
+en
+).
+External Links:
+Link
+Cited by:
+Table 2
+,
+§2
+.
+Podobnik
+et al.
+(2010)
+B. Podobnik, D. Wang, D. Horvatic, I. Grosse, and H. E. Stanley
+Time-lag cross-correlations in collective phenomena
+.
+Europhysics Letters
+90
+(
+6
+),
+pp.
+68001
+(
+en
+).
+External Links:
+ISSN 0295-5075
+,
+Link
+,
+Document
+Cited by:
+§4.2
+.
+Runge
+et al.
+(2023)
+J. Runge, A. Gerhardus, G. Varando, V. Eyring, and G. Camps-Valls
+Causal inference for time series
+.
+Nature Reviews Earth & Environment
+4
+(
+7
+),
+pp.
+487–505
+.
+Cited by:
+§2
+.
+Sathishkumar V E (2021)
+C. S. Sathishkumar V E
+Steel Industry Energy Consumption
+.
+UCI Machine Learning Repository
+.
+External Links:
+Link
+,
+Document
+Cited by:
+§1
+.
+Schmidinger
+et al.
+(2025)
+N. Schmidinger, L. Schneckenreiter, P. Seidl, J. Schimunek, P. Hoedt, J. Brandstetter, A. Mayr, S. Luukkonen, S. Hochreiter, and G. Klambauer
+Bio-xlstm: generative modeling, representation and in-context learning of biological and chemical sequences
+.
+International Conference On Learning Representations
+.
+Cited by:
+§3.2
+.
+Shchur
+et al.
+(2025)
+O. Shchur, A. F. Ansari, C. Turkmen, L. Stella, N. Erickson, P. Guerron, M. Bohlke-Schneider, and Y. Wang
+Fev-bench: A realistic benchmark for time series forecasting
+.
+arXiv preprint arXiv:2509.26468
+.
+Cited by:
+Appendix E
+,
+Appendix G
+,
+Appendix G
+,
+Appendix G
+,
+§4
+,
+§4.1
+,
+§4
+.
+Sims (1980)
+C. A. Sims
+Macroeconomics and Reality
+.
+Econometrica
+48
+(
+1
+),
+pp.
+1–48
+.
+External Links:
+ISSN 0012-9682
+,
+Link
+,
+Document
+Cited by:
+§1
+,
+§1
+.
+Smith and Topin (2019)
+L. N. Smith and N. Topin
+Super-convergence: Very fast training of neural networks using large learning rates
+.
+In
+Artificial intelligence and machine learning for multi-domain operations applications
+,
+Vol.
+11006
+,
+pp.
+369–386
+.
+Cited by:
+Appendix D
+.
+Uniejewski and Weron (2018)
+B. Uniejewski and R. Weron
+Efficient Forecasting of Electricity Spot Prices with Expert and LASSO Mode ls
+.
+Energies
+11
+(
+8
+).
+External Links:
+ISSN 1996-1073
+,
+Link
+,
+Document
+Cited by:
+§3.2
+.
+Wang
+et al.
+(2025)
+X. Wang, T. Zhou, J. Gao, B. Ding, and J. Zhou
+Output Scaling: YingLong-Delayed Chain of Thought in a Large Pretrained Time Series Forecasting Model
+.
+arXiv
+.
+Note:
+arXiv:2506.11029 [cs]
+External Links:
+Link
+,
+Document
+Cited by:
+§2
+.
+Wang
+et al.
+(2024)
+Y. Wang, H. Wu, J. Dong, G. Qin, H. Zhang, Y. Liu, Y. Qiu, J. Wang, and M. Long
+TimeXer: Empowering Transformers for Time Series Forecasting with Exogenous Variables
+.
+(
+en
+).
+External Links:
+Link
+Cited by:
+§B.4
+,
+§3.2
+.
+Wen
+et al.
+(2026)
+Y. Wen, W. M. Gifford, C. Reddy, L. M. Nguyen, J. Kalagnanam, and A. A. Julius
+Revisiting the Generic Transformer: Deconstructing a Strong Baseline for Time Series Foundation Models
+.
+arXiv
+.
+Note:
+arXiv:2602.06909 [cs]
+External Links:
+Link
+,
+Document
+Cited by:
+§4
+.
+Woo
+et al.
+(2024)
+G. Woo, C. Liu, A. Kumar, C. Xiong, S. Savarese, and D. Sahoo
+Unified Training of Universal Time Series Forecasting Transformers
+.
+In
+Proceedings of the 41st International Conference on Machine Learning
+,
+pp.
+53140–53164
+(
+en
+).
+External Links:
+ISSN 2640-3498
+,
+Link
+Cited by:
+Table 2
+,
+§1
+,
+§2
+,
+§4
+.
+Wu
+et al.
+(2026)
+S. Wu, J. Huang, W. Feng, B. Li, X. Zhang, E. Meng, D. Li, J. Lou, and S. Ng
+WaveMoE: A Wavelet-Enhanced Mixture-of-Experts Foundation Model for Time Series Forecasting
+.
+(
+en
+).
+External Links:
+Link
+Cited by:
+§2
+.
+Xie
+et al.
+(2025)
+S. Xie, V. Feofanov, M. Alonso, A. Odonnat, J. Zhang, and I. Redko
+CauKer: Classification Time Series Foundation Models Can Be Pretrained on Synthetic Data only
+.
+In
+1st ICML Workshop on Foundation Models for Structured Data
+,
+External Links:
+Link
+Cited by:
+§2
+.
+Xue and Salim (2023)
+H. Xue and F. D. Salim
+PromptCast: A New Prompt-based Learning Paradigm for Time Series Forecasting
+.
+arXiv
+.
+Note:
+arXiv:2210.08964 [stat]
+Comment: TKDE Accepted Version
+External Links:
+Link
+,
+Document
+Cited by:
+§2
+.
+Yamaguchi
+et al.
+(2025)
+Y. Yamaguchi, I. Suemitsu, and W. Wei
+CITRAS: Covariate-Informed Transformer for Time Series Forecasting
+.
+arXiv
+(
+en
+).
+Note:
+arXiv:2503.24007 [cs]
+Comment: Submission under review
+External Links:
+Link
+,
+Document
+Cited by:
+§B.4
+,
+§3.2
+.
+Yan
+et al.
+(2024)
+P. Yan, A. Abdulkadir, P. Luley, M. Rosenthal, G. A. Schatte, B. F. Grewe, and T. Stadelmann
+A Comprehensive Survey of Deep Transfer Learning for Anomaly Detection in Industrial Time Series: Methods, Applications, and Directions
+.
+IEEE Access
+12
+,
+pp.
+3768–3789
+.
+External Links:
+ISSN 2169-3536
+,
+Link
+,
+Document
+Cited by:
+§1
+.
+Zhang and Yan (2022)
+Y. Zhang and J. Yan
+Crossformer: Transformer Utilizing Cross-Dimension Dependency for Multivariate Time Series Forecasting
+.
+(
+en
+).
+External Links:
+Link
+Cited by:
+§2
+,
+§2
+.
+Zhao
+et al.
+(2023)
+H. Zhao, H. Li, Y. Xuan, S. Bao, Y. Cidan, Y. Liu, C. Li, and M. Yao
+Investigating the critical influencing factors of snowmelt runoff and development of a mid-long term snowmelt runoff forecasting
+.
+Journal of Geographical Sciences
+33
+(
+6
+),
+pp.
+1313–1333
+(
+en
+).
+External Links:
+ISSN 1861-9568
+,
+Link
+,
+Document
+Cited by:
+§4.2
+.
+Appendix
+Appendix A
+Extended results
+Figure 7
+:
+Mean MASE on fev-bench versus mean active parameters across nine zero-shot
+time series foundation models (TSFMs). Pareto-optimal models
+(Moirai-2.0, TiRex, TiRex-2) form the lower-left frontier (dashed
+staircase) and are highlighted with black outlines; the shaded region marks
+the dominated subset of the parameter–MASE plane. TiRex-2 attains the
+lowest mean MASE in the benchmark while using
+∼
+2.2
+×
+\sim\!2.2\times
+fewer mean
+active parameters than Chronos-2 and
+∼
+4.3
+×
+\sim\!4.3\times
+fewer than
+TimesFM-2.5. For TiRex-2, the variate mixer is skipped on purely
+univariate inputs (Sec.
+3
+), so we report the
+task-weighted expectation
+𝔼
+t
+​
+[
+P
+active
+]
+=
+P
+base
++
+p
+cov
+​
+P
+var-mix
+=
+38.4
++
+0.35
+⋅
+44.1
+≈
+53.84
+\mathbb{E}_{t}[P_{\text{active}}]=P_{\text{base}}+p_{\text{cov}}\,P_{\text{var-mix}}=38.4+0.35\cdot 44.1\approx 53.84
+M
+over the
+65
+/
+100
+65/100
+univariate and
+35
+/
+100
+35/100
+multivariate tasks of fev-bench. All other models are dense, so total and active parameter counts coincide.
+Figure 8
+:
+Streaming evaluation: MASE of TiRex-2 as a function of cumulative
+streamed steps. Univariate and multivariate variants are shown separately.
+Shaded regions indicate
+±
+1
+\pm 1
+standard deviation of the MASE across
+8
+8
+runs.
+Vertical dashed lines mark the pre-training context length (
+2
+2
+k) and
+post-training context length (
+8
+8
+k).
+Figure 9
+:
+Long-horizon forecasting on
+dysts
+, MASE vs. forecast horizon
+on a log-
+y
+y
+axis. Subplots show fine, medium, and coarse temporal granularity.
+Shaded bands indicate
+±
+1
+\pm 1
+SEM (
+σ
+/
+N
+\sigma/\sqrt{N}
+,
+N
+=
+135
+N{=}135
+tasks).
+TiRex-2 outperforms Chronos-2 across all granularities, with
+the largest gap at fine resolution and the smallest at coarse resolution.
+Appendix B
+Asymmetric group attention: leakage derivation and details
+This appendix expands on the variate-mixer paragraph in Sec.
+3.3
+’s preceding architecture
+description and gives (i) the full specification of the asymmetric group attention, (ii) a proof that the
+asymmetric mask together with the forward-only xLSTM on targets and past covariates is
+sufficient
+for
+target-causality (
+Proposition
+1
+), and (iii) a counterexample showing that the asymmetric mask is
+necessary
+: dropping the
+cov
+→
+tgt
+\mathrm{cov}\!\to\!\mathrm{tgt}
+block opens a concrete two-block leakage path
+from future targets into earlier target representations.
+B.1  Notation and group structure
+We follow the indexing of the main paper: writing one TiRex-2 block as
+𝐇
+[
+2
+​
+n
+]
+→
+TimeMixer
+𝐇
+[
+2
+​
+n
++
+1
+]
+→
+VariateMixer
+𝐇
+[
+2
+​
+n
++
+2
+]
+\mathbf{H}^{[2n]}\!\xrightarrow{\text{TimeMixer}}\!\mathbf{H}^{[2n+1]}\!\xrightarrow{\text{VariateMixer}}\!\mathbf{H}^{[2n+2]}
+,
+with even
+n
+n
+entering the time mixer and odd
+n
+n
+the variate mixer. Each token tensor lives in
+ℝ
+V
+×
+L
+×
+D
+\mathbb{R}^{V\times L\times D}
+, with
+every variate index
+v
+∈
+{
+1
+,
+…
+,
+V
+}
+v\in\{1,\dots,V\}
+assigned a fixed type
+type
+⁡
+(
+v
+)
+∈
+{
+tgt
+,
+pcov
+,
+fcov
+}
+\mathrm{type}(v)\in\{\mathrm{tgt},\mathrm{pcov},\mathrm{fcov}\}
+and a fixed group
+g
+⁡
+(
+v
+)
+∈
+{
+1
+,
+…
+,
+G
+}
+g(v)\in\{1,\dots,G\}
+. Groups partition the variates of a single time series; when several short
+series are packed into one batch element, each contributes its own group. Inside the variate mixer we transpose to
+shape
+L
+×
+V
+×
+D
+L\times V\times D
+and apply attention along the
+V
+V
+axis independently per patch position
+l
+l
+and per
+group. Writing
+cov
+=
+pcov
+∪
+fcov
+\mathrm{cov}=\mathrm{pcov}\cup\mathrm{fcov}
+, the additive attention mask is
+M
+i
+​
+j
+=
+{
+0
+if
+​
+g
+​
+(
+i
+)
+=
+g
+⁡
+(
+j
+)
+​
+and
+​
+¬
+(
+type
+⁡
+(
+i
+)
+∈
+cov
+∧
+type
+⁡
+(
+j
+)
+∈
+tgt
+)
+,
+−
+∞
+otherwise.
+M_{ij}\;=\;\begin{cases}0&\text{if }g(i)=g(j)\text{ and }\neg\!\bigl(\mathrm{type}(i)\!\in\!\mathrm{cov}\,\wedge\,\mathrm{type}(j)\!\in\!\mathrm{tgt}\bigr),\\
+-\infty&\text{otherwise.}\end{cases}
+(2)
+Equivalently, the allowed (query
+→
+\to
+key) pairs within a group are
+tgt
+→
+tgt
+\mathrm{tgt}\!\to\!\mathrm{tgt}
+,
+tgt
+→
+cov
+\mathrm{tgt}\!\to\!\mathrm{cov}
+and
+cov
+→
+cov
+\mathrm{cov}\!\to\!\mathrm{cov}
+, while
+cov
+→
+tgt
+\mathrm{cov}\!\to\!\mathrm{tgt}
+is forbidden (illustrated in the following
+table). Cross-group attention is forbidden in all directions.
+query \ key
+𝖳
+\mathsf{T}
+𝖢
+\mathsf{C}
+𝖳
+\mathsf{T}
+✓
+✓
+𝖢
+\mathsf{C}
+×
+\times
+✓
+B.2  Proof of
+Proposition
+1
+(sufficiency)
+This subsection establishes that the asymmetric mask
+Equation
+1
+together with the forward-only
+xLSTM on targets and past covariates is sufficient to keep target tokens free of future-target dependencies
+at every depth; necessity of the mask is treated separately in
+Section
+B.3
+.
+For a token
+𝐡
+v
+,
+l
+[
+n
+]
+\mathbf{h}^{[n]}_{v,l}
+at substep
+n
+n
+, variate
+v
+v
+, and patch
+l
+l
+, let
+D
+⁡
+(
+𝐡
+v
+,
+l
+[
+n
+]
+)
+⊆
+{
+tgt
+,
+pcov
+,
+fcov
+}
+×
+{
+0
+,
+…
+,
+L
+−
+1
+}
+D(\mathbf{h}^{[n]}_{v,l})\subseteq\{\text{tgt},\text{pcov},\text{fcov}\}\times\{0,\dots,L{-}1\}
+be the set of input-layer tokens it functionally depends on, i.e. the set of pairs
+(
+v
+′
+,
+l
+′
+)
+(v^{\prime},l^{\prime})
+such that
+𝐡
+v
+,
+l
+[
+n
+]
+\mathbf{h}^{[n]}_{v,l}
+is a (non-trivial) function of
+𝐡
+v
+′
+,
+l
+′
+[
+0
+]
+\mathbf{h}^{[0]}_{v^{\prime},l^{\prime}}
+.
+Define the temporal receptive field
+I
+v
+​
+(
+l
+)
+=
+{
+0
+,
+…
+,
+L
+−
+1
+}
+I_{v}(l)=\{0,\dots,L{-}1\}
+if
+v
+=
+fcov
+v=\text{fcov}
+and
+I
+v
+​
+(
+l
+)
+=
+{
+0
+,
+…
+,
+l
+}
+I_{v}(l)=\{0,\dots,l\}
+otherwise,
+and the variate receptive set
+S
+tgt
+=
+{
+tgt
+,
+pcov
+,
+fcov
+}
+S_{\text{tgt}}=\{\text{tgt},\text{pcov},\text{fcov}\}
+,
+S
+pcov
+=
+S
+fcov
+=
+{
+pcov
+,
+fcov
+}
+S_{\text{pcov}}=S_{\text{fcov}}=\{\text{pcov},\text{fcov}\}
+.
+I
+v
+I_{v}
+encodes the directionality of the time mixer (forward-only on tgt and pcov, bidirectional on fcov),
+and
+S
+v
+S_{v}
+encodes the asymmetric mask (
+1
+) (cov queries cannot read tgt keys). The mixers
+then compose dependency sets as
+D
+⁡
+(
+𝐡
+v
+,
+l
+[
+2
+​
+n
++
+1
+]
+)
+\displaystyle D\bigl(\mathbf{h}^{[2n+1]}_{v,l}\bigr)
+=
+⋃
+l
+′
+∈
+I
+v
+​
+(
+l
+)
+D
+⁡
+(
+𝐡
+v
+,
+l
+′
+[
+2
+​
+n
+]
+)
+\displaystyle=\!\!\bigcup_{l^{\prime}\in I_{v}(l)}\!\!D\bigl(\mathbf{h}^{[2n]}_{v,l^{\prime}}\bigr)
+(time mixer),
+D
+⁡
+(
+𝐡
+v
+,
+l
+[
+2
+​
+n
++
+2
+]
+)
+\displaystyle D\bigl(\mathbf{h}^{[2n+2]}_{v,l}\bigr)
+=
+⋃
+v
+′
+∈
+S
+v
+D
+⁡
+(
+𝐡
+v
+′
+,
+l
+[
+2
+​
+n
++
+1
+]
+)
+\displaystyle=\bigcup_{v^{\prime}\in S_{v}}D\bigl(\mathbf{h}^{[2n+1]}_{v^{\prime},l}\bigr)
+(variate mixer),
+where the variate-mixer union is at fixed patch
+l
+l
+since the mixer acts independently per patch.
+We prove by induction on
+n
+n
+the joint invariant
+(
+𝐂
+)
+\displaystyle\mathbf{(C)}\;\;
+(
+v
+′
+,
+l
+′
+)
+∈
+D
+⁡
+(
+𝐡
+tgt
+,
+l
+[
+n
+]
+)
+​
+and
+​
+v
+′
+=
+tgt
+⟹
+l
+′
+≤
+l
+,
+\displaystyle(v^{\prime},l^{\prime})\in D\bigl(\mathbf{h}^{[n]}_{\text{tgt},l}\bigr)\;\text{ and }\;v^{\prime}=\text{tgt}\;\Longrightarrow\;l^{\prime}\leq l,
+(
+𝐈
+)
+\displaystyle\mathbf{(I)}\;\;
+v
+∈
+{
+pcov
+,
+fcov
+}
+⟹
+(
+tgt
+,
+⋅
+)
+∉
+D
+⁡
+(
+𝐡
+v
+,
+l
+[
+n
+]
+)
+.
+\displaystyle v\in\{\text{pcov},\text{fcov}\}\;\Longrightarrow\;(\text{tgt},\cdot)\notin D\bigl(\mathbf{h}^{[n]}_{v,l}\bigr).
+Base
+(
+k
+=
+0
+k{=}0
+):
+D
+⁡
+(
+𝐡
+v
+,
+l
+[
+0
+]
+)
+=
+{
+(
+v
+,
+l
+)
+}
+D(\mathbf{h}^{[0]}_{v,l})=\{(v,l)\}
+satisfies both.
+Time mixer
+: for
+v
+=
+tgt
+v=\text{tgt}
+,
+I
+tgt
+​
+(
+l
+)
+⊆
+{
+0
+,
+…
+,
+l
+}
+I_{\text{tgt}}(l)\subseteq\{0,\dots,l\}
+,
+so every tgt-typed pair inherited from layer
+2
+​
+n
+2n
+has
+l
+′
+≤
+l
+l^{\prime}\leq l
+, preserving
+(
+𝐂
+)
+\mathbf{(C)}
+. For
+v
+∈
+{
+pcov
+,
+fcov
+}
+v\in\{\text{pcov},\text{fcov}\}
+,
+the union is over the same variate and
+(
+𝐈
+)
+\mathbf{(I)}
+propagates verbatim.
+Variate mixer
+(
+2
+​
+n
++
+→
+2
+​
+n
++
+2
+2n+1\!\to\!2n{+}2
+): for
+v
+=
+tgt
+v=\text{tgt}
+, the union runs over
+v
+′
+∈
+S
+tgt
+v^{\prime}\in S_{\text{tgt}}
+at fixed patch
+l
+l
+;
+any tgt-typed dependency comes from
+D
+⁡
+(
+𝐡
+tgt
+,
+l
+[
+2
+​
+n
++
+2
+]
+)
+D(\mathbf{h}^{[2n+2]}_{\text{tgt},l})
+via
+(
+𝐂
+)
+\mathbf{(C)}
+(so
+l
+′
+≤
+l
+l^{\prime}\leq l
+),
+while contributions from
+v
+′
+∈
+{
+pcov
+,
+fcov
+}
+v^{\prime}\in\{\text{pcov},\text{fcov}\}
+contain no tgt pair by
+(
+𝐈
+)
+\mathbf{(I)}
+, preserving
+(
+𝐂
+)
+\mathbf{(C)}
+.
+For
+v
+∈
+{
+pcov
+,
+fcov
+}
+v\in\{\text{pcov},\text{fcov}\}
+,
+S
+v
+S_{v}
+excludes tgt, and
+(
+𝐈
+)
+\mathbf{(I)}
+holds at layer
+2
+​
+n
++
+1
+2n{+}1
+for every
+v
+′
+∈
+S
+v
+v^{\prime}\in S_{v}
+, so
+(
+𝐈
+)
+\mathbf{(I)}
+is preserved.
+Applying
+(
+𝐂
+)
+\mathbf{(C)}
+at
+k
+=
+2
+​
+N
+k=2N
+yields
+D
+⁡
+(
+𝐡
+tgt
+,
+l
+[
+2
+​
+N
+]
+)
+∩
+(
+{
+tgt
+}
+×
+{
+0
+,
+…
+,
+L
+−
+1
+}
+)
+⊆
+{
+tgt
+}
+×
+{
+0
+,
+…
+,
+l
+}
+D(\mathbf{h}^{[2N]}_{\text{tgt},l})\cap(\{\text{tgt}\}\times\{0,\dots,L{-}1\})\subseteq\{\text{tgt}\}\times\{0,\dots,l\}
+,
+which is
+Proposition
+1
+.
+□
+\square
+Intuitively,
+(
+𝐈
+)
+\mathbf{(I)}
+is what makes the bidirectional time mixer on fcov safe: covariate tokens never accumulate target information,
+so the reverse pass cannot transport target content from a later patch back to an earlier one.
+B.3  Necessity of the asymmetric mask: two-block leakage counterexample
+The sufficiency proof in
+Section
+B.2
+leaves open whether the
+cov
+→
+tgt
+\mathrm{cov}\!\to\!\mathrm{tgt}
+block in
+Equation
+2
+is actually needed, or whether a symmetric variate mixer would already preserve
+target-causality. We resolve this by exhibiting an explicit leakage path: without the
+cov
+→
+tgt
+\mathrm{cov}\!\to\!\mathrm{tgt}
+block, a target representation at patch
+l
+l
+depends on target inputs at
+positions
+l
+′
+>
+l
+l^{\prime}>l
+, even within a single forward pass and without any autoregressive sampling. The leakage path uses one symmetric variate mixer, the bidirectional time
+mixer of the next block, and a second variate mixer; three components that are individually well-defined but, in
+combination, route information backwards along the time axis.
+Let
+n
+n
+index blocks and assume the series contains at least one future-covariate variate
+𝖥
+\mathsf{F}
+and one
+target variate
+𝖳
+\mathsf{T}
+in the same group, with respective indices
+f
+f
+and
+t
+t
+.
+Step 1 (symmetric variate mixer, block
+n
+n
+).
+With a symmetric mask, the future-covariate token at position
+l
+l
+in block
+n
+n
+aggregates over all variates in the
+group, including
+𝖳
+\mathsf{T}
+:
+𝐡
+f
+,
+l
+[
+2
+​
+n
++
+2
+]
+=
+𝐡
+f
+,
+l
+[
+2
+​
+n
++
+1
+]
++
+∑
+v
+∈
+g
+⁡
+(
+f
+)
+α
+f
+,
+v
+,
+l
+​
+𝐡
+v
+,
+l
+[
+2
+​
+n
++
+1
+]
+with
+​
+α
+f
+,
+t
+,
+l
+≠
+0
+​
+in general.
+\mathbf{h}^{[2n+2]}_{f,l}\;=\;\mathbf{h}^{[2n+1]}_{f,l}+\sum_{v\in g(f)}\alpha_{f,v,l}\,\mathbf{h}^{[2n+1]}_{v,l}\hskip 10.00002pt\text{with }\alpha_{f,t,l}\neq 0\text{ in general.}
+Hence
+𝐡
+f
+,
+l
+[
+2
+​
+n
++
+2
+]
+\mathbf{h}^{[2n+2]}_{f,l}
+already carries information about
+𝐡
+t
+,
+l
+[
+2
+​
+n
++
+1
+]
+\mathbf{h}^{[2n+1]}_{t,l}
+.
+Step 2 (bidirectional time mixer, block
+n
++
+1
+n{+}1
+).
+The future-covariate stream is processed by both a forward and a reverse xLSTM. The reverse pass of block
+n
++
+1
+n{+}1
+writes into future-covariate tokens at positions
+l
+′
+<
+l
+l^{\prime}<l
+a representation that is a function of all
+𝐡
+f
+,
+l
+′′
+[
+2
+​
+n
++
+2
+]
+\mathbf{h}^{[2n+2]}_{f,l^{\prime\prime}}
+with
+l
+′′
+≥
+l
+′
+l^{\prime\prime}\geq l^{\prime}
+, including
+l
+′′
+=
+l
+l^{\prime\prime}=l
+:
+𝐡
+f
+,
+l
+′
+[
+2
+​
+n
++
+3
+]
+=
+ϕ
+⁡
+(
+𝐡
+f
+,
+l
+′
+[
+2
+​
+n
++
+2
+]
+,
+𝐡
+f
+,
+l
+′
++
+1
+[
+2
+​
+n
++
+2
+]
+,
+…
+,
+𝐡
+f
+,
+L
+−
+1
+[
+2
+​
+n
++
+2
+]
+)
+,
+\mathbf{h}^{[2n+3]}_{f,l^{\prime}}\;=\;\phi\!\left(\mathbf{h}^{[2n+2]}_{f,l^{\prime}},\,\mathbf{h}^{[2n+2]}_{f,l^{\prime}+1},\,\ldots,\,\mathbf{h}^{[2n+2]}_{f,L-1}\right),
+where
+ϕ
+\phi
+collects the forward output, the reverse output, and their linear fusion. By Step 1,
+ϕ
+\phi
+is a
+function of
+𝐡
+t
+,
+l
+[
+2
+​
+n
++
+1
+]
+\mathbf{h}^{[2n+1]}_{t,l}
+, the target token at the
+later
+position
+l
+l
+.
+Step 3 (variate mixer, block
+n
++
+1
+n{+}1
+).
+With a symmetric variate mixer at block
+n
++
+1
+n{+}1
+, the target token at position
+l
+′
+<
+l
+l^{\prime}<l
+attends to all variates of
+its group at the same patch index, including
+𝖥
+\mathsf{F}
+:
+𝐡
+t
+,
+l
+′
+[
+2
+​
+n
++
+4
+]
+⊇
+α
+t
+,
+f
+,
+l
+′
+′
+​
+𝐡
+f
+,
+l
+′
+[
+2
+​
+n
++
+3
+]
+​
+⊇
+Step 2
+​
+function of
+​
+𝐡
+t
+,
+l
+[
+2
+​
+n
++
+1
+]
+(
+l
+>
+l
+′
+)
+.
+\mathbf{h}^{[2n+4]}_{t,l^{\prime}}\;\supseteq\;\alpha^{\prime}_{t,f,l^{\prime}}\,\mathbf{h}^{[2n+3]}_{f,l^{\prime}}\;\overset{\text{Step 2}}{\supseteq}\;\text{function of }\mathbf{h}^{[2n+1]}_{t,l}\hskip 10.00002pt(l>l^{\prime}).
+Composing the three steps, the target representation at the earlier patch
+l
+′
+l^{\prime}
+is a non-trivial function of the
+target input at the later patch
+l
+l
+. During training this leak corrupts the supervision signal: the loss at position
+l
+′
+l^{\prime}
+can be reduced by copying from
+position
+l
+>
+l
+′
+l>l^{\prime}
+, and at inference (where future targets are absent) the resulting representation distribution is
+shifted away from training. Single-pass streaming forecasts are then no longer well-defined either.
+How the asymmetric mask breaks the chain.
+The mask in Eq. (
+2
+) forbids exactly the
+cov
+→
+tgt
+\mathrm{cov}\!\to\!\mathrm{tgt}
+direction by setting
+α
+f
+,
+t
+,
+l
+=
+0
+\alpha_{f,t,l}=0
+for
+all
+l
+l
+, thus
+𝐡
+f
+,
+l
+[
+2
+​
+n
++
+2
+]
+\mathbf{h}^{[2n+2]}_{f,l}
+is independent of any target token, and steps 2–3
+cannot inject target information at later positions back into earlier target tokens.
+B.4  Comparison to prior cross-variate asymmetric attention designs
+Several recent models also impose an asymmetric target
+↔
+\leftrightarrow
+covariate information flow, but
+in different regimes.
+TimeXer
+(
+Wang et al., 2024
+)
+compresses
+each covariate series into a single learnable token and lets target queries
+cross-attend to those tokens; we instead attend at every patch position,
+preserving the temporal alignment between target and covariate features. TimeXer
+is moreover a task-specific model and is not evaluated as a zero-shot foundation
+model.
+Timer-XL
+(
+Liu et al., 2024
+)
+flattens variates and time
+into a single token sequence and combines causal intra-variate attention with
+covariate-asymmetric attention inside one block. Because it is fully causal
+along time, it cannot exploit future covariates; our design avoids this
+limitation by treating future covariates bidirectionally in the time mixer.
+CITRAS
+(
+Yamaguchi et al., 2025
+)
+likewise factorises time and
+variate attention and forms variate attention with the target as query and
+covariates as keys/values; for future covariates it pairs key at patch
+l
+l
+with
+value at patch
+l
++
+1
+l{+}1
+to look one step ahead. CITRAS is again task-specific
+(not claimed to be zero-shot) and its one-step shift is a heuristic substitute
+for the proper bidirectional treatment of future covariates that we adopt.
+B.5  Comparison to multivariate and covariate-aware TSFMs
+Table
+2
+positions TiRex-2 against existing
+multivariate time series foundation models and covariate-aware single-target
+models along three axes: (i) whether the model can ingest past- and (ii) future covariates, and
+(ii) whether its architecture preserves
+target causality
+, i.e. whether
+target representations at patch
+l
+l
+are guaranteed to be independent of target
+inputs at patches
+l
+′
+>
+l
+l^{\prime}>l
+. To our knowledge TiRex-2 is the first TSFM to provide support for future covariates and stay causal on the target variate(s). This is a prerequisite for the streaming inference of
+Sec.
+3.3
+since otherwise target states at earlier patches
+would change as new time steps arrive.
+Table 2:
+Past and future-covariate support and target-causality preservation across
+multivariate and covariate-aware time series foundation models.
+✓
+\checkmark
+= supported/preserved,
+×
+\times
+= not supported/not preserved.
+Model
+Past covariates
+Future covariates
+Target causality
+TiRex-2 (ours)
+✓
+\checkmark
+✓
+\checkmark
+✓
+\checkmark
+Multivariate TSFMs
+Moirai
+(
+Woo et al., 2024
+)
+✓
+\checkmark
+✓
+\checkmark
+×
+\times
+Moirai-MoE
+(
+Liu et al., 2025a
+)
+✓
+\checkmark
+✓
+\checkmark
+×
+\times
+Toto
+(
+Cohen et al., 2025
+)
+×
+\times
+×
+\times
+✓
+\checkmark
+Chronos-2
+(
+Ansari et al., 2025
+)
+✓
+\checkmark
+✓
+\checkmark
+×
+\times
+TabPFN-TS
+(
+Hoo et al., 2024
+)
+×
+\times
+✓
+\checkmark
+×
+\times
+GTT
+(
+Feng et al., 2024
+)
+✓
+\checkmark
+×
+\times
+×
+\times
+MORPHEUS
+(
+Patil et al., 2025
+)
+✓
+\checkmark
+✓
+\checkmark
+×
+\times
+Covariate-aware single-target TSFMs
+COSMIC
+(
+Auer et al., 2025a
+)
+✓
+\checkmark
+✓
+\checkmark
+×
+\times
+TimesFM-ICF
+(
+Faw et al., 2025
+)
+✓
+\checkmark
+×
+\times
+✓
+\checkmark
+Appendix C
+Binary-aware tail-compressing scaler
+This appendix expands on the input-layer paragraph in Sec.
+3
+and gives (i) the motivation for the
+binary-aware bypass, (ii) the full forward and inverse transforms with numerical clipping, and (iii) the per-variate
+statistics used by the scaler.
+Given a single variate
+𝐱
+∈
+ℝ
+T
+\mathbf{x}\in\mathbb{R}^{T}
+with index set of observed entries
+𝒱
+⊆
+{
+1
+,
+…
+,
+T
+}
+\mathcal{V}\subseteq\{1,\dots,T\}
+, we compute per-variate statistics over the full context window:
+μ
+^
+=
+1
+|
+𝒱
+|
+​
+∑
+t
+∈
+𝒱
+x
+t
+,
+σ
+^
+=
+max
+⁡
+(
+1
+|
+𝒱
+|
+​
+∑
+t
+∈
+𝒱
+(
+x
+t
+−
+μ
+^
+)
+2
+,
+ϵ
+)
+,
+\hat{\mu}=\frac{1}{|\mathcal{V}|}\sum_{t\in\mathcal{V}}x_{t},\hskip 20.00003pt\hat{\sigma}=\max\!\Bigg(\sqrt{\frac{1}{|\mathcal{V}|}\sum_{t\in\mathcal{V}}(x_{t}-\hat{\mu})^{2}},\;\epsilon\Bigg),
+(3)
+where
+ϵ
+>
+0
+\epsilon>0
+is a small constant that prevents division by zero for near-constant or sparse variates.
+Why binary signals need a bypass.
+Naive standardization is problematic for sparse binary signals. Consider the
+rare-positive case
+p
+¯
+≪
+1
+\bar{p}\ll 1
+(the rare-negative case
+p
+¯
+→
+1
+\bar{p}\to 1
+is
+symmetric by exchanging the roles of the two levels): for
+X
+∈
+{
+0
+,
+1
+}
+X\in\{0,1\}
+with
+ℙ
+⁡
+(
+X
+=
+1
+)
+=
+p
+¯
+\mathbb{P}(X=1)=\bar{p}
+, the empirical statistics become
+μ
+^
+≈
+p
+¯
+\hat{\mu}\approx\bar{p}
+and
+σ
+^
+≈
+p
+¯
+​
+(
+1
+−
+p
+¯
+)
+≈
+p
+¯
+\hat{\sigma}\approx\sqrt{\bar{p}(1-\bar{p})}\approx\sqrt{\bar{p}}
+. The two standardized levels are then
+z
+0
+=
+0
+−
+μ
+^
+σ
+^
+≈
+−
+p
+¯
+p
+¯
+=
+−
+p
+¯
+,
+z
+1
+=
+1
+−
+μ
+^
+σ
+^
+≈
+1
+−
+p
+¯
+p
+¯
+=
+1
+p
+¯
+−
+p
+¯
+,
+z_{0}\;=\;\frac{0-\hat{\mu}}{\hat{\sigma}}\;\approx\;\frac{-\bar{p}}{\sqrt{\bar{p}}}\;=\;-\sqrt{\bar{p}},\hskip 20.00003ptz_{1}\;=\;\frac{1-\hat{\mu}}{\hat{\sigma}}\;\approx\;\frac{1-\bar{p}}{\sqrt{\bar{p}}}\;=\;\frac{1}{\sqrt{\bar{p}}}-\sqrt{\bar{p}},
+(4)
+yielding a gap
+z
+1
+−
+z
+0
+≈
+1
+p
+¯
+−
+p
+¯
+−
+(
+−
+p
+¯
+)
+=
+1
+p
+¯
+z_{1}-z_{0}\;\approx\;\frac{1}{\sqrt{\bar{p}}}-\sqrt{\bar{p}}-\left(-\sqrt{\bar{p}}\right)\;=\;\frac{1}{\sqrt{\bar{p}}}
+(5)
+that grows without bound as
+p
+¯
+→
+0
+\bar{p}\to 0
+. The representation of both levels
+therefore depends on the context-window sparsity rather than the binary
+semantics of the signal. To avoid this, the affine transformation is bypassed
+for detected binary variates:
+μ
+=
+(
+1
+−
+b
+)
+μ
+^
+,
+σ
+=
+(
+1
+−
+b
+)
+σ
+^
++
+b
+,
+b
+=
+[
+∀
+t
+∈
+𝒱
+:
+x
+t
+∈
+{
+0
+,
+1
+}
+]
+.
+\mu=(1-b)\,\hat{\mu},\hskip 20.00003pt\sigma=(1-b)\,\hat{\sigma}+b,\hskip 20.00003ptb=\mathbf{1}\!\Big[\,\forall\,t\in\mathcal{V}:\;x_{t}\in\{0,1\}\Big].
+(6)
+This gated parameterization replaces
+(
+μ
+^
+,
+σ
+^
+)
+(\hat{\mu},\hat{\sigma})
+with
+(
+0
+,
+1
+)
+(0,1)
+when
+b
+=
+1
+b=1
+, so the affine transform reduces to the identity without branching.
+The construction preserves the canonical
+{
+0
+,
+1
+}
+\{0,1\}
+encoding and yields a stable,
+sparsity-invariant input regardless of the class balance observed in the context.
+Forward and inverse transforms.
+The forward transformation standardizes and applies an
+arcsinh
+\operatorname{arcsinh}
+tail compression to non-binary variates while leaving binary ones unchanged;
+the inverse undoes the compression and rescales back to the original domain:
+x
+~
+t
+=
+(
+1
+−
+b
+)
+​
+arcsinh
+⁡
+(
+x
+t
+−
+μ
+σ
+)
++
+b
+​
+x
+t
+,
+x
+^
+t
+=
+(
+1
+−
+b
+)
+​
+(
+σ
+​
+sinh
+⁡
+(
+clip
+c
+⁡
+(
+x
+~
+t
+)
+)
++
+μ
+)
++
+b
+​
+x
+~
+t
+,
+\tilde{x}_{t}=(1-b)\,\operatorname{arcsinh}\!\!\left(\tfrac{x_{t}-\mu}{\sigma}\right)+b\,x_{t},\hskip 20.00003pt\hat{x}_{t}=(1-b)\,\Big(\sigma\,\operatorname{sinh}\!\big(\operatorname{clip}_{c}(\tilde{x}_{t})\big)+\mu\Big)+b\,\tilde{x}_{t},
+(7)
+where
+clip
+c
+⁡
+(
+z
+)
+=
+max
+⁡
+(
+−
+c
+,
+min
+⁡
+(
+c
+,
+z
+)
+)
+\operatorname{clip}_{c}(z)=\max(-c,\min(c,z))
+bounds the input to
+sinh
+\sinh
+to prevent its exponential asymptotic growth from exceeding the
+representable range of the output datatype. We compute
+c
+c
+per sample from
+the per-variate statistics
+(
+μ
+,
+σ
+)
+(\mu,\sigma)
+as
+c
+=
+α
+⋅
+arcsinh
+⁡
+(
+x
+max
+(
+dtype
+)
+−
+μ
+σ
+)
+,
+c\;=\;\alpha\cdot\operatorname{arcsinh}\!\left(\frac{x_{\max}^{(\mathrm{dtype})}-\mu}{\sigma}\right),
+(8)
+with safety factor
+α
+∈
+(
+0
+,
+1
+]
+\alpha\in(0,1]
+, which guarantees
+σ
+​
+sinh
+⁡
+(
+c
+)
++
+μ
+≤
+x
+max
+(
+dtype
+)
+\sigma\sinh(c)+\mu\leq x_{\max}^{(\mathrm{dtype})}
+and, for
+α
+<
+1
+\alpha<1
+, additionally suppresses
+implausibly large outlier predictions. The same per-sample computation is used
+in training and at inference. Replacing the per-sample formula with a fixed
+c
+=
+20
+c=20
+does not change the results in our experiments, since model outputs
+x
+^
+t
+\hat{x}_{t}
+stay well below
+sinh
+⁡
+(
+20
+)
+≈
+2.4
+×
+10
+8
+\sinh(20)\approx 2.4\times 10^{8}
+and the clip
+remains inactive.
+Appendix D
+Training Setup
+We pretrain TiRex-2 for
+700,000
+700{,}000
+optimizer steps on
+2
+2
+NVIDIA H100 GPUs in
+bf16-mixed precision. Training takes approximately
+50
+50
+hours wall-clock time at
+an effective batch size of
+64
+64
+(per-GPU batch size of
+32
+32
+, no gradient
+accumulation). Optimization uses AdamW
+(
+Loshchilov and Hutter, 2019
+)
+with a
+weight decay of
+0.01
+0.01
+and gradients are value-clipped at
+1.0
+1.0
+to stabilize the
+update magnitude in the presence of the heavy-tailed sample-loss distribution
+typical of large-scale time-series corpora.
+Learning-rate schedule.
+The learning rate follows the OneCycle schedule
+(
+Smith and Topin, 2019
+)
+as
+implemented by
+torch.optim.lr_scheduler.OneCycleLR
+with cosine
+annealing in both phases
+(
+anneal_strategy=’cos’
+). The schedule is
+parameterized by a peak learning rate
+η
+max
+=
+1.2
+⋅
+10
+−
+3
+\eta_{\max}=1.2\cdot 10^{-3}
+, an
+initial divisor
+d
+0
+=
+50
+d_{0}=50
+and a final divisor
+d
+f
+=
+10
+4
+d_{f}=10^{4}
+, which fix the
+boundary values
+η
+0
+=
+η
+max
+d
+0
+=
+2.4
+⋅
+10
+−
+5
+,
+η
+f
+=
+η
+0
+d
+f
+=
+η
+max
+d
+0
+​
+d
+f
+=
+2.4
+⋅
+10
+−
+9
+.
+\eta_{0}\;=\;\frac{\eta_{\max}}{d_{0}}\;=\;2.4\cdot 10^{-5},\hskip 20.00003pt\eta_{f}\;=\;\frac{\eta_{0}}{d_{f}}\;=\;\frac{\eta_{\max}}{d_{0}\,d_{f}}\;=\;2.4\cdot 10^{-9}.
+(9)
+With total training steps
+T
+=
+700,000
+T=700{,}000
+and warmup fraction
+ρ
+=
+0.05
+\rho=0.05
+(
+pct_start
+), the warmup phase ends at step
+T
+w
+=
+ρ
+​
+T
+=
+35,000
+T_{w}=\rho T=35{,}000
+. Letting
+t
+t
+denote the current optimizer step and
+defining the normalized phase progress
+s
+w
+​
+(
+t
+)
+=
+t
+T
+w
+,
+s
+a
+​
+(
+t
+)
+=
+t
+−
+T
+w
+T
+−
+T
+w
+,
+s_{w}(t)\;=\;\frac{t}{T_{w}},\hskip 20.00003pts_{a}(t)\;=\;\frac{t-T_{w}}{T-T_{w}},
+(10)
+the schedule is given by
+η
+⁡
+(
+t
+)
+=
+{
+η
+max
++
+1
+2
+​
+(
+η
+0
+−
+η
+max
+)
+​
+(
+1
++
+cos
+⁡
+(
+π
+​
+s
+w
+​
+(
+t
+)
+)
+)
+,
+0
+≤
+t
+≤
+T
+w
+(cosine warmup)
+,
+η
+f
++
+1
+2
+​
+(
+η
+max
+−
+η
+f
+)
+​
+(
+1
++
+cos
+⁡
+(
+π
+​
+s
+a
+​
+(
+t
+)
+)
+)
+,
+T
+w
+<
+t
+≤
+T
+(cosine anneal)
+.
+\eta(t)\;=\;\begin{cases}\eta_{\max}+\tfrac{1}{2}\big(\eta_{0}-\eta_{\max}\big)\big(1+\cos(\pi\,s_{w}(t))\big),&0\leq t\leq T_{w}\quad\text{(cosine warmup)},\\[6.0pt]
+\eta_{f}+\tfrac{1}{2}\big(\eta_{\max}-\eta_{f}\big)\big(1+\cos(\pi\,s_{a}(t))\big),&T_{w}<t\leq T\quad\text{(cosine anneal)}.\end{cases}
+(11)
+Hence
+η
+\eta
+ramps cosine-smoothly from
+η
+0
+\eta_{0}
+to
+η
+max
+\eta_{\max}
+over the
+first
+5
+%
+5\%
+of training and is then cosine-annealed back to
+η
+f
+≈
+0
+\eta_{f}\approx 0
+over the remaining
+95
+%
+95\%
+. The cosine-shaped warmup is
+particularly well suited when continuing from a pretrained checkpoint: the
+gradually increasing step size lifts the parameters out of the local optimum
+they occupy without disrupting the geometry of the learned representations,
+enabling stable continued training before the main annealing phase takes over.
+Model configuration.
+The backbone consists of
+N
+=
+12
+N=12
+residual blocks alternating mLSTM and sLSTM, with embedding dimension
+d
+model
+=
+512
+d_{\text{model}}=512
+,
+h
+=
+4
+h=4
+heads per layer, a feed-forward
+expansion to dimension
+d
+ff
+=
+2,048
+d_{\text{ff}}=2{,}048
+, QK-normalization, and
+dropout
+p
+=
+0.1
+p=0.1
+applied within each block. The model operates on a context of
+L
+ctx
+=
+2,048
+L_{\text{ctx}}=2{,}048
+time steps and produces forecasts over a horizon of
+L
+pred
+=
+320
+L_{\text{pred}}=320
+steps, with both input and output patch sizes set to
+P
+in
+=
+P
+out
+=
+32
+P_{\text{in}}=P_{\text{out}}=32
+. This yields
+L
+ctx
+/
+P
+in
+=
+64
+L_{\text{ctx}}/P_{\text{in}}=64
+input tokens and
+L
+pred
+/
+P
+out
+=
+10
+L_{\text{pred}}/P_{\text{out}}=10
+output tokens per sample.
+Training objective.
+We minimize the quantile loss over
+K
+=
+99
+K=99
+equidistant quantile levels
+{
+τ
+k
+=
+k
+/
+100
+}
+k
+=
+1
+99
+\{\tau_{k}=k/100\}_{k=1}^{99}
+, augmented with soft sample-impact capping to
+limit the influence of individual high-loss samples on the gradient. This
+prevents pathological tail samples (e.g. rare regime shifts or outliers in the
+synthetic mixtures) from dominating the update direction without discarding
+their information content entirely.
+D.1  Long-context posttraining
+To adapt TiRex-2 to longer sequences, we follow pretraining with a short
+posttraining phase that extends the context length to
+L
+ctx
+pt
+=
+8,192
+L_{\text{ctx}}^{\text{pt}}=8{,}192
+and the prediction horizon to
+L
+pred
+pt
+=
+512
+L_{\text{pred}}^{\text{pt}}=512
+, while keeping the input/output patch size
+fixed at
+P
+in
+=
+P
+out
+=
+32
+P_{\text{in}}=P_{\text{out}}=32
+.
+All architectural hyperparameters
+(
+N
+N
+,
+d
+model
+d_{\text{model}}
+,
+h
+h
+,
+d
+ff
+d_{\text{ff}}
+, dropout, normalization) are
+inherited unchanged from pretraining.
+Posttraining is initialized from the pretraining checkpoint and runs for
+T
+pt
+=
+100,000
+T^{\text{pt}}=100{,}000
+optimizer steps, retaining the optimizer
+configuration of the pretraining phase (AdamW with weight decay
+0.01
+0.01
+,
+gradient value-clipping at
+1.0
+1.0
+, bf16-mixed precision) and the same training
+objective (quantile loss over
+K
+=
+99
+K=99
+levels with soft sample-impact capping).
+The learning-rate schedule is again OneCycle but with a peak value reduced by
+an order of magnitude to
+η
+max
+pt
+=
+1.2
+⋅
+10
+−
+4
+\eta_{\max}^{\text{pt}}=1.2\cdot 10^{-4}
+, reflecting the fine-tuning
+character of this phase and preventing the model from drifting away from the
+pretrained solution.
+While trained with a fixed prediction horizon of
+L
+pred
+pt
+=
+512
+L_{\text{pred}}^{\text{pt}}=512
+, the
+xLSTM backbone enables inference at arbitrarily long horizons via streaming.
+The training horizon is therefore not an upper bound on the horizon at
+deployment: as demonstrated in Section
+4
+, the model
+generalizes well beyond
+L
+pred
+pt
+L_{\text{pred}}^{\text{pt}}
+, and we evaluate this
+capability up to
+L
+pred
+stream
+=
+32,000,000
+L_{\text{pred}}^{\text{stream}}=32{,}000{,}000
+steps,
+i.e. a
+4,000
+×
+4{,}000\times
+extrapolation beyond the posttraining horizon.
+Table 3
+:
+Training hyperparameters of TiRex-2 for the pretraining and
+long-context posttraining phases.
+Pretraining
+Posttraining
+Optimization
+Optimizer
+AdamW
+(
+Loshchilov and Hutter, 2019
+)
+Weight decay
+0.01
+0.01
+Gradient clipping (value)
+1.0
+1.0
+Precision
+bf16-mixed
+Hardware
+2
+×
+2\times
+NVIDIA H100
+Total steps
+700,000
+700{,}000
+100,000
+100{,}000
+Effective batch size
+64
+64
+(per-GPU
+32
+32
+, no grad. accumulation)
+Wall-clock time
+≈
+50
+\approx 50
+h
+Initialization
+random
+Learning-rate schedule (OneCycle)
+Peak LR
+η
+max
+\eta_{\max}
+1.2
+⋅
+10
+−
+3
+1.2\cdot 10^{-3}
+1.2
+⋅
+10
+−
+4
+1.2\cdot 10^{-4}
+Warmup fraction
+5
+%
+5\%
+Initial divisor
+50
+50
+Final divisor
+10
+4
+10^{4}
+Architecture
+Blocks
+N
+N
+12
+12
+(alternating mLSTM / sLSTM)
+Embedding dim
+d
+model
+d_{\text{model}}
+512
+512
+Heads
+h
+h
+4
+4
+FFN dim
+d
+ff
+d_{\text{ff}}
+2,048
+2{,}048
+Normalization
+QK-norm
+Dropout
+0.1
+0.1
+Output clamp
+Clamp of
+sinh
+\mathrm{sinh}
+input to
+±
+20
+\pm 20
+during re-scaling
+Quantile levels
+K
+K
+99
+99
+Sequence layout
+Context length
+L
+ctx
+L_{\text{ctx}}
+2,048
+2{,}048
+8,192
+8{,}192
+Prediction horizon
+L
+pred
+L_{\text{pred}}
+320
+320
+512
+512
+Input / output patch size
+32
+32
+/
+32
+32
+Input / output tokens
+64
+64
+/
+10
+10
+256
+256
+/
+16
+16
+Streaming prediction horizon (tested)
+2
+16
+=
+65,536
+2^{16}=65{,}536
+Objective
+Loss
+Quantile loss with soft sample-impact capping
+Quantile levels
+K
+K
+99
+99
+(equidistant in
+(
+0
+,
+1
+)
+(0,1)
+)
+Appendix E
+Pre-Training Corpus
+The univariate data sources of our pre-training corpuses are inherited from
+TiRex and TiRex-1.1
+(
+Auer et al., 2025b
+)
+. We reproduce the description here for
+self-containedness and to make the boundary between the inherited univariate
+sources and the multivariate extension introduced in
+Section
+3.4
+explicit. In contrast to TiRex, we do
+not
+apply the TSMixup
+augmentation of
+Ansari et al. (2024)
+: its role as a univariate mixing
+prior is subsumed by our coupling mechanism (
+Section
+3.4
+), which both
+generates and mixes series under a richer set of cross-variate structures.
+The univariate corpus comprises three components:
+1.
+Chronos training data (
+∼
+30
+\sim\!30
+M series).
+We use the
+public training collection assembled by
+Ansari et al. (2024)
+as
+a source of real-world univariate time series drawn from heterogeneous
+domains. Series are
+z
+z
+-score normalized per sample and used directly,
+without TSMixup-style convex combination at this stage.
+2.
+Synthetic Gaussian-process series (
+∼
+15
+\sim\!15
+M).
+We adopt the GP-based synthetic data pipeline of TiRex
+(
+Auer et al., 2025b
+)
+verbatim, which itself is an extension of
+KernelSynth
+(
+Ansari et al., 2024
+)
+: each series is drawn from a
+zero-mean Gaussian process whose kernel is randomly composed from a fixed
+bank under
+{
++
+,
+×
+}
+\{+,\times\}
+. We refer to
+Auer et al. (2025b)
+for the
+full specification.
+3.
+GIFT-Eval pre-training subset (
+∼
+2.5
+\sim\!2.5
+M).
+A subset of the pre-training corpus released alongside
+GIFT-Eval
+(
+Aksu et al., 2024
+)
+; concrete dataset filtering is
+handled per evaluation benchmark as described below.
+Sampling protocol.
+At each training step a sample is drawn from this pool such that the Chronos component and the synthetic GP component are sampled with equal per-series probability, following the original TiRex pipeline.
+We additionally mix in, at a fixed rate of
+1
+%
+1\%
+, synthetic trajectories generated from
+dysts
+(
+Gilpin, 2023
+)
+to
+expose the model to deterministic chaotic dynamics. The corresponding
+dysts
+evaluation split used in
+Section
+4
+is strictly
+held out and not used for training. To form a multivariate training instance,
+we draw
+V
+∼
+𝒰
+​
+{
+1
+,
+…
+,
+12
+}
+V\sim\mathcal{U}\{1,\dots,12\}
+univariate series from this pool
+and pass them through the coupling mechanism of
+Section
+3.4
+, which
+imposes cross-variate dependencies on the otherwise independently sampled
+series;
+dysts
+trajectories are exempt from this stage and enter the
+batch as standalone univariate samples. The coupling mechanism thereby
+both lifts the univariate marginal to a multivariate distribution and
+replaces the role of TSMixup as a univariate mixing prior.
+Per-benchmark zero-leakage corpora.
+To ensure a strictly zero-shot evaluation, we pre-train two separate model checkpoints, one for each benchmark used in
+Section
+4
+: for the GIFT-Eval
+(
+Aksu et al., 2024
+)
+and fev-bench
+(
+Shchur et al., 2025
+)
+evaluations, we remove from the training corpus any dataset overlapping with the corresponding evaluation benchmark, following each benchmark’s own leakage rules. Two datasets requiring particular attention are
+chronos_datasets/solar
+and
+chronos_datasets/solar_1
+. Following the approach of TiRex 1.0, these solar datasets do not constitute leakage for fev-bench, as we train at 5-minute and 1-hour resolutions while the benchmark evaluates at weekly and daily frequencies. For the GIFT-Eval checkpoint, we remove the leaking Alabama subsets of the solar datasets from the training data. The two training corpora therefore differ in their concrete dataset composition, while the sampling protocol described above is applied identically in both cases. Reported scores for each benchmark are produced by the checkpoint trained on the corpus from which that benchmark’s data has been excluded.
+Table 4
+:
+Training datasets —
+Salesforce/lotsa_data
+.
+Dataset
+TiRex-2-fev
+TiRex-2-GIFT-Eval
+lotsa_data/BEIJING_SUBWAY_30MIN
+✓
+✓
+lotsa_data/HZMETRO
+✓
+✓
+lotsa_data/LOS_LOOP
+✓
+✓
+lotsa_data/PEMS03
+✓
+✓
+lotsa_data/PEMS04
+✓
+✓
+lotsa_data/PEMS07
+✓
+✓
+lotsa_data/PEMS08
+✓
+✓
+lotsa_data/PEMS_BAY
+✓
+✓
+lotsa_data/Q-TRAFFIC
+✓
+✓
+lotsa_data/SHMETRO
+✓
+✓
+lotsa_data/alibaba_cluster_trace_2018
+✓
+—
+lotsa_data/australian_electricity_demand
+✓
+—
+lotsa_data/azure_vm_traces_2017
+✓
+—
+lotsa_data/bdg-2_bear
+✓
+—
+lotsa_data/bdg-2_fox
+✓
+—
+lotsa_data/bdg-2_panther
+✓
+—
+lotsa_data/bdg-2_rat
+✓
+—
+lotsa_data/beijing_air_quality
+✓
+✓
+lotsa_data/bitcoin_with_missing
+✓
+—
+lotsa_data/borealis
+✓
+✓
+lotsa_data/borg_cluster_data_2011
+✓
+—
+lotsa_data/buildings_900k
+✓
+✓
+lotsa_data/bull
+✓
+✓
+lotsa_data/car_parts_with_missing
+✓
+—
+lotsa_data/cdc_fluview_ilinet
+✓
+✓
+lotsa_data/cdc_fluview_who_nrevss
+✓
+✓
+lotsa_data/china_air_quality
+✓
+✓
+lotsa_data/cif_2016_12
+✓
+—
+lotsa_data/cif_2016_6
+✓
+—
+lotsa_data/cmip6_*
+(years 1850–2010, every 5 yr; 33)
+✓
+—
+lotsa_data/cockatoo
+✓
+✓
+lotsa_data/covid19_energy
+✓
+✓
+lotsa_data/covid_deaths
+✓
+—
+lotsa_data/covid_mobility
+✓
+✓
+lotsa_data/elecdemand
+✓
+—
+lotsa_data/elf
+✓
+✓
+lotsa_data/era5_*
+(years 1991–2018; 28)
+✓
+—
+lotsa_data/extended_web_traffic_with_missing
+✓
+✓
+lotsa_data/favorita_sales
+✓
+✓
+lotsa_data/favorita_transactions
+—
+✓
+lotsa_data/gfc12_load
+—
+✓
+lotsa_data/gfc14_load
+—
+✓
+lotsa_data/gfc17_load
+—
+✓
+lotsa_data/godaddy
+✓
+✓
+lotsa_data/hog
+✓
+✓
+lotsa_data/ideal
+✓
+✓
+lotsa_data/kaggle_web_traffic_weekly
+✓
+✓
+lotsa_data/kdd2022
+—
+✓
+lotsa_data/largest_2017
+✓
+✓
+lotsa_data/largest_2018
+✓
+✓
+lotsa_data/largest_2019
+✓
+✓
+lotsa_data/largest_2020
+✓
+✓
+lotsa_data/largest_2021
+✓
+✓
+lotsa_data/lcl
+✓
+—
+lotsa_data/london_smart_meters_with_missing
+—
+✓
+lotsa_data/m1_monthly
+✓
+—
+lotsa_data/m1_quarterly
+✓
+—
+lotsa_data/m1_yearly
+✓
+—
+lotsa_data/m4_quarterly
+✓
+—
+lotsa_data/m4_yearly
+✓
+—
+lotsa_data/monash_m3_monthly
+✓
+—
+lotsa_data/monash_m3_other
+✓
+✓
+lotsa_data/monash_m3_quarterly
+✓
+—
+lotsa_data/monash_m3_yearly
+✓
+—
+lotsa_data/nn5_daily_with_missing
+✓
+—
+lotsa_data/nn5_weekly
+✓
+—
+lotsa_data/oikolab_weather
+✓
+✓
+lotsa_data/pdb
+✓
+✓
+lotsa_data/pedestrian_counts
+—
+✓
+lotsa_data/project_tycho
+✓
+✓
+lotsa_data/residential_load_power
+✓
+✓
+lotsa_data/residential_pv_power
+✓
+✓
+lotsa_data/saugeenday
+✓
+—
+lotsa_data/sceaux
+✓
+✓
+lotsa_data/smart
+✓
+✓
+lotsa_data/solar_power
+✓
+✓
+lotsa_data/spain
+✓
+✓
+lotsa_data/subseasonal
+✓
+✓
+lotsa_data/subseasonal_precip
+✓
+✓
+lotsa_data/sunspot_with_missing
+✓
+✓
+lotsa_data/taxi_30min
+✓
+—
+lotsa_data/tourism_monthly
+✓
+✓
+lotsa_data/tourism_quarterly
+✓
+—
+lotsa_data/tourism_yearly
+✓
+—
+lotsa_data/traffic_hourly
+✓
+—
+lotsa_data/traffic_weekly
+✓
+—
+lotsa_data/uber_tlc_daily
+—
+✓
+lotsa_data/uber_tlc_hourly
+—
+✓
+lotsa_data/us_births
+✓
+—
+lotsa_data/vehicle_trips_with_missing
+✓
+✓
+lotsa_data/weather
+✓
+—
+lotsa_data/wiki-rolling_nips
+✓
+✓
+lotsa_data/wind_power
+✓
+✓
+Table 5
+:
+Training datasets —
+autogluon/chronos_datasets
+.
+Dataset
+TiRex-2-fev
+TiRex-2-GIFT-Eval
+chronos_datasets/dominick
+✓
+✓
+chronos_datasets/electricity_15min
+✓
+—
+chronos_datasets/exchange_rate
+✓
+✓
+chronos_datasets/m4_daily
+✓
+—
+chronos_datasets/m4_hourly
+✓
+—
+chronos_datasets/m4_monthly
+✓
+—
+chronos_datasets/m4_weekly
+✓
+—
+chronos_datasets/mexico_city_bikes
+✓
+✓
+chronos_datasets/monash_australian_electricity
+—
+✓
+chronos_datasets/monash_cif_2016
+—
+✓
+chronos_datasets/monash_electricity_hourly
+✓
+—
+chronos_datasets/monash_electricity_weekly
+✓
+—
+chronos_datasets/monash_fred_md
+—
+✓
+chronos_datasets/monash_kdd_cup_2018
+✓
+—
+chronos_datasets/monash_london_smart_meters
+✓
+✓
+chronos_datasets/monash_m1_monthly
+—
+✓
+chronos_datasets/monash_m1_quarterly
+—
+✓
+chronos_datasets/monash_m1_yearly
+—
+✓
+chronos_datasets/monash_m3_monthly
+—
+✓
+chronos_datasets/monash_m3_quarterly
+—
+✓
+chronos_datasets/monash_m3_yearly
+—
+✓
+chronos_datasets/monash_nn5_weekly
+—
+✓
+chronos_datasets/monash_pedestrian_counts
+✓
+✓
+chronos_datasets/monash_rideshare
+✓
+✓
+chronos_datasets/monash_temperature_rain
+✓
+—
+chronos_datasets/monash_tourism_quarterly
+—
+✓
+chronos_datasets/monash_tourism_yearly
+—
+✓
+chronos_datasets/monash_traffic
+✓
+✓
+chronos_datasets/monash_weather
+—
+✓
+chronos_datasets/nn5
+—
+✓
+chronos_datasets/solar
+✓
+✓
+chronos_datasets/solar_1h
+✓
+✓
+chronos_datasets/taxi_1h
+✓
+✓
+chronos_datasets/taxi_30min
+✓
+✓
+chronos_datasets/uber_tlc_daily
+✓
+✓
+chronos_datasets/uber_tlc_hourly
+✓
+✓
+chronos_datasets/ushcn_daily
+✓
+✓
+chronos_datasets/weatherbench_daily
+✓
+✓
+chronos_datasets/weatherbench_hourly_geopotential
+✓
+✓
+chronos_datasets/weatherbench_hourly_potential_vorticity
+✓
+✓
+chronos_datasets/weatherbench_hourly_relative_humidity
+✓
+✓
+chronos_datasets/weatherbench_hourly_specific_humidity
+✓
+✓
+chronos_datasets/weatherbench_hourly_temperature
+✓
+✓
+chronos_datasets/weatherbench_hourly_toa_incident_solar_radiation
+✓
+✓
+chronos_datasets/weatherbench_hourly_total_cloud_cover
+✓
+✓
+chronos_datasets/weatherbench_hourly_total_precipitation
+✓
+✓
+chronos_datasets/weatherbench_hourly_u_component_of_wind
+✓
+✓
+chronos_datasets/weatherbench_hourly_v_component_of_wind
+✓
+✓
+chronos_datasets/weatherbench_hourly_vorticity
+✓
+✓
+chronos_datasets/weatherbench_weekly
+✓
+✓
+chronos_datasets/wiki_daily_100k
+✓
+✓
+chronos_datasets/wind_farms_daily
+✓
+✓
+chronos_datasets/wind_farms_hourly
+✓
+✓
+chronos_datasets_extra/brazilian_cities_temperature
+✓
+✓
+chronos_datasets_extra/spanish_energy_and_weather
+✓
+✓
+Table 6
+:
+Training datasets other sources.
+Dataset
+TiRex-2-fev
+TiRex-2-GIFT-Eval
+boom/boom_full
+(filtered for leakage)
+✓
+—
+boom/boom_full_mv
+(filtered for leakage)
+✓
+—
+hydrology
+✓
+—
+Table 7
+:
+Training datasets — GIFT-Eval cloud-operations datasets.
+Dataset
+TiRex-2-fev
+TiRex-2-GIFT-Eval
+gift-eval/bitbrains_fast_storage
+✓
+—
+gift-eval/bitbrains_rnd
+✓
+—
+gift-eval/bizitobs_application
+✓
+—
+gift-eval/bizitobs_service
+✓
+—
+Appendix F
+Synthetic Multivariate Coupling: Background and Design
+This appendix provides the conceptual background for the synthetic
+coupling pipeline introduced in
+Section
+3.4
+. We specify the
+phenomena the pipeline is designed to cover during training of
+TiRex-2, the rationale for their inclusion, and the design
+principles underlying the construction.
+Motivation.
+Real multivariate time series rarely arise from a single generative
+process. They typically combine several qualitatively distinct sources
+of cross-variate structure: shared unobserved drivers, lagged
+dependencies, deterministic functional relationships between variates,
+and joint stochastic trends. Observational pipelines superimpose
+further structure (irregular sampling, partial observability, sensor
+dropouts, quantisation, and asynchronous updates) that is generally
+inseparable from the underlying signal. A foundation model intended
+for zero-shot generalisation across domains must therefore handle all
+of these regimes simultaneously, since the dominant regime is
+typically unknown a priori and may vary within a single dataset.
+Curated multivariate corpora are insufficient to enforce this breadth,
+whereas large univariate corpora are abundant. We therefore construct
+multivariate training examples on the fly from the univariate pool by
+sampling from a broad menu of cross-variate dependency types, combined
+with a rich set of observational artefacts. The pipeline is not
+intended to replicate any specific real-world dataset; rather, it
+ensures that no single inductive bias dominates, so that shared latent
+factors, lagged causal influence, deterministic covariate
+relationships, and common stochastic trends are each represented with
+non-negligible probability in the training distribution.
+Design principles.
+The pipeline is governed by three principles.
+Coverage
+: the
+training distribution spans qualitatively distinct dependency types,
+including indirect (latent-factor) structure, directed lagged
+causation, and direct pointwise functional relationships.
+Compositionality
+: each stage is independently randomised per
+example, yielding a combinatorial enlargement of the effective
+training distribution relative to any enumeration of fixed scenarios.
+Observational realism
+: the data presented to TiRex-2
+reflects the structural artefacts encountered in applied forecasting,
+which frequently account for the gap between benchmark and deployment
+performance.
+Pipeline overview.
+The pipeline comprises three stages, each randomised per example. The
+first stage diversifies the marginal behaviour of individual
+univariate series (amplitude profile, dynamic range, and the
+presence and shape of localised events) so that the joint structure
+imposed in subsequent stages is not confounded with marginal
+variability. The second stage introduces cross-variate dependencies
+by sampling from a collection of coupling mechanisms, each targeting
+a distinct region of dependency space. The third stage applies a
+sequence of randomised observational transforms. The mechanism within
+each stage is itself sampled, so that the joint distribution over
+training examples is induced by a procedural prior rather than by a
+single parametric model.
+Coverage of dependency phenomena.
+The coupling mechanisms in the second stage are selected to span
+complementary forms of multivariate structure. Each constitutes a
+stylised representative of a class of phenomena; the equations from
+Section
+3.4
+are restated below to fix notation.
+Indirect coupling through linear mixing,
+𝐱
+⁡
+(
+t
+)
+=
+𝐀
+​
+𝐳
+​
+(
+t
+)
+,
+\mathbf{x}(t)\;=\;\mathbf{A}\,\mathbf{z}(t),
+captures the case in which observed series arise as combinations of
+a smaller number of underlying drivers. The induced correlation
+structure varies continuously with the spectrum of
+𝐀
+\mathbf{A}
+,
+ranging from near-independence to near-collinearity. We sample from
+several qualitatively distinct spectral regimes to avoid implicit
+specialisation to any particular effective rank or condition number.
+Directed, lagged influence
+is represented by structural causal
+models over a randomly sampled directed acyclic graph. In the linear
+case,
+x
+j
+​
+(
+t
+)
+=
+∑
+i
+∈
+pa
+⁡
+(
+j
+)
+α
+i
+​
+j
+​
+z
+i
+​
+(
+t
+−
+τ
+i
+​
+j
+)
++
+ε
+j
+​
+(
+t
+)
+,
+x_{j}(t)\;=\;\sum_{i\in\mathrm{pa}(j)}\alpha_{ij}\,z_{i}(t-\tau_{ij})\;+\;\varepsilon_{j}(t),
+this class introduces dependencies that instantaneous mixing cannot
+produce, in particular a temporal asymmetry between cause and effect.
+The nonlinear extension,
+x
+j
+​
+(
+t
+)
+=
+h
+⁡
+(
+z
+k
+​
+(
+t
+−
+τ
+k
+)
+)
+​
+∑
+i
+∈
+pa
+⁡
+(
+j
+)
+g
+i
+​
+j
+​
+(
+z
+i
+​
+(
+t
+−
+τ
+i
+​
+j
+)
+)
+,
+x_{j}(t)\;=\;h\!\bigl(z_{k}(t-\tau_{k})\bigr)\,\sum_{i\in\mathrm{pa}(j)}g_{ij}\!\bigl(z_{i}(t-\tau_{ij})\bigr),
+adds a multiplicative modulation component, which serves as a
+proxy for threshold-driven and regime-switching dynamics. Such
+dynamics are characteristic of gated systems and of many physical and
+economic processes in which one variable controls the activity of
+another. The pipeline does not commit to a parametric form for the
+modulating function
+h
+h
+or the edge-level nonlinearities
+g
+i
+​
+j
+g_{ij}
+.
+Common stochastic trends
+are represented by a cointegration
+mechanism,
+𝐱
+⁡
+(
+t
+)
+=
+𝚲
+​
+𝝉
+​
+(
+t
+)
++
+𝝃
+⁡
+(
+t
+)
+,
+\mathbf{x}(t)\;=\;\boldsymbol{\Lambda}\,\boldsymbol{\tau}(t)\;+\;\boldsymbol{\xi}(t),
+with non-stationary shared drivers
+𝝉
+\boldsymbol{\tau}
+and stationary
+deviations
+𝝃
+\boldsymbol{\xi}
+. The relevant phenomenon is that
+individual series may drift without bound while specific linear
+combinations remain stationary, a regime that is poorly approximated
+by either linear mixing or SCM-style coupling.
+Direct functional coupling,
+x
+j
+​
+(
+t
+)
+=
+f
+j
+​
+(
+x
+0
+​
+(
+t
+)
+)
++
+ε
+j
+​
+(
+t
+)
+,
+x_{j}(t)\;=\;f_{j}\!\bigl(x_{0}(t)\bigr)+\varepsilon_{j}(t),
+represents the opposite extreme: a covariate is a deterministic
+transformation of the target up to additive noise. This regime
+corresponds to calendar features, derived quantities, and sensors
+that observe a common underlying signal through distinct
+nonlinearities, and is the most informative for the forecasting
+target. It complements the indirect dependency classes by exposing
+the model to covariates carrying near-deterministic information,
+which is the regime the asymmetric variate mixer is designed to
+exploit.
+The identity and univariate pass-through case,
+x
+j
+​
+(
+t
+)
+=
+z
+j
+​
+(
+t
+)
+,
+x_{j}(t)\;=\;z_{j}(t),
+is included explicitly to preserve univariate forecasting performance.
+In its absence, exposure to coupled data biases the model toward
+assuming cross-variate structure even when none is present, which is
+particularly detrimental in univariate mode, where the variate mixer
+is bypassed.
+Observational layer.
+The third stage addresses the empirical observation that the gap
+between a well-specified generative process and the observed data is
+frequently dominated by observational artefacts. Variates may be
+reordered arbitrarily across datasets, sampled asynchronously, missing
+in contiguous blocks (due to joint blackouts or independent sensor
+faults), observed only up to the forecast origin rather than over the
+full horizon
+F
+F
+, or discretised in value or time. Each of these
+artefacts must be handled by a deployed forecasting model and is
+absent from clean synthetic data. The observational layer is therefore
+treated as a first-class component of the pipeline. The artefact
+families it covers (variate permutation, smooth time warping, patch
+masking generalising the contiguous-patch scheme of
+TiRex
+(
+Auer et al., 2025b
+)
+, partial future observability for a
+random subset of future covariates, and value- and
+time-discretisation) were selected on the basis of artefact patterns
+prevalent in applied forecasting. Partial future observability
+prevents TiRex-2 from becoming dependent on the future-covariate
+channel being fully populated, training it to exploit such
+information when available without conditioning on its presence.
+Appendix G
+Evaluation Metrics
+We assess both point and probabilistic forecast accuracy. Point accuracy is
+measured with the Mean Absolute Scaled Error (MASE) on both fev-bench and
+GIFT-Eval. Probabilistic accuracy is measured with the Continuous Ranked
+Probability Score (CRPS) on GIFT-Eval and with the Scaled Quantile Loss (SQL)
+on fev-bench, following the protocol of each
+benchmark
+(
+Aksu et al., 2024
+;
+Shchur et al., 2025
+)
+. All metrics are
+computed per target series over the forecast horizon and then aggregated
+according to the respective benchmark protocol.
+Throughout, let
+y
+t
+y_{t}
+denote the observed value and
+y
+^
+t
+\hat{y}_{t}
+the point
+forecast at time step
+t
+t
+, and let
+y
+^
+t
+(
+q
+)
+\hat{y}^{(q)}_{t}
+denote the predicted
+q
+q
+-quantile for
+q
+∈
+𝒬
+=
+{
+0.1
+,
+0.2
+,
+…
+,
+0.9
+}
+q\in\mathcal{Q}=\{0.1,0.2,\dots,0.9\}
+. Forecasts span the
+horizon
+t
+=
+T
++
+1
+,
+…
+,
+T
++
+F
+t=T+1,\dots,T+F
+, and
+s
+s
+is the seasonal period implied by the data
+frequency. We denote the historical seasonal-naive error by
+a
+=
+1
+T
+−
+s
+​
+∑
+t
+=
+s
++
+1
+T
+|
+y
+t
+−
+y
+t
+−
+s
+|
+a\;=\;\frac{1}{T-s}\sum_{t=s+1}^{T}\bigl|y_{t}-y_{t-s}\bigr|
+and the quantile (pinball) loss at level
+q
+q
+by
+ρ
+q
+​
+(
+y
+t
+,
+y
+^
+t
+(
+q
+)
+)
+=
+q
+​
+(
+y
+t
+−
+y
+^
+t
+(
+q
+)
+)
++
++
+(
+1
+−
+q
+)
+​
+(
+y
+^
+t
+(
+q
+)
+−
+y
+t
+)
++
+,
+(
+z
+)
++
+=
+max
+⁡
+(
+z
+,
+0
+)
+.
+\rho_{q}\!\left(y_{t},\hat{y}^{(q)}_{t}\right)\;=\;q\,\bigl(y_{t}-\hat{y}^{(q)}_{t}\bigr)_{+}+(1-q)\,\bigl(\hat{y}^{(q)}_{t}-y_{t}\bigr)_{+},\hskip 17.00024pt(z)_{+}=\max(z,0).
+Mean Absolute Scaled Error (MASE).
+MASE scales the mean absolute forecast error by the in-sample seasonal-naive
+error
+a
+a
+, yielding a scale-free point metric:
+MASE
+=
+1
+F
+​
+a
+​
+∑
+t
+=
+T
++
+1
+T
++
+F
+|
+y
+t
+−
+y
+^
+t
+|
+.
+\mathrm{MASE}\;=\;\frac{1}{F\,a}\sum_{t=T+1}^{T+F}\bigl|y_{t}-\hat{y}_{t}\bigr|.
+Continuous Ranked Probability Score (CRPS).
+CRPS measures the squared distance between the predictive CDF
+F
+t
+F_{t}
+and the
+observation,
+CRPS
+=
+1
+F
+∑
+t
+=
+T
++
+1
+T
++
+F
+∫
+−
+∞
+∞
+(
+F
+t
+(
+u
+)
+−
+𝟏
+{
+y
+t
+≤
+u
+}
+)
+2
+d
+u
+,
+\mathrm{CRPS}\;=\;\frac{1}{F}\sum_{t=T+1}^{T+F}\int_{-\infty}^{\infty}\bigl(F_{t}(u)-\mathbf{1}\{y_{t}\leq u\}\bigr)^{2}\,\mathrm{d}u,
+which we approximate by the mean weighted quantile loss over
+𝒬
+\mathcal{Q}
+(
+Aksu et al., 2024
+)
+:
+CRPS
+≈
+1
+|
+𝒬
+|
+​
+∑
+q
+∈
+𝒬
+2
+​
+∑
+t
+=
+T
++
+1
+T
++
+F
+ρ
+q
+​
+(
+y
+t
+,
+y
+^
+t
+(
+q
+)
+)
+∑
+t
+=
+T
++
+1
+T
++
+F
+|
+y
+t
+|
+.
+\mathrm{CRPS}\;\approx\;\frac{1}{|\mathcal{Q}|}\sum_{q\in\mathcal{Q}}\frac{2\sum_{t=T+1}^{T+F}\rho_{q}\!\left(y_{t},\hat{y}^{(q)}_{t}\right)}{\sum_{t=T+1}^{T+F}\bigl|y_{t}\bigr|}.
+Scaled Quantile Loss (SQL).
+SQL is the probabilistic analogue of MASE: it aggregates the quantile loss over
+𝒬
+\mathcal{Q}
+and normalizes by the seasonal-naive error
+a
+a
+rather than by
+∑
+t
+|
+y
+t
+|
+\sum_{t}|y_{t}|
+, keeping the metric scale-free
+(
+Shchur et al., 2025
+)
+:
+SQL
+=
+2
+F
+​
+a
+​
+∑
+t
+=
+T
++
+1
+T
++
+F
+∑
+q
+∈
+𝒬
+ρ
+q
+​
+(
+y
+t
+,
+y
+^
+t
+(
+q
+)
+)
+.
+\mathrm{SQL}\;=\;\frac{2}{F\,a}\sum_{t=T+1}^{T+F}\sum_{q\in\mathcal{Q}}\rho_{q}\!\left(y_{t},\hat{y}^{(q)}_{t}\right).
+Aggregation across tasks.
+On fev-bench we aggregate per-task performance into two complementary
+marginal statistics, following
+Shchur et al. (2025)
+. Let
+E
+r
+​
+j
+E_{rj}
+denote the error (SQL) of model
+j
+j
+on task
+r
+r
+, over
+R
+R
+tasks and
+M
+M
+models.
+The
+average win rate
+W
+j
+W_{j}
+is the probability that model
+j
+j
+achieves a
+lower error than another randomly chosen model
+k
+≠
+j
+k\neq j
+on a randomly chosen
+task, with ties counted as half a win:
+W
+j
+=
+1
+R
+⁡
+(
+M
+−
+1
+)
+​
+∑
+r
+=
+1
+R
+∑
+k
+=
+1
+k
+≠
+j
+M
+[
+𝟏
+​
+(
+E
+r
+​
+j
+<
+E
+r
+​
+k
+)
++
+1
+2
+​
+1
+​
+(
+E
+r
+​
+j
+=
+E
+r
+​
+k
+)
+]
+,
+W_{j}\;=\;\frac{1}{R\,(M-1)}\sum_{r=1}^{R}\sum_{\begin{subarray}{c}k=1\\
+k\neq j\end{subarray}}^{M}\Bigl[\mathbf{1}(E_{rj}<E_{rk})+\tfrac{1}{2}\,\mathbf{1}(E_{rj}=E_{rk})\Bigr],
+ranging from
+0
+0
+(worst) to
+1
+1
+(best).
+The
+skill score
+S
+j
+S_{j}
+quantifies the average relative error reduction of
+model
+j
+j
+against a fixed baseline
+β
+\beta
+(Seasonal Naive), aggregated as a
+geometric mean of per-task error ratios:
+S
+j
+=
+1
+−
+∏
+r
+=
+1
+R
+clip
+⁡
+(
+E
+r
+​
+j
+E
+r
+​
+β
+,
+ℓ
+,
+u
+)
+R
+,
+clip
+⁡
+(
+x
+,
+ℓ
+,
+u
+)
+=
+max
+⁡
+(
+ℓ
+,
+min
+⁡
+(
+x
+,
+u
+)
+)
+,
+S_{j}\;=\;1-\sqrt[R]{\prod_{r=1}^{R}\operatorname{clip}\!\left(\frac{E_{rj}}{E_{r\beta}};\,\ell,\,u\right)},\hskip 17.00024pt\operatorname{clip}(x;\ell,u)=\max(\ell,\min(x,u)),
+with clipping bounds
+ℓ
+=
+10
+−
+2
+\ell=10^{-2}
+,
+u
+=
+10
+2
+u=10^{2}
+to bound the influence of
+extreme ratios. Positive values indicate better-than-baseline performance.
+Experimental support, please
+view the build logs
+for errors. Generated by
+L
+A
+T
+E
+xml
+.
+Instructions for reporting errors
+We are continuing to improve HTML versions of papers, and your feedback helps enhance accessibility and mobile
+      support. To report errors in the HTML that will help us improve conversion and rendering, choose any of the
+      methods listed below:
+Click the "Report Issue"
+(
+)
+button, located in the page header.
+Tip:
+You can select the relevant text first, to include it in your report.
+Our team has already identified
+the following issues
+. We appreciate your time reviewing and reporting rendering errors we
+      may not have found yet. Your efforts will help us improve the HTML versions for all readers, because disability
+      should not be a barrier to accessing research. Thank you for your continued support in championing open access for
+      all.
+Have a free development cycle? Help support accessibility at arXiv! Our collaborators at LaTeXML maintain a
+list of packages that need conversion
+, and welcome
+developer contributions
+.
+We gratefully acknowledge support from
+        our
+major funders
+,
+member institutions
+,
+,
+        and all contributors.
+About
+·
+Help
+·
+Contact
+·
+Subscribe
+·
+Copyright
+·
+Privacy
+·
+Accessibility
+·
+Operational Status
+(opens in new tab)
+Major funding support from

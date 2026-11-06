@@ -1,0 +1,44 @@
+{
+  "id": "moirai2_paper",
+  "url": "https://arxiv.org/html/2511.11698v3",
+  "retrieved_at_utc": "2026-11-06T14:55:18.790063+00:00",
+  "status_code": 200,
+  "sha256": "bc2cec58d67ff0f3cd12df294e5c37d51672dd76887678f4ad36c55bf9752c05",
+  "tables": [
+    {
+      "id": "S5.T1",
+      "caption": "Table 1: Performance of different Moirai 2.0 sizes.",
+      "rows": [
+        [
+          "Model",
+          "Params (M)",
+          "MASE",
+          "CRPS"
+        ],
+        [
+          "Moirai 2.0 small",
+          "11.4",
+          "0.728",
+          "0.516"
+        ],
+        [
+          "Moirai 2.0 base",
+          "87.1",
+          "0.732",
+          "0.525"
+        ],
+        [
+          "Moirai 2.0 large",
+          "305",
+          "0.743",
+          "0.530"
+        ]
+      ]
+    },
+    {
+      "id": "S5.T2",
+      "caption": "Table 2: Ablation study of Moirai 2.0 design choices. Starting from the Moirai 1.0 followed by a decoder-only variant using the original GIFT-Eval pretraining and distributional loss (v0), new pretraining corpus (v1), quantile loss (v2), autoregressive quantile decoding (v3), random masking (v4), and multi-token prediction (v5). The final Moirai 2.0 additionally replaces the linear projection with a residual block, achieving the best overall results.",
+      "rows": []
+    }
+  ]
+}
